@@ -1,0 +1,14 @@
+Package: mastiff
+Title: Mathematical and Statistical Utilities from the Fraser Group at Oxford
+Version: 0.0.0.9000
+Authors@R: 
+    person("Chris", "Wymant", , "chris.wymant@bdi.ox.ac.uk", role = c("aut", "cre"))
+Description: Provides assorted mathematical and statistical tools we have
+    written for our work on infectious disease epidemiology, which should be of
+    broader use. 
+License: Apache License (>= 2)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+URL: https://github.com/BDI-pathogens/mastiff
+BugReports: https://github.com/BDI-pathogens/mastiff/issues
