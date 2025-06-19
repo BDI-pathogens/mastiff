@@ -1,0 +1,68 @@
+---
+title: "Plotting Stan output"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotting Stan output}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mastiff)
+```
+
+Load the example Stan output included with `mastiff`, from a simple linear normal regression model: $y \sim N(mx + c, \sigma)$.
+
+```{r data}
+stan_eg <- mastiff::stan_example_regression
+names(stan_eg)
+stan_eg$posterior_samples
+```
+
+For each parameter plot the marginal posterior (i.e. the posterior for the value of that parameter regardless of any other parameter):
+
+```{r plot_basic, fig.dim = c(4, 1.5)}
+plot_posterior(stan_eg$posterior_samples)
+```
+
+Overlay plots of the posterior and prior distributions^[You should always do this for the key parameters of a model (perhaps excluding less relevant parameters, especially if there are so many of them this would be distracting), so that you and your audience can see see how much of your conclusion is coming from the data and how much is coming from prior assumptions.]:
+
+```{r plot_overlay, fig.dim = c(4.5, 1.5)}
+plot_posterior(stan_eg$posterior_samples,
+               prior_samples = stan_eg$prior_samples)
+```
+
+For data that is simulated using the same likelihood that our inference is based on, we know the true values of the parameters we are estimating.
+Include those in our plots^[Checking that our posteriors are closer to the true values than the priors are provides a check that we have correctly implemented our statistical model.
+You should always do such a check. 
+For simple models it is very quick; for more complex models it is very important, because with greater model complexity comes greater risk of at least one error in coding the inference.
+Posteriors should become increasingly concentrated at the true parameter values as the size of the dataset increases, assuming the parameters are to some degree identifiable by this kind of data.
+If some parameters are not at all identifiable, their posteriors should remain equal to their priors regardless of the amount of data.
+If posteriors become increasingly concentrated at any value other than the true value, this indicates an error in the implementation of the statistical model (or an error in the simulation code you wrote to check your inference code).]:
+
+```{r plot_truth, fig.dim = c(4.5, 1.5)}
+plot_posterior(stan_eg$posterior_samples,
+               prior_samples = stan_eg$prior_samples,
+               true_param_values = stan_eg$true_values)
+```
+
+Specify a transformation for some parameters.
+Note the parameter names are not automatically updated in the plot: handle this with `labels` argument.
+
+```{r plot_transforms, fig.dim = c(4.5, 1.5)}
+plot_posterior(stan_eg$posterior_samples,
+               prior_samples = stan_eg$prior_samples,
+               true_param_values = stan_eg$true_values,
+               transforms = list(sigma=log),
+               labels = c(sigma = "log(sigma)")
+               )
+```
+
+
