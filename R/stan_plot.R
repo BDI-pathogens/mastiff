@@ -1,7 +1,7 @@
 #' Plots the marginal posteriors of each parameter in a stanfit object
 #'
-#' @param stanfit A stanfit object e.g. as returned by `rstan::sampling()`. This
-#'   should contain samples from the posterior.
+#' @param posterior_samples A stanfit object e.g. as returned by
+#'   `rstan::sampling()`. This should contain samples from the posterior.
 #' @param prior_samples A stanfit object containing samples from the prior, so
 #'   that the prior and posterior distributions are overlaid. The default value
 #'   of NA means only the posterior is plotted.
@@ -29,8 +29,15 @@
 #'   plot of the posterior for x reflects the log transformation.
 #'
 #' @returns A ggplot object.
+#' @examples
+#' eg <- mastiff::stan_example_regression
+#' plot_posterior(eg$posterior_samples)
+#' plot_posterior(eg$posterior_samples,
+#'                prior_samples = eg$prior_samples,
+#'                true_param_values = eg$true_values)
+#' @importFrom data.table :=
 #' @export
-plot_posterior <- function( stanfit,
+plot_posterior <- function( posterior_samples,
                             prior_samples = NA,
                             true_param_values = NA,
                             params_desired = NA,
@@ -38,7 +45,7 @@ plot_posterior <- function( stanfit,
                             labels = NA ) {
 
   # Check args
-  dt_posterior <- stanfit_to_dt( stanfit, params_desired )
+  dt_posterior <- stanfit_to_dt( posterior_samples, params_desired )
   params <- names( dt_posterior )
   have_prior <- ! identical(NA, prior_samples )
   have_true_param_values <- ! identical(NA, true_param_values )

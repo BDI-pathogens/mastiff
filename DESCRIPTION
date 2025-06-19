@@ -23,6 +23,5 @@ LazyData: true
 Imports: 
     data.table,
     ggplot2,
-    rlang,
     rstantools
 VignetteBuilder: knitr
