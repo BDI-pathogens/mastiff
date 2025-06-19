@@ -6,9 +6,12 @@
 #'   value of `NA` means all parameters are included except `"lp__"` (which is not
 #'   actually a parameter: Stan uses it to record the value of the target
 #'   probability density).
-#'
 #' @returns A matrix or data.table with one column per parameter and one row per
 #'   sample.
+#' @examples
+#'   eg <- mastiff::stan_example_regression$posterior_samples
+#'   stanfit_to_matrix(eg)
+#'   stanfit_to_dt(eg)
 #' @export
 stanfit_to_matrix <- function( stanfit,
                                params_desired = NA ) {
@@ -33,7 +36,7 @@ stanfit_to_matrix <- function( stanfit,
 #' @rdname stanfit_to_matrix
 #' @export
 stanfit_to_dt <- function( stanfit,
-                           params_desired = NULL ) {
+                           params_desired = NA ) {
   stopifnot( class( stanfit )[[ 1 ]] == "stanfit" )
   stanfit_as_dt <- data.table::as.data.table( stanfit )
   if ( ! identical(NA, params_desired ) ) {
@@ -68,7 +71,11 @@ stanfit_to_dt <- function( stanfit,
 #'   probability density).
 #'
 #' @returns A 2D array: the first index for the parameter, the second index for
-#    the stanfit object.
+#'    the stanfit object.
+#' @examples
+#'    eg <- mastiff::stan_example_regression
+#'    posterior_means(  list(eg$posterior_samples, eg$prior_samples))
+#'    posterior_medians(list(eg$posterior_samples, eg$prior_samples))
 #' @export
 posterior_means <- function( stanfit_list,
                              params_desired = NA ) {
@@ -119,6 +126,10 @@ posterior_medians <- function( stanfit_list,
 #'
 #' @returns A 3D array: the first index for the parameter, the second for the
 #'   percentile, the third for the stanfit object.
+#' @examples
+#'    eg <- mastiff::stan_example_regression
+#'    posterior_intervals(list(eg$posterior_samples, eg$prior_samples), prob =
+#'    0.95)
 #' @export
 posterior_intervals <- function( stanfit_list,
                                  prob,
@@ -154,6 +165,9 @@ posterior_intervals <- function( stanfit_list,
 #' @returns A single number: the amount of probability (mass) that this
 #'   parameter has in this range, estimated as the fraction of samples in the
 #'   stanfit object for which the parameter is in the range.
+#' @examples
+#'   eg <- mastiff::stan_example_regression$posterior_samples
+#'   posterior_mass_in_range(eg, "m", c(-Inf, 2))
 #' @export
 posterior_mass_in_range <- function( stanfit, param, range ) {
   stopifnot( class( stanfit )[[ 1 ]] == "stanfit" )

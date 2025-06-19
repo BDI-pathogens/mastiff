@@ -23,8 +23,14 @@ probability density).}
 }
 \value{
 A 2D array: the first index for the parameter, the second index for
+the stanfit object.
 }
 \description{
 In presto the typical list supplied to this would have one stanfit object
 for each simulated trial.
+}
+\examples{
+   eg <- mastiff::stan_example_regression
+   posterior_means(  list(eg$posterior_samples, eg$prior_samples))
+   posterior_medians(list(eg$posterior_samples, eg$prior_samples))
 }

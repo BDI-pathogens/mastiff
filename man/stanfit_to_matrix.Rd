@@ -7,7 +7,7 @@
 \usage{
 stanfit_to_matrix(stanfit, params_desired = NA)
 
-stanfit_to_dt(stanfit, params_desired = NULL)
+stanfit_to_dt(stanfit, params_desired = NA)
 }
 \arguments{
 \item{stanfit}{A stanfit object e.g. as returned by \code{rstan::sampling()}.}
@@ -24,4 +24,9 @@ sample.
 }
 \description{
 Converts a stanfit object to a matrix or data.table
+}
+\examples{
+  eg <- mastiff::stan_example_regression$posterior_samples
+  stanfit_to_matrix(eg)
+  stanfit_to_dt(eg)
 }

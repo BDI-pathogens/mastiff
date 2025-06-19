@@ -36,3 +36,8 @@ The function is a simple wrapper around \code{rstantools::posterior_interval()}.
 In presto the typical list supplied to this would have one stanfit object
 for each simulated trial.
 }
+\examples{
+   eg <- mastiff::stan_example_regression
+   posterior_intervals(list(eg$posterior_samples, eg$prior_samples), prob =
+   0.95)
+}

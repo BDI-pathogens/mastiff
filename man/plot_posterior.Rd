@@ -5,7 +5,7 @@
 \title{Plots the marginal posteriors of each parameter in a stanfit object}
 \usage{
 plot_posterior(
-  stanfit,
+  posterior_samples,
   prior_samples = NA,
   true_param_values = NA,
   params_desired = NA,
@@ -14,8 +14,8 @@ plot_posterior(
 )
 }
 \arguments{
-\item{stanfit}{A stanfit object e.g. as returned by \code{rstan::sampling()}. This
-should contain samples from the posterior.}
+\item{posterior_samples}{A stanfit object e.g. as returned by
+\code{rstan::sampling()}. This should contain samples from the posterior.}
 
 \item{prior_samples}{A stanfit object containing samples from the prior, so
 that the prior and posterior distributions are overlaid. The default value
@@ -52,4 +52,11 @@ A ggplot object.
 }
 \description{
 Plots the marginal posteriors of each parameter in a stanfit object
+}
+\examples{
+eg <- mastiff::stan_example_regression
+plot_posterior(eg$posterior_samples)
+plot_posterior(eg$posterior_samples,
+               prior_samples = eg$prior_samples,
+               true_param_values = eg$true_values)
 }

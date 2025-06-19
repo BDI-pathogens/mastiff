@@ -27,3 +27,7 @@ stanfit object for which the parameter is in the range.
 \description{
 Calculates the amount of probability (mass) a parameter has in a range
 }
+\examples{
+  eg <- mastiff::stan_example_regression$posterior_samples
+  posterior_mass_in_range(eg, "m", c(-Inf, 2))
+}
