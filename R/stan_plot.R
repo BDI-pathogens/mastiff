@@ -46,30 +46,35 @@ plot_posterior <- function( posterior_samples,
 
   # Check args
   dt_posterior <- stanfit_to_dt( posterior_samples, params_desired )
-  params <- names( dt_posterior )
+  params <- names( dt_posterior ) # params included
+  params_all <- posterior_samples@model_pars # params including those excluded
   have_prior <- ! identical(NA, prior_samples )
   have_true_param_values <- ! identical(NA, true_param_values )
   have_params_desired <- ! identical(NA, params_desired )
   have_transforms <- ! identical(NA, transforms )
   have_labels <- ! identical(NA, labels )
   if ( have_prior ) {
+    stopifnot( identical( sort( posterior_samples@model_pars ),
+                          sort(     prior_samples@model_pars ) ) )
     dt_prior <- stanfit_to_dt( prior_samples, params_desired )
-    stopifnot( identical( sort( params ),
-                          sort( names( dt_prior ) ) ) )
   }
+
+  # Silently ignore any params in true_param_values that are not in params.
+  # Noisily ignore any params in true_param_values that are not in params_all.
   if ( have_true_param_values ) {
     stopifnot( is.numeric( true_param_values ) )
-    unexpected_true_params <- names( true_param_values )[
-      ! names( true_param_values ) %in% params ]
-    if ( length( unexpected_true_params ) ) {
+    noisy_params_to_skip <- names( true_param_values )[
+      ! names( true_param_values ) %in% params_all ]
+    if ( length( noisy_params_to_skip ) ) {
       warning( paste( "Ignoring the following params which had true values",
                       "specified, but were not found in the posterior samples:",
-                      paste( unexpected_true_params, collapse = " " ) ) )
-      true_param_values <-
-        true_param_values[ names( true_param_values ) %in% params ]
-      if ( ! length(true_param_values) ) have_true_param_values <- FALSE
+                      paste( noisy_params_to_skip, collapse = " " ) ) )
     }
+    true_param_values <-
+      true_param_values[ names( true_param_values ) %in% params ]
+    if ( ! length(true_param_values) ) have_true_param_values <- FALSE
   }
+
   if ( have_transforms ) {
     stopifnot( is.list ( transforms ) )
     for ( transform in transforms ) stopifnot( is.function( transform ) )
