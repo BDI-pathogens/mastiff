@@ -2,17 +2,17 @@
 title: "Mixture of two normals"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{mixture-of-two-normals}
+%\VignetteIndexEntry{mixture-of-two-normals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
----
-
-\newcommand{\|}{\: | \:}
-
-```{r, include = FALSE}
+  ---
+  
+  \newcommand{\|}{\: | \:}
+  
+  ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+collapse = TRUE,
+comment = "#>"
 )
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
@@ -50,7 +50,9 @@ Simulate some data from a mixture of two normal distributions:
 
 ```{r}
 groups <- LETTERS[1:5]
-results <- simulate_mixture_of_two_normals(n = 500, groups = groups)
+results <- simulate_mixture_of_two_normals(n = 500,
+                                           groups = groups,
+                                           sd_groups = 2)
 df_data <- results$data
 params <- results$params
 ```
@@ -63,7 +65,7 @@ head(df_data)
 
 Plot all the data
 
-```{r}
+```{r, fig.dim = c(3, 3)}
 ggplot(df_data) +
   geom_histogram(aes(y), bins = 30) +
   coord_cartesian(expand = FALSE)
@@ -71,7 +73,7 @@ ggplot(df_data) +
 
 Visualise the two normals separately:
 
-```{r}
+```{r, fig.dim = c(4, 3)}
 ggplot(df_data) +
   geom_histogram(aes(y, fill = as.factor(as.integer(d))),
                  position = "identity",
@@ -97,12 +99,12 @@ df_samples_posterior <- estimate_mixture_of_two_normals(
   sd_1_lower = 0, 
   sd_1_upper = 5,
   sd_groups_lower = 0,
-  sd_groups_upper = 2)
+  sd_groups_upper = 3)
 ```
 
 For plotting purposes we sample from the prior as well as the posterior:
 
-```{r}
+```{r, fig.dim = c(5, 1.5)}
 df_samples_prior <- estimate_mixture_of_two_normals(
   y = df_data$y,
   groups = df_data$group, 
@@ -115,7 +117,7 @@ df_samples_prior <- estimate_mixture_of_two_normals(
   sd_1_lower = 0, 
   sd_1_upper = 5,
   sd_groups_lower = 0,
-  sd_groups_upper = 2,
+  sd_groups_upper = 3,
   sample_posterior_not_prior = FALSE)
 ```
 
@@ -125,7 +127,7 @@ Read more about doing this, and why you should always do it, in the vignette [Pl
 Here we need the `skip_stanfit_to_dt` argument of `plot_posterior()` because we're giving it samples stored as datatables instead of as stanfit objects.
 In the plot, each panel is one parameter, and the black vertical line is the true value.
 
-```{r}
+```{r, fig.dim = c(7, 4)}
 plot_posterior(df_samples_posterior,
                prior_samples = df_samples_prior,
                true_param_values = params,
@@ -133,6 +135,7 @@ plot_posterior(df_samples_posterior,
                params_desired = c("mu_0", "mu_1", "sd_0", "sd_1", "sd_groups", paste0("p_for_", groups)))
 ```
 
+The estimation of `sd_groups` isn't great, but that doesn't matter provided our estimates of `p` for each group are OK.
 Next we investigate the distribution of $y$ after having marginalised over $d$, i.e. the mixture of two normals, and how this distribution varies between groups. 
 First we calculate the true distribution given the true parameters.
 For later convenience, at the same time as calculating $P(y) = P(y \| d = 0) P(d = 0) + P(y \| d = 1) P(d = 1)$, we also calculate as a function of y $P(d = 1 \| y) = P(y \| d = 1) P(d = 1) / P(y)$.
@@ -141,7 +144,7 @@ For later convenience, at the same time as calculating $P(y) = P(y \| d = 0) P(d
 y_values <- seq(from = min(df_data$y), to = max(df_data$y), length.out = 100)
 true_ps <- params[paste0("p_for_", groups)]
 df_y_distributions_true <- tibble(p = true_ps,
-       group = names(true_ps)) %>%
+                                  group = names(true_ps)) %>%
   mutate(group = str_remove(group, "p_for_")) %>%
   cross_join(tibble(y = y_values)) %>%
   mutate(`P(y | d = 1)` = dnorm(y, params[["mu_1"]], params[["sd_1"]]),
@@ -157,13 +160,13 @@ Second we calculate the estimated distributions.
 
 ```{r}
 df_y_distributions <- df_samples_posterior %>%
-    as_tibble() %>%
+  as_tibble() %>%
   mutate(sample = row_number()) %>%
   select("sample", "mu_0", "mu_1", "sd_0", "sd_1", paste0("p_for_", groups)) %>%
-    pivot_longer(cols = paste0("p_for_", groups),
-                 names_to = "group",
-                 values_to = "p",
-                 names_prefix = "p_for_") %>%
+  pivot_longer(cols = paste0("p_for_", groups),
+               names_to = "group",
+               values_to = "p",
+               names_prefix = "p_for_") %>%
   cross_join(tibble(y = y_values)) %>%
   mutate(`P(y | d = 1)` = dnorm(y, mu_1, sd_1),
          `P(y | d = 0)` = dnorm(y, mu_0, sd_0),
@@ -176,7 +179,7 @@ df_y_distributions <- df_samples_posterior %>%
 
 We plot both of these together with the data.
 
-```{r}
+```{r, fig.dim = c(6, 5)}
 posterior_thinning_factor <- 10 # Keep one in every 10 samples
 ggplot() +
   geom_histogram(data = df_data, aes(x = y, y = after_stat(density)),
@@ -192,14 +195,14 @@ ggplot() +
   facet_wrap(~group) +
   theme_classic() +
   labs(subtitle = paste0("Histogram = data.\nBlue line = true distribution.\n",
-                        "Black lines = posterior samples for the estimated ",
-                        "distribution.\nPosterior thinned by a factor ",
-                        posterior_thinning_factor, " for visibility."))
+                         "Black lines = posterior samples for the estimated ",
+                         "distribution.\nPosterior thinned by a factor ",
+                         posterior_thinning_factor, " for visibility."))
 ```
 
 Now plot $P(d = 1 \| y) = P(y \| d = 1) P(d = 1) / P(y)$, i.e. how likely each $y$ value is to have come from one normal distribution or the other.
 
-```{r}
+```{r, fig.dim = c(6, 5)}
 ggplot() +
   geom_line(data = df_y_distributions %>%
               filter(which_function_of_y == "P(d = 1 | y)",
@@ -212,7 +215,8 @@ ggplot() +
   facet_wrap(~group) +
   theme_classic() +
   labs(subtitle = paste0("Blue line = true function.\n",
-                        "Black lines = posterior samples for the estimated ",
-                        "function.\nPosterior thinned by a factor ",
-                        posterior_thinning_factor, " for visibility."))
+                         "Black lines = posterior samples for the estimated ",
+                         "function.\nPosterior thinned by a factor ",
+                         posterior_thinning_factor, " for visibility."))
 ```
+
