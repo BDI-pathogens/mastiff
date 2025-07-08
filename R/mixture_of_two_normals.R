@@ -55,7 +55,7 @@ simulate_mixture_of_two_normals <- function(
   check_numeric(p, lower = 0, upper = 1)
   check_numeric(sd_groups, lower = 0)
   stopifnot(is.character(groups))
-  stopifnot(!anyDuplicated(groups))
+  stopif(anyDuplicated(groups))
   stopifnot(is.numeric(group_frequencies))
   stopifnot(length(group_frequencies) == length(groups))
   stopifnot(all(group_frequencies >= 0))

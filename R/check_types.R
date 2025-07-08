@@ -25,7 +25,7 @@ check_numeric <- function(x,
   # Then do the checks the function is designed for
   stopifnot(is.numeric(x))
   stopifnot(length(x) == 1)
-  if (! allow_missing) stopifnot(! is.na(x))
+  if (! allow_missing) stopif(is.na(x))
   if (lower_inclusive) {
     stopifnot(lower <= x)
   } else {
@@ -53,6 +53,6 @@ check_logical <- function(x, allow_missing = FALSE) {
   # Then do the checks the function is designed for
   stopifnot(is.logical(x))
   stopifnot(length(x) == 1)
-  if (! allow_missing) stopifnot(! is.na(x))
+  if (! allow_missing) stopif(is.na(x))
 
 }
