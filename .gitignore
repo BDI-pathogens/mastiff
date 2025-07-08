@@ -3,3 +3,8 @@
 .RData
 .Ruserdata
 inst/doc
+*.Rproj
+src/*.o
+src/*.so
+src/*.cc
+src/*.h
