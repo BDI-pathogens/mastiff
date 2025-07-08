@@ -10,7 +10,8 @@ plot_posterior(
   true_param_values = NA,
   params_desired = NA,
   transforms = NA,
-  labels = NA
+  labels = NA,
+  skip_stanfit_to_dt = NA
 )
 }
 \arguments{
@@ -46,6 +47,13 @@ parameters as they are named within the stanfit object, and the values
 being new names to use instead. e.g. if \code{transforms=list(x=log)} were
 specified, \verb{labels(x="log(x)"} would make sense, so that the label of the
 plot of the posterior for x reflects the log transformation.}
+
+\item{skip_stanfit_to_dt}{If this argument is set to \code{TRUE}, the
+\code{posterior_samples} argument (and the \code{prior_samples} argument if used)
+should be used to provide a datatable of samples instead of a stanfit
+object of samples, for example after having already run
+\code{\link[=stanfit_to_dt]{stanfit_to_dt()}} on the stanfit objects. This allows e.g. manual
+renaming of parameters before plotting.}
 }
 \value{
 A ggplot object.
