@@ -2,11 +2,13 @@
 % Please edit documentation in R/mastiff-package.R
 \docType{package}
 \name{mastiff-package}
-\alias{mastiff}
 \alias{mastiff-package}
+\alias{mastiff}
 \title{mastiff: Mathematical and Statistical Utilities from the Fraser Group at Oxford}
 \description{
 Provides assorted mathematical and statistical tools we have written for our work on infectious disease epidemiology, which should be of broader use.
+
+TODO: A DESCRIPTION OF THE PACKAGE
 }
 \seealso{
 Useful links:
