@@ -27,6 +27,12 @@
 #'   being new names to use instead. e.g. if `transforms=list(x=log)` were
 #'   specified, `labels(x="log(x)"` would make sense, so that the label of the
 #'   plot of the posterior for x reflects the log transformation.
+#' @param skip_stanfit_to_dt If this argument is set to `TRUE`, the
+#'   `posterior_samples` argument (and the `prior_samples` argument if used)
+#'   should be used to provide a datatable of samples instead of a stanfit
+#'   object of samples, for example after having already run
+#'   [mastiff::stanfit_to_dt()] on the stanfit objects. This allows e.g. manual
+#'   renaming of parameters before plotting.
 #'
 #' @returns A ggplot object.
 #' @examples
@@ -42,21 +48,64 @@ plot_posterior <- function( posterior_samples,
                             true_param_values = NA,
                             params_desired = NA,
                             transforms = NA,
-                            labels = NA ) {
+                            labels = NA,
+                            skip_stanfit_to_dt = NA ) {
 
-  # Check args
-  dt_posterior <- stanfit_to_dt( posterior_samples, params_desired )
-  params <- names( dt_posterior ) # params included
-  params_all <- posterior_samples@model_pars # params including those excluded
+  # What options were set to non-defaults
+  have_params_desired <- ! identical(NA, params_desired )
   have_prior <- ! identical(NA, prior_samples )
   have_true_param_values <- ! identical(NA, true_param_values )
-  have_params_desired <- ! identical(NA, params_desired )
   have_transforms <- ! identical(NA, transforms )
   have_labels <- ! identical(NA, labels )
+
+  # Get the posterior samples into a dt with only the desired params
+  if (identical(skip_stanfit_to_dt, NA)) {
+    skip_stanfit_to_dt <- FALSE
+  } else {
+    stopifnot(is.logical(skip_stanfit_to_dt))
+    stopif(is.na(skip_stanfit_to_dt))
+  }
+  if (skip_stanfit_to_dt) {
+    stopifnot(is.data.frame(posterior_samples))
+    dt_posterior <- posterior_samples
+    params_all <- names( dt_posterior ) # params including those excluded
+    if (have_params_desired) {
+      stopifnot( is.character( params_desired ) )
+      stopifnot( length( params_desired ) > 0L )
+      for (param in params_desired) {
+        if (! param %in% colnames( dt_posterior ) ) {
+          stop(paste("Parameter", param, "not present in posterior_samples"))
+        }
+      }
+      dt_posterior <- dt_posterior[ , ..params_desired ]
+    }
+    params <- names( dt_posterior )
+  } else {
+    dt_posterior <- stanfit_to_dt(posterior_samples, params_desired)
+    params <- names( dt_posterior ) # params included
+    params_all <- posterior_samples@model_pars # params including those excluded
+  }
+
+  # Get the prior samples into a dt with only the desired params
   if ( have_prior ) {
+    if (skip_stanfit_to_dt) {
+      stopifnot(is.data.frame(prior_samples))
+      dt_prior <- prior_samples
+      if (have_params_desired) {
+        for (param in params_desired) {
+          if (! param %in% colnames( dt_prior ) ) {
+            stop(paste("Parameter", param, "not present in posterior_samples"))
+          }
+        }
+        dt_prior <- dt_prior[ , ..params_desired ]
+      }
+      stopifnot(identical(sort(names(dt_posterior)),
+                          sort(names(dt_prior))))
+    } else {
     stopifnot( identical( sort( posterior_samples@model_pars ),
                           sort(     prior_samples@model_pars ) ) )
     dt_prior <- stanfit_to_dt( prior_samples, params_desired )
+    }
   }
 
   # Silently ignore any params in true_param_values that are not in params.
@@ -75,6 +124,7 @@ plot_posterior <- function( posterior_samples,
     if ( ! length(true_param_values) ) have_true_param_values <- FALSE
   }
 
+  # Check remaining args (after possible exclusion of some params)
   if ( have_transforms ) {
     stopifnot( is.list ( transforms ) )
     for ( transform in transforms ) stopifnot( is.function( transform ) )
