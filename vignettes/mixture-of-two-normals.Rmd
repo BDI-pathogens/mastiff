@@ -9,7 +9,7 @@ vignette: >
   
   \newcommand{\|}{\: | \:}
   
-  ```{r, include = FALSE}
+```{r, include = FALSE}
 knitr::opts_chunk$set(
 collapse = TRUE,
 comment = "#>"
@@ -17,7 +17,7 @@ comment = "#>"
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
-# TODO: add vignette with package-wide mathematical notation
+<!-- TODO: add vignette with package-wide mathematical notation -->
 
 Consider the following model:
 
@@ -136,7 +136,7 @@ First we calculate the true distribution given the true parameters.
 For later convenience, at the same time as calculating $P(y) = P(y \| d = 0) P(d = 0) + P(y \| d = 1) P(d = 1)$, we also calculate as a function of y $P(d = 1 \| y) = P(y \| d = 1) P(d = 1) / P(y)$.
 
 ```{r}
-y_values <- seq(from = min(df_data$y), to = max(df_data$y), length.out = 100)
+y_values <- seq(from = min(df_data$y) - 2, to = max(df_data$y) + 2, length.out = 100)
 true_ps <- params[paste0("p_for_", groups)]
 df_y_distributions_true <- tibble(p = true_ps,
                                   group = names(true_ps)) %>%
@@ -192,7 +192,8 @@ ggplot() +
   labs(subtitle = paste0("Histogram = data.\nBlue line = true distribution.\n",
                          "Black lines = posterior samples for the estimated ",
                          "distribution.\nPosterior thinned by a factor ",
-                         posterior_thinning_factor, " for visibility."))
+                         posterior_thinning_factor, " for visibility.")) +
+  xlim(min(df_data$y), max(df_data$y))
 ```
 
 Now plot $P(d = 1 \| y) = P(y \| d = 1) P(d = 1) / P(y)$, i.e. how likely each $y$ value is to have come from one normal distribution or the other.
@@ -214,4 +215,12 @@ ggplot() +
                          "function.\nPosterior thinned by a factor ",
                          posterior_thinning_factor, " for visibility."))
 ```
+
+You can see at the smallest $y$ values that $P(d = 1 \| y)$ is not monotonic in $y$.
+This is always true for a mixture of two normal distributions unless they have identical variances.
+If they don't, the one with the larger variances makes up an ever increasing proportion of the mixture at both asymptotically positive and asymptotically negative values of $y$.
+This may be problematic for applications where we want $P(d = 1 \| y)$ to be monotonic, i.e. where we believe that the larger $y$ is the more likely it is to come from $d=1$ (or from $d=0$ depending).
+In this case, the model may be an acceptable application if the fitted model is monotonic over the range of $y$ values of interest.
+If not, a different mixture model using a distribution other than a normal should be used.
+
 
