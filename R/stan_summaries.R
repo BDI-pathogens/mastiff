@@ -20,6 +20,10 @@ stanfit_to_matrix <- function( stanfit,
   if ( ! identical(NA, params_desired ) ) {
     stopifnot( is.character( params_desired ) )
     stopifnot( length( params_desired ) > 0L )
+    if (anyDuplicated(params_desired)) {
+      warning("Duplicates are present in params_desired. Ignoring them.")
+      params_desired <- unique(params_desired)
+    }
     for (param in params_desired) {
       if (! param %in% colnames( stanfit_as_matrix ) ) {
         stop(paste("Parameter", param, "not present in stanfit object"))
@@ -42,6 +46,10 @@ stanfit_to_dt <- function( stanfit,
   if ( ! identical(NA, params_desired ) ) {
     stopifnot( is.character( params_desired ) )
     stopifnot( length( params_desired ) > 0L )
+    if (anyDuplicated(params_desired)) {
+      warning("Duplicates are present in params_desired. Ignoring them.")
+      params_desired <- unique(params_desired)
+    }
     for (param in params_desired) {
       if (! param %in% colnames( stanfit_as_dt ) ) {
         stop(paste("Parameter", param, "not present in stanfit object"))
