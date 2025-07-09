@@ -63,7 +63,7 @@ plot_posterior <- function( posterior_samples,
     skip_stanfit_to_dt <- FALSE
   } else {
     stopifnot(is.logical(skip_stanfit_to_dt))
-    stopif(is.na(skip_stanfit_to_dt))
+    stopifnot(! is.na(skip_stanfit_to_dt))
   }
   if (skip_stanfit_to_dt) {
     stopifnot(is.data.frame(posterior_samples))
@@ -72,6 +72,10 @@ plot_posterior <- function( posterior_samples,
     if (have_params_desired) {
       stopifnot( is.character( params_desired ) )
       stopifnot( length( params_desired ) > 0L )
+      if (anyDuplicated(params_desired)) {
+        warning("Duplicates are present in params_desired. Ignoring them.")
+        params_desired <- unique(params_desired)
+      }
       for (param in params_desired) {
         if (! param %in% colnames( dt_posterior ) ) {
           stop(paste("Parameter", param, "not present in posterior_samples"))
@@ -94,7 +98,7 @@ plot_posterior <- function( posterior_samples,
       if (have_params_desired) {
         for (param in params_desired) {
           if (! param %in% colnames( dt_prior ) ) {
-            stop(paste("Parameter", param, "not present in posterior_samples"))
+            stop(paste("Parameter", param, "not present in prior_samples"))
           }
         }
         dt_prior <- dt_prior[ , ..params_desired ]
@@ -112,6 +116,8 @@ plot_posterior <- function( posterior_samples,
   # Noisily ignore any params in true_param_values that are not in params_all.
   if ( have_true_param_values ) {
     stopifnot( is.numeric( true_param_values ) )
+    stopifnot(! is.null(names(true_param_values)))
+    stopifnot(! anyDuplicated(names(true_param_values)))
     noisy_params_to_skip <- names( true_param_values )[
       ! names( true_param_values ) %in% params_all ]
     if ( length( noisy_params_to_skip ) ) {
@@ -127,11 +133,19 @@ plot_posterior <- function( posterior_samples,
   # Check remaining args (after possible exclusion of some params)
   if ( have_transforms ) {
     stopifnot( is.list ( transforms ) )
-    for ( transform in transforms ) stopifnot( is.function( transform ) )
+    stopifnot(! is.null(names(transforms)))
+    stopifnot(! anyDuplicated(names(transforms)))
+    for ( transform in transforms ) {
+     if (! is.function( transform ) ) {
+       stop(paste("At least one element in the transforms list is not a function"))
+     }
+    }
     stopifnot( all( names( transforms ) %in% params ) )
   }
   if ( have_labels ) {
     stopifnot( is.character ( labels ) )
+    stopifnot(! is.null(names(labels)))
+    stopifnot(! anyDuplicated(names(labels)))
     stopifnot( all( names( labels ) %in% params ) )
   }
 
