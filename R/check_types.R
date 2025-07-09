@@ -99,7 +99,7 @@ check_numeric <- function(x,
 check_logical <- function(x, allow_missing = FALSE) {
 
   # First check this function was called correctly
-  error_msg <- "check_numeric function called incorrectly:"
+  error_msg <- "check_logical function called incorrectly:"
   if (! is.logical(allow_missing)) stop(paste(error_msg, "allow_missing must be logical"))
   if (length(allow_missing) != 1) stop(paste(error_msg, "allow_missing must be of length 1"))
   if (is.na(allow_missing)) stop(paste(error_msg, "allow_missing must not be missing"))

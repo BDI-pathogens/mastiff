@@ -47,7 +47,7 @@ test_that("bad inputs to check_logical trigger errors", {
   expect_error(check_logical(NA))
   expect_error(check_logical(NA_real_, allow_missing = TRUE))
   # Errors in how the function is called:
-  msg <- "check_numeric function called incorrectly:"
+  msg <- "check_logical function called incorrectly:"
   expect_error(check_logical(TRUE, allow_missing = "foo"), regexp = msg)
   expect_error(check_logical(TRUE, allow_missing = c(TRUE, TRUE)), regexp = msg)
   expect_error(check_logical(TRUE, allow_missing = NA), regexp = msg)
