@@ -1,6 +1,6 @@
 #' Converts a stanfit object to a matrix or data.table
 #'
-#' @param stanfit A stanfit object e.g. as returned by `rstan::sampling()`.
+#' @param stanfit A stanfit object e.g. as returned by [rstan::sampling()].
 #' @param params_desired A character vector with the names of those parameters
 #'   in the stanfit object that should be included in the output. The default
 #'   value of `NA` means all parameters are included except `"lp__"` (which is not
@@ -69,7 +69,7 @@ stanfit_to_dt <- function( stanfit,
 #' for each simulated trial.
 #'
 #' @param stanfit_list A list of stanfit objects e.g. as returned by
-#'   `rstan::sampling()`. The function's name reflects the assumption that these
+#'   [rstan::sampling()]. The function's name reflects the assumption that these
 #'   contain samples from the posterior, but they could contain samples from the
 #'   prior.
 #' @param params_desired A character vector with the names of those parameters
@@ -112,12 +112,11 @@ posterior_medians <- function( stanfit_list,
 #' Calculates central probability intervals for each parameter for each stanfit
 #' object
 #'
-#' The function is a simple wrapper around `rstantools::posterior_interval()`.
-#' In presto the typical list supplied to this would have one stanfit object
-#' for each simulated trial.
+#' The function is a trivial wrapper around [rstantools::posterior_interval()]
+#' for a list of stanfit objects.
 #'
 #' @param stanfit_list A list of stanfit objects e.g. as returned by
-#'   `rstan::sampling()`. The function's name reflects the assumption that these
+#'   [rstan::sampling()]. The function's name reflects the assumption that these
 #'   contain samples from the posterior, but they could contain samples from the
 #'   prior.
 #' @param prob A single number between 0 and 1 specifying the amount of
@@ -130,7 +129,7 @@ posterior_medians <- function( stanfit_list,
 #'   not actually a parameter: Stan uses it to record the value of the target
 #'   probability density).
 #' @param ... Additional arguments to pass to
-#'   `rstantools::posterior_interval()`.
+#'   [rstantools::posterior_interval()].
 #'
 #' @returns A 3D array: the first index for the parameter, the second for the
 #'   percentile, the third for the stanfit object.
@@ -143,10 +142,7 @@ posterior_intervals <- function( stanfit_list,
                                  prob,
                                  params_desired = NA,
                                  ... ) {
-  stopifnot( is.numeric( prob ) )
-  stopifnot( length( prob ) == 1 )
-  stopifnot( prob >= 0 )
-  stopifnot( prob <= 1 )
+  check_numeric(prob, lower = 0, upper = 1)
   stopifnot( is.list( stanfit_list ) )
   results_list <- lapply( stanfit_list, function( samples_one_stanfit ) {
     samples_one_stanfit <-
@@ -160,7 +156,7 @@ posterior_intervals <- function( stanfit_list,
 
 #' Calculates the amount of probability (mass) a parameter has in a range
 #'
-#' @param stanfit A stanfit object e.g. as returned by `rstan::sampling()`. The
+#' @param stanfit A stanfit object e.g. as returned by [rstan::sampling()]. The
 #'   function's name reflects the assumption that this contains samples from the
 #'   posterior, but it could contain samples from the prior.
 #' @param param The name of the parameter, as a character.
