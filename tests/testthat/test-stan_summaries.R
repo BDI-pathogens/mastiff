@@ -96,7 +96,7 @@ test_that("Bad args give appropriate errors", {
   expect_error(posterior_intervals(stanfit_list, prob = "foo"), fixed = TRUE,
                regex = 'is.numeric(x) is not TRUE')
   expect_error(posterior_intervals(stanfit_list, prob = -1), fixed = TRUE,
-               regex = 'lower <= x is not TRUE')
+               regex = 'x >= lower is not TRUE')
   expect_error(posterior_intervals(stanfit_list, prob = 2), fixed = TRUE,
                regex = 'x <= upper is not TRUE')
   expect_error(posterior_intervals(stanfit_list, prob = NA_real_), fixed = TRUE,

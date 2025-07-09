@@ -61,9 +61,9 @@ check_numeric <- function(x,
   if (! allow_missing) {
     stopifnot(! is.na(x))
     if (lower_inclusive) {
-      stopifnot(lower <= x)
+      stopifnot(x >= lower)
     } else {
-      stopifnot(lower < x)
+      stopifnot(x > lower)
     }
     if (upper_inclusive) {
       stopifnot(x <= upper)
