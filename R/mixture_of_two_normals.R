@@ -55,7 +55,7 @@ simulate_mixture_of_two_normals <- function(
   check_numeric(p, lower = 0, upper = 1)
   check_numeric(sd_groups, lower = 0)
   stopifnot(is.character(groups))
-  stopif(anyDuplicated(groups))
+  stopifnot(! anyDuplicated(groups))
   stopifnot(is.numeric(group_frequencies))
   stopifnot(length(group_frequencies) == length(groups))
   stopifnot(all(group_frequencies >= 0))
@@ -101,19 +101,8 @@ simulate_mixture_of_two_normals <- function(
 #' @export
 estimate_mixture_of_two_normals <- function(
     y,
+    prior_boundaries,
     groups = NA,
-    mu_0_lower,
-    mu_0_upper,
-    mu_1_lower,
-    mu_1_upper,
-    sd_0_lower,
-    sd_0_upper,
-    sd_1_lower,
-    sd_1_upper,
-    sd_groups_lower,
-    sd_groups_upper,
-    p_lower = 0,
-    p_upper = 1,
     sample_posterior_not_prior = TRUE,
     cores = 1,
     report_stan_progress = FALSE,
@@ -122,19 +111,20 @@ estimate_mixture_of_two_normals <- function(
   # Check args
   stopifnot(is.numeric(y))
   n <- length(y)
-  check_numeric(mu_0_lower)
-  check_numeric(mu_0_upper, lower = mu_0_lower)
-  check_numeric(mu_1_lower, lower = mu_0_lower)
-  check_numeric(mu_1_upper, lower = mu_1_lower)
-  check_numeric(sd_0_lower, lower = 0)
-  check_numeric(sd_0_upper, lower = sd_0_lower)
-  check_numeric(sd_1_lower, lower = 0)
-  check_numeric(sd_1_upper, lower = sd_1_lower)
-  check_numeric(sd_groups_lower, lower = 0)
-  check_numeric(sd_groups_upper, lower = sd_groups_lower)
-  check_numeric(p_lower, lower = 0, upper = 1)
-  check_numeric(p_upper, lower = p_lower, upper = 1)
-  check_numeric(cores, lower = 1)
+  stopifnot(is.data.frame(prior_boundaries))
+  stopifnot(all(c("param", "lower", "upper") %in% names(prior_boundaries)))
+  stopifnot(is.character(prior_boundaries$param))
+  stopifnot(is.numeric(prior_boundaries$lower))
+  stopifnot(is.numeric(prior_boundaries$upper))
+  stopifnot(all(c("mu_0", "mu_1", "sd_0", "sd_1", "sd_groups", "p") %in%
+                  prior_boundaries$param))
+  stopifnot(all(prior_boundaries$lower < prior_boundaries$upper))
+  stopifnot(! anyDuplicated(prior_boundaries$param))
+  stopifnot(prior_boundaries[prior_boundaries$param == "sd_0", ]$lower >= 0)
+  stopifnot(prior_boundaries[prior_boundaries$param == "sd_1", ]$lower >= 0)
+  stopifnot(prior_boundaries[prior_boundaries$param == "sd_groups", ]$lower >= 0)
+  stopifnot(prior_boundaries[prior_boundaries$param == "p", ]$lower >= 0)
+  stopifnot(prior_boundaries[prior_boundaries$param == "p", ]$upper <= 1)
   check_logical(sample_posterior_not_prior)
   check_logical(report_stan_progress)
   have_groups <- ! identical(groups, NA)
@@ -171,19 +161,13 @@ estimate_mixture_of_two_normals <- function(
 
   stan_input <- list(y = y,
                      num_groups = num_groups,
-                     groups = groups_as_ints,
-                     mu_0_lower = mu_0_lower,
-                     mu_0_upper = mu_0_upper,
-                     mu_1_lower = mu_1_lower,
-                     mu_1_upper = mu_1_upper,
-                     sd_0_lower = sd_0_lower,
-                     sd_0_upper = sd_0_upper,
-                     sd_1_lower = sd_1_lower,
-                     sd_1_upper = sd_1_upper,
-                     sd_groups_lower = sd_groups_lower,
-                     sd_groups_upper = sd_groups_upper,
-                     p_lower = p_lower,
-                     p_upper = p_upper)
+                     groups = groups_as_ints)
+  for (row in 1:nrow(prior_boundaries)) {
+    stan_input[[paste0(prior_boundaries$param[[row]], "_lower")]] <-
+      prior_boundaries$lower[[row]]
+    stan_input[[paste0(prior_boundaries$param[[row]], "_upper")]] <-
+      prior_boundaries$upper[[row]]
+  }
   params_to_ignore <- c("p_by_i_log",
                         "p_by_i_log1m",
                         "lp_1",

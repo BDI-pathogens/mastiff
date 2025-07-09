@@ -17,16 +17,18 @@ comment = "#>"
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
+# TODO: add vignette with package-wide mathematical notation
+
 Consider the following model:
 
 * $i$ indexes the observation  
 * The unobserved binary variable $d_i$ equals 1 with probability $p_i$, 0 otherwise: $d_i \| p_i \sim \text{Bernoulli}(p_i)$  
 * The observed variable $y_i$ is normally distributed with parameters $\mu_0, \sigma_0$ if $d_i=0$, or normally distributed with parameters $\mu_1, \sigma_1$ if $d_i=1$.
 We can write this in a single equation:
-$$P(y_i \| d_i, \mu_1, \sigma_1, \mu_0, \sigma_0) = d_i N(\mu_1, \sigma_1) + (1-d_i)  N(\mu_0, \sigma_0)$$
+$$P(y_i \| d_i, \mu_1, \sigma_1, \mu_0, \sigma_0) = d_i N(y_i \| \mu_1, \sigma_1) + (1-d_i)  N(y_i \| \mu_0, \sigma_0)$$
 For identifiability we define $\mu_0 \leq \mu_1$, i.e. whichever normal has the smaller mean we define to be $d=0$.
 We obtain the unconditional probability of $y_i$ without knowing $d_i$ by marginalising over $d_i$, giving a mixture of the two normals:
-$$\begin{aligned} P(y_i \| p_i, \mu_1, \sigma_1, \mu_0, \sigma_0) = & \sum_{d_i} P(y_i \| d_i, \mu_1, \sigma_1, \mu_0, \sigma_0) P(d_i \| p_i) \\ = &  p_i N(\mu_1, \sigma_1) + (1-p_i)  N(\mu_0, \sigma_0)\end{aligned}$$  
+$$\begin{aligned} P(y_i \| p_i, \mu_1, \sigma_1, \mu_0, \sigma_0) = & \sum_{d_i} P(y_i \| d_i, \mu_1, \sigma_1, \mu_0, \sigma_0) P(d_i \| p_i) \\ = &  p_i N(y_i \| \mu_1, \sigma_1) + (1-p_i)  N(y_i \| \mu_0, \sigma_0)\end{aligned}$$  
 * There are $n$ discrete groups, indexed by $g \in [1, 2, \ldots n]$, which differ in their probabilities for $d$: $p_g$ is the probability that $d_i=1$ if $i$ is in $g$.
 Parameterise the variability between $p_g$ values with an overall parameter $p$, a length-$n$ vector $\boldsymbol{\beta}$ of unconstrained regression coefficients, and a logit link function to keep probability parameters between 0 and 1: $p_g = \text{logistic}(\text{logit}(p) + \beta_g)$.
 We thus use $n+1$ parameters to describe $n$ degrees of freedom, but this allows us to have identical and correlated priors for the $n$ different groups (as opposed to picking one group as a reference and parameterising others relative to it, introducing greater uncertainty for the non-reference groups even before conditioning on the data).
@@ -84,22 +86,24 @@ ggplot(df_data) +
 ```
 
 Estimate the parameters using Bayesian inference.
-For almost all parameters (all except the normally varying components of $\boldsymbol\beta$) we use uniform priors with specified upper and lower bounds.
+For almost all parameters we use uniform priors with specified upper and lower bounds.
+('Almost all' means all except the normally varying components of $\boldsymbol\beta$, the group-specific values of $p$ that are defined by $\boldsymbol\beta$, and $\mu_1$ for which we specify a minimum and maximum but it is constrained to be greater than $\mu_0$.) 
 
 ```{r}
+prior_boundaries <- tribble(
+  ~param, ~lower, ~upper,
+  "mu_0", -10, 10,
+  "mu_1", -10, 10,
+  "sd_0", 0, 5,
+  "sd_1", 0, 5,
+  "sd_groups", 0, 3,
+  "p", 0, 1
+  )
 df_samples_posterior <- estimate_mixture_of_two_normals(
   y = df_data$y,
   groups = df_data$group, 
-  mu_0_lower = -10, 
-  mu_0_upper = 10,
-  mu_1_lower = -10, 
-  mu_1_upper = 10, 
-  sd_0_lower = 0, 
-  sd_0_upper = 5,
-  sd_1_lower = 0, 
-  sd_1_upper = 5,
-  sd_groups_lower = 0,
-  sd_groups_upper = 3)
+  prior_boundaries = prior_boundaries,
+  report_stan_progress = TRUE)
 ```
 
 For plotting purposes we sample from the prior as well as the posterior:
@@ -108,16 +112,7 @@ For plotting purposes we sample from the prior as well as the posterior:
 df_samples_prior <- estimate_mixture_of_two_normals(
   y = df_data$y,
   groups = df_data$group, 
-  mu_0_lower = -10, 
-  mu_0_upper = 10,
-  mu_1_lower = -10, 
-  mu_1_upper = 10, 
-  sd_0_lower = 0, 
-  sd_0_upper = 5,
-  sd_1_lower = 0, 
-  sd_1_upper = 5,
-  sd_groups_lower = 0,
-  sd_groups_upper = 3,
+  prior_boundaries = prior_boundaries,
   sample_posterior_not_prior = FALSE)
 ```
 
