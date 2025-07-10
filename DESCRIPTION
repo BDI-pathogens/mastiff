@@ -1,5 +1,5 @@
 Package: mastiff
-Title: Mathematical and Statistical Utilities from the Fraser Group at Oxford
+Title: Mathematical and Statistical Utilities by the Fraser Group at Oxford
 Version: 0.0.0.9000
 Authors@R: 
     person("Chris", "Wymant", , "chris.wymant@bdi.ox.ac.uk", role = c("aut", "cre"))
