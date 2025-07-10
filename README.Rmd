@@ -1,0 +1,51 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# mastiff
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+mastiff is short for MAthematical and STatistical utIlities by the Fraser group at oxFord.
+That's [Christophe Fraser's group](https://www.bdi.ox.ac.uk/research/fraser-pathogen-dynamics-group) in the Pandemic Sciences Institute, University of Oxford.
+We work on infectious disease epidemiology.
+This package will collect mathematical and statistical methods we write in R that have usefulness beyond infectious disease epidemiology.
+
+## Installation
+
+I think one or all of the following three methods should work.
+mastiff is currently a private repository, and will stay private for a little while during development, so the command you use to access it on GitHub needs to know about your GitHub credentials.
+Hopefully you know how to do that for `git clone` from the command line. 
+`remotes::install_github()` has an `auth_token` argument that will try to find the file with your credentials if it's in a standard place, or you can use this argument to manually provide your GitHub access token.
+
+1. In R:
+``` r
+install.packages("remotes") # if not already installed
+remotes::install_github("BDI-pathogens/mastiff", build_vignettes = TRUE)
+```
+2. In a terminal / from the command line:
+``` bash
+git clone https://github.com/BDI-pathogens/mastiff.git
+```
+Then in R, changing your directory to the repository you've just cloned, and running
+``` r
+install.packages("devtools") # if not already installed
+devtools::install(".", build_vignettes = TRUE)
+```
+3. In R:
+``` r
+# install.packages("pak")
+pak::pak("BDI-pathogens/mastiff")
+```
