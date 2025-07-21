@@ -8,6 +8,7 @@ test_that("Good args to stanfit_to_matrix and stanfit_to_dt work", {
 })
 
 test_that("Bad args to stanfit_to_matrix give appropriate errors or warnings", {
+  stanfit_ <- stan_example_regression$posterior_samples
   expect_error(stanfit_to_matrix("foo"), fixed = TRUE,
                regex = 'class(stanfit)[[1]] == "stanfit" is not TRUE')
   expect_error(stanfit_to_matrix(stanfit_, params_desired = 1), fixed = TRUE,
@@ -21,6 +22,7 @@ test_that("Bad args to stanfit_to_matrix give appropriate errors or warnings", {
 })
 
 test_that("Bad args to stanfit_to_dt give appropriate errors or warnings", {
+  stanfit_ <- stan_example_regression$posterior_samples
   expect_error(stanfit_to_dt("foo"), fixed = TRUE,
                regex = 'class(stanfit)[[1]] == "stanfit" is not TRUE')
   expect_error(stanfit_to_dt(stanfit_, params_desired = 1), fixed = TRUE,
@@ -72,6 +74,8 @@ test_that("summaries of stan_example_regression data = snapshotted values", {
 })
 
 test_that("Using params_desired restricts output to expected dimensions", {
+  stanfit_list <- list(stan_example_regression$posterior_samples,
+                       stan_example_regression$prior_samples)
   expect_equal(dim(posterior_means(stanfit_list, params_desired = c("c", "m"))),
                c(2, 2))
   expect_equal(dim(posterior_medians(stanfit_list, params_desired = c("c", "m"))),
