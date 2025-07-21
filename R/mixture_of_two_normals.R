@@ -39,7 +39,7 @@ simulate_mixture_of_two_normals <- function(
     groups = LETTERS[1:5],
     group_frequencies = rep(1 / length(groups), length(groups)),
     mu_0 = 0,
-    mu_1 = 3,
+    mu_1 = mu_0 + 3,
     sd_0 = 0.5,
     sd_1 = 1,
     p = 0.5,
@@ -58,23 +58,29 @@ simulate_mixture_of_two_normals <- function(
   stopifnot(! anyDuplicated(groups))
   stopifnot(is.numeric(group_frequencies))
   stopifnot(length(group_frequencies) == length(groups))
-  stopifnot(all(group_frequencies >= 0))
-  stopifnot(sum(group_frequencies) == 1)
 
-  have_groups <- length(groups) > 0
+  # If we have groups, calculate group-specific p parameters, otherwise all
+  # observations use p
+  have_groups <- length(groups) > 1
+  if (have_groups) {
+    stopifnot(all(group_frequencies >= 0))
+    stopifnot(sum(group_frequencies) == 1)
+    beta_by_group <- stats::rnorm(length(groups),
+                                  mean = 0,
+                                  sd = sd_groups)
+    p_by_group <- logistic(logit(p) + beta_by_group)
+    names(p_by_group) <- groups
+    df <- data.frame(group = sample(groups,
+                                    size = n,
+                                    replace = TRUE))
+    df$p_group <- purrr::map_dbl(df$group,
+                                 function(pred_) p_by_group[[pred_]])
+    df$d <- stats::runif(n) < df$p_group
+    df$p_group <- NULL
+  } else {
+    df <- data.frame(d = stats::runif(n) < p)
+  }
 
-  beta_by_group <- stats::rnorm(length(groups),
-                                    mean = 0,
-                                    sd = sd_groups)
-  p_by_group <- logistic(logit(p) + beta_by_group)
-  names(p_by_group) <- groups
-  df <- data.frame(group = sample(groups,
-                                      size = n,
-                                      replace = TRUE))
-  df$p_group <- purrr::map_dbl(df$group,
-                                   function(pred_) p_by_group[[pred_]])
-  df$d <- stats::runif(n) < df$p_group
-  df$p_group <- NULL
   df$y <- dplyr::if_else(df$d,
                          stats::rnorm(n, mean = mu_1, sd = sd_1),
                          stats::rnorm(n, mean = mu_0, sd = sd_0))
@@ -198,11 +204,11 @@ estimate_mixture_of_two_normals <- function(
   # the first group character)"
   dt <- stanfit_to_dt(samples)
   if (have_groups) {
-  col_names_existing <- paste0("p_by_group[", 1:num_groups, "]")
-  stopifnot(all(col_names_existing %in% colnames(dt)))
-  col_names_new <- paste0("p_for_", groups_as_ints_key)
-  data.table::setnames(dt, col_names_existing, col_names_new)
-  data.table::setnames(dt, "sd_groups[1]", "sd_groups")
+    col_names_existing <- paste0("p_by_group[", 1:num_groups, "]")
+    stopifnot(all(col_names_existing %in% colnames(dt)))
+    col_names_new <- paste0("p_for_", groups_as_ints_key)
+    data.table::setnames(dt, col_names_existing, col_names_new)
+    data.table::setnames(dt, "sd_groups[1]", "sd_groups")
 
   }
 
