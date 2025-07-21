@@ -161,7 +161,8 @@ estimate_mixture_of_two_normals <- function(
     #stopifnot(isTRUE(all.equal(unname(groups),
     #                           unname(groups_recalculated))))
   } else {
-    groups_as_ints <- matrix(ncol = 0, nrow = 1)
+    groups_as_ints <- matrix(ncol = n, nrow = 0)
+    num_groups <- 0
     #x <- matrix(nrow = n, ncol = 0)
   }
 
