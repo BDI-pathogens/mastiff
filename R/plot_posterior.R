@@ -203,7 +203,9 @@ plot_posterior <- function( posterior_samples,
     ggplot2::coord_cartesian( expand = FALSE )
   if ( have_prior ) {
     plot <- plot +
-      ggplot2::geom_histogram( ggplot2::aes( value, fill = density_type ),
+      ggplot2::geom_histogram( ggplot2::aes( x = value,
+                                             y = ggplot2::after_stat(density),
+                                             fill = density_type ),
                                bins = 30,
                                position = "identity",
                                alpha = 0.6 ) +
@@ -212,7 +214,8 @@ plot_posterior <- function( posterior_samples,
       ggplot2::scale_fill_brewer( palette = "Set1" )
   } else {
     plot <- plot +
-      ggplot2::geom_histogram( ggplot2::aes( value ),
+      ggplot2::geom_histogram( ggplot2::aes( x = value,
+                                             y = ggplot2::after_stat(density) ),
                                bins = 30 ) +
       ggplot2::labs( y = "posterior density" )
   }
