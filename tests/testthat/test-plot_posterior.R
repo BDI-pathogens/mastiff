@@ -200,13 +200,13 @@ if (do_manual_visual_testing) {
   plot_posterior(posterior, labels = c(sigma = "log(sigma)"), transform = list(sigma = log), params_desired = c("m", "sigma"), prior_samples = prior)
   plot_posterior(posterior, labels = c(sigma = "log(sigma)"), transform = list(sigma = log), params_desired = c("m", "sigma"), prior_samples = prior, true_param_values = true_vals)
 
-  # Test on prior & posterior data.table objects
-  posterior_dt <- data.table::data.table(m = stats::rnorm(100),
-                                         c = stats::rnorm(100, mean = 10),
-                                         sigma = stats::rlnorm(100))
-  prior_dt <- data.table::data.table(m = stats::rnorm(100, sd = 2),
-                                     c = stats::rnorm(100, mean = 10, sd = 2),
-                                     sigma = stats::rlnorm(100, sdlog = 2))
+  # Test on prior & posterior dataframe objects
+  posterior_dt <- data.frame(m = stats::rnorm(100),
+                             c = stats::rnorm(100, mean = 10),
+                             sigma = stats::rlnorm(100))
+  prior_dt <- data.frame(m = stats::rnorm(100, sd = 2),
+                         c = stats::rnorm(100, mean = 10, sd = 2),
+                         sigma = stats::rlnorm(100, sdlog = 2))
   true_vals_dt <- c(m = 0, c = 10, sigma = 1)
   plot_posterior(posterior_dt, skip_stanfit_to_dt = TRUE)
   plot_posterior(posterior_dt, true_param_values = true_vals_dt, skip_stanfit_to_dt = TRUE)

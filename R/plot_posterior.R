@@ -67,7 +67,8 @@ plot_posterior <- function( posterior_samples,
   }
   if (skip_stanfit_to_dt) {
     stopifnot(is.data.frame(posterior_samples))
-    dt_posterior <- posterior_samples
+    dt_posterior <- data.table::copy(posterior_samples)
+    data.table::setDT(dt_posterior)
     params_all <- names( dt_posterior ) # params including those excluded
     if (have_params_desired) {
       stopifnot( is.character( params_desired ) )
@@ -94,7 +95,8 @@ plot_posterior <- function( posterior_samples,
   if ( have_prior ) {
     if (skip_stanfit_to_dt) {
       stopifnot(is.data.frame(prior_samples))
-      dt_prior <- prior_samples
+      dt_prior <- data.table::copy(prior_samples)
+      data.table::setDT(dt_prior)
       if (have_params_desired) {
         for (param in params_desired) {
           if (! param %in% colnames( dt_prior ) ) {
@@ -150,9 +152,9 @@ plot_posterior <- function( posterior_samples,
   }
 
   # Bind posterior and prior if desired
-  dt_posterior$density_type <- "posterior"
+  dt_posterior[, density_type := "posterior" ]
   if ( have_prior ) {
-    dt_prior$density_type <- "prior"
+    dt_prior[, density_type := "prior" ]
     dt <- rbind( dt_posterior, dt_prior )
   } else {
     dt <- dt_posterior
