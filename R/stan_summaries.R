@@ -55,7 +55,7 @@ stanfit_to_dt <- function( stanfit,
         stop(paste("Parameter", param, "not present in stanfit object"))
       }
     }
-    stanfit_as_dt <- stanfit_as_dt[ , ..params_desired ]
+    stanfit_as_dt <- stanfit_as_dt[ , params_desired, with = FALSE ]
   } else {
     stanfit_as_dt <-
       stanfit_as_dt[ , colnames( stanfit_as_dt ) != "lp__", with = FALSE ]

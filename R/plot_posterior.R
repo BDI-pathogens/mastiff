@@ -81,7 +81,7 @@ plot_posterior <- function( posterior_samples,
           stop(paste("Parameter", param, "not present in posterior_samples"))
         }
       }
-      dt_posterior <- dt_posterior[ , ..params_desired ]
+      dt_posterior <- dt_posterior[ , params_desired, with = FALSE ]
     }
     params <- names( dt_posterior )
   } else {
@@ -101,7 +101,7 @@ plot_posterior <- function( posterior_samples,
             stop(paste("Parameter", param, "not present in prior_samples"))
           }
         }
-        dt_prior <- dt_prior[ , ..params_desired ]
+        dt_prior <- dt_prior[ , params_desired, with = FALSE ]
       }
       stopifnot(identical(sort(names(dt_posterior)),
                           sort(names(dt_prior))))
