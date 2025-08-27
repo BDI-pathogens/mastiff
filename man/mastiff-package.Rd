@@ -4,7 +4,7 @@
 \name{mastiff-package}
 \alias{mastiff-package}
 \alias{mastiff}
-\title{mastiff: Mathematical and Statistical Utilities from the Fraser Group at Oxford}
+\title{mastiff: Mathematical and Statistical Utilities by the Fraser Group at Oxford}
 \description{
 Provides assorted mathematical and statistical tools we have written for our work on infectious disease epidemiology, which should be of broader use.
 

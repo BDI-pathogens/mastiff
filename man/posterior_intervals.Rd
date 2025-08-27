@@ -9,7 +9,7 @@ posterior_intervals(stanfit_list, prob, params_desired = NA, ...)
 }
 \arguments{
 \item{stanfit_list}{A list of stanfit objects e.g. as returned by
-\code{rstan::sampling()}. The function's name reflects the assumption that these
+\code{\link[rstan:stanmodel-method-sampling]{rstan::sampling()}}. The function's name reflects the assumption that these
 contain samples from the posterior, but they could contain samples from the
 prior.}
 
@@ -25,16 +25,15 @@ not actually a parameter: Stan uses it to record the value of the target
 probability density).}
 
 \item{...}{Additional arguments to pass to
-\code{rstantools::posterior_interval()}.}
+\code{\link[rstantools:posterior_interval]{rstantools::posterior_interval()}}.}
 }
 \value{
 A 3D array: the first index for the parameter, the second for the
 percentile, the third for the stanfit object.
 }
 \description{
-The function is a simple wrapper around \code{rstantools::posterior_interval()}.
-In presto the typical list supplied to this would have one stanfit object
-for each simulated trial.
+The function is a trivial wrapper around \code{\link[rstantools:posterior_interval]{rstantools::posterior_interval()}}
+for a list of stanfit objects.
 }
 \examples{
    eg <- mastiff::stan_example_regression

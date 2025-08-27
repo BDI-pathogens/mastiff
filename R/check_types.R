@@ -7,7 +7,7 @@
 #'   whether we require `x >= lower` or `x > lower` (the default is the former).
 #' @param upper The upper limit for `x` (default = `Inf`).
 #' @param upper_inclusive Whether the upper limit itself is inclusive, i.e.
-#'   whether we require `x <= upper` or `x < lower` (the default is the former).
+#'   whether we require `x <= upper` or `x < upper` (the default is the former).
 #' @param allow_missing Whether x is allowed to be missing (default = `FALSE`).
 #'   If `allow_missing` is `TRUE` we skip the tests comparing `x` to `lower` and
 #'   `upper`.

@@ -24,7 +24,7 @@ whether we require \code{x >= lower} or \code{x > lower} (the default is the for
 \item{upper}{The upper limit for \code{x} (default = \code{Inf}).}
 
 \item{upper_inclusive}{Whether the upper limit itself is inclusive, i.e.
-whether we require \code{x <= upper} or \code{x < lower} (the default is the former).}
+whether we require \code{x <= upper} or \code{x < upper} (the default is the former).}
 
 \item{allow_missing}{Whether x is allowed to be missing (default = \code{FALSE}).
 If \code{allow_missing} is \code{TRUE} we skip the tests comparing \code{x} to \code{lower} and

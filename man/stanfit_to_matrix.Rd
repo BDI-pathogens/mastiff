@@ -10,7 +10,7 @@ stanfit_to_matrix(stanfit, params_desired = NA)
 stanfit_to_dt(stanfit, params_desired = NA)
 }
 \arguments{
-\item{stanfit}{A stanfit object e.g. as returned by \code{rstan::sampling()}.}
+\item{stanfit}{A stanfit object e.g. as returned by \code{\link[rstan:stanmodel-method-sampling]{rstan::sampling()}}.}
 
 \item{params_desired}{A character vector with the names of those parameters
 in the stanfit object that should be included in the output. The default

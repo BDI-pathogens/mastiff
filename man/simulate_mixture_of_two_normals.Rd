@@ -9,7 +9,7 @@ simulate_mixture_of_two_normals(
   groups = LETTERS[1:5],
   group_frequencies = rep(1/length(groups), length(groups)),
   mu_0 = 0,
-  mu_1 = 3,
+  mu_1 = mu_0 + 3,
   sd_0 = 0.5,
   sd_1 = 1,
   p = 0.5,

@@ -7,7 +7,7 @@
 posterior_mass_in_range(stanfit, param, range)
 }
 \arguments{
-\item{stanfit}{A stanfit object e.g. as returned by \code{rstan::sampling()}. The
+\item{stanfit}{A stanfit object e.g. as returned by \code{\link[rstan:stanmodel-method-sampling]{rstan::sampling()}}. The
 function's name reflects the assumption that this contains samples from the
 posterior, but it could contain samples from the prior.}
 

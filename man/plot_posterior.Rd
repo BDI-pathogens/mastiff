@@ -45,7 +45,7 @@ transforms are applied to any parameter.}
 \item{labels}{A named character vector, with the names being the names of
 parameters as they are named within the stanfit object, and the values
 being new names to use instead. e.g. if \code{transforms=list(x=log)} were
-specified, \verb{labels(x="log(x)"} would make sense, so that the label of the
+specified, \verb{labels=c(x="log(x))"} would make sense, so that the label of the
 plot of the posterior for x reflects the log transformation.}
 
 \item{skip_stanfit_to_dt}{If this argument is set to \code{TRUE}, the
