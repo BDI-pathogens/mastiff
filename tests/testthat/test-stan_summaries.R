@@ -125,3 +125,11 @@ test_that("Bad args give appropriate errors", {
                                        param = "m", range = c(1, 0)),
                fixed = TRUE, regex = 'range[[1]] <= range[[2]] is not TRUE')
 })
+
+test_that("rename_params_cmdstandr_to_rstan works as expected", {
+  param_names <- c("foo", "foo.1", "foo.1.2", "foo.1.2.3", "foo.1.2.3.4",
+                   "foo.1.2.3.4.5", "foo.1.2.3.4.5.6", "foo.1.2.3.4.5.6.7")
+  expected_output <- c("foo", "foo[1]", "foo[1,2]", "foo[1,2,3]", "foo[1,2,3,4]",
+                       "foo[1,2,3,4,5]", "foo[1,2,3,4,5,6]", "foo.1.2.3.4.5.6.7")
+  expect_equal(rename_params_cmdstandr_to_rstan(param_names), expected_output)
+})
