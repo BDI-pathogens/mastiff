@@ -14,7 +14,7 @@
 #'   stanfit_to_dt(eg)
 #' @export
 stanfit_to_matrix <- function(stanfit,
-                               params_desired = NA) {
+                              params_desired = NA) {
   stopifnot(class(stanfit)[[ 1 ]] == "stanfit")
   stanfit_as_matrix <- as.matrix(stanfit)
   if (! identical(NA, params_desired)) {
@@ -40,7 +40,7 @@ stanfit_to_matrix <- function(stanfit,
 #' @rdname stanfit_to_matrix
 #' @export
 stanfit_to_dt <- function(stanfit,
-                           params_desired = NA) {
+                          params_desired = NA) {
   stopifnot(class(stanfit)[[ 1 ]] == "stanfit")
   stanfit_as_dt <- data.table::as.data.table(stanfit)
   if (! identical(NA, params_desired)) {
@@ -86,7 +86,7 @@ stanfit_to_dt <- function(stanfit,
 #'    posterior_medians(list(eg$posterior_samples, eg$prior_samples))
 #' @export
 posterior_means <- function(stanfit_list,
-                             params_desired = NA) {
+                            params_desired = NA) {
   stopifnot(is.list(stanfit_list))
   results_list <- lapply(stanfit_list, function(samples_one_stanfit) {
     samples_one_stanfit <-
@@ -99,7 +99,7 @@ posterior_means <- function(stanfit_list,
 #' @rdname posterior_means
 #' @export
 posterior_medians <- function(stanfit_list,
-                               params_desired = NA) {
+                              params_desired = NA) {
   stopifnot(is.list(stanfit_list))
   results_list <- lapply(stanfit_list, function(samples_one_stanfit) {
     samples_one_stanfit <-
@@ -139,17 +139,17 @@ posterior_medians <- function(stanfit_list,
 #'    0.95)
 #' @export
 posterior_intervals <- function(stanfit_list,
-                                 prob,
-                                 params_desired = NA,
-                                 ...) {
+                                prob,
+                                params_desired = NA,
+                                ...) {
   check_numeric(prob, lower = 0, upper = 1)
   stopifnot(is.list(stanfit_list))
   results_list <- lapply(stanfit_list, function(samples_one_stanfit) {
     samples_one_stanfit <-
       stanfit_to_matrix(samples_one_stanfit, params_desired)
     rstantools::posterior_interval(samples_one_stanfit,
-                                    prob = prob,
-                                    ...)
+                                   prob = prob,
+                                   ...)
   })
   simplify2array(results_list)
 }

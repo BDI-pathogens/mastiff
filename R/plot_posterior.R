@@ -44,12 +44,12 @@
 #' @importFrom data.table :=
 #' @export
 plot_posterior <- function(posterior_samples,
-                            prior_samples = NA,
-                            true_param_values = NA,
-                            params_desired = NA,
-                            transforms = NA,
-                            labels = NA,
-                            skip_stanfit_to_dt = NA) {
+                           prior_samples = NA,
+                           true_param_values = NA,
+                           params_desired = NA,
+                           transforms = NA,
+                           labels = NA,
+                           skip_stanfit_to_dt = NA) {
 
   # What options were set to non-defaults
   have_params_desired <- ! identical(NA, params_desired)
@@ -108,9 +108,9 @@ plot_posterior <- function(posterior_samples,
       stopifnot(identical(sort(names(dt_posterior)),
                           sort(names(dt_prior))))
     } else {
-    stopifnot(identical(sort(posterior_samples@model_pars),
+      stopifnot(identical(sort(posterior_samples@model_pars),
                           sort(prior_samples@model_pars)))
-    dt_prior <- stanfit_to_dt(prior_samples, params_desired)
+      dt_prior <- stanfit_to_dt(prior_samples, params_desired)
     }
   }
 
@@ -124,8 +124,8 @@ plot_posterior <- function(posterior_samples,
       ! names(true_param_values) %in% params_all ]
     if (length(noisy_params_to_skip)) {
       warning(paste("Ignoring the following params which had true values",
-                      "specified, but were not found in the posterior samples:",
-                      paste(noisy_params_to_skip, collapse = " ")))
+                    "specified, but were not found in the posterior samples:",
+                    paste(noisy_params_to_skip, collapse = " ")))
     }
     true_param_values <-
       true_param_values[ names(true_param_values) %in% params ]
@@ -138,9 +138,9 @@ plot_posterior <- function(posterior_samples,
     stopifnot(! is.null(names(transforms)))
     stopifnot(! anyDuplicated(names(transforms)))
     for (transform in transforms) {
-     if (! is.function(transform)) {
-       stop(paste("At least one element in the transforms list is not a function"))
-     }
+      if (! is.function(transform)) {
+        stop(paste("At least one element in the transforms list is not a function"))
+      }
     }
     stopifnot(all(names(transforms) %in% params))
   }
@@ -175,12 +175,12 @@ plot_posterior <- function(posterior_samples,
 
   # Pivot from wide to long.
   dt <- data.table::melt(dt,
-                          id.vars = "density_type",
-                          variable.name = "param",
-                          variable.factor = FALSE)
+                         id.vars = "density_type",
+                         variable.name = "param",
+                         variable.factor = FALSE)
   if (have_true_param_values) {
     dt_true <- data.table::data.table(param = names(true_param_values),
-                                       value = true_param_values)
+                                      value = true_param_values)
   }
 
   # Rename if desired
@@ -190,7 +190,7 @@ plot_posterior <- function(posterior_samples,
   # But doing that robustly (e.g. imagine labels = c(x="y", y="x")) is tricky
   if (have_labels) {
     dt_label <- data.table::data.table(param = names(labels),
-                                        label = labels)
+                                       label = labels)
     dt[ dt_label, on = 'param', label := label]
     dt[ , param := ifelse(is.na (label), param, label) ]
     if (have_true_param_values) {
@@ -206,25 +206,25 @@ plot_posterior <- function(posterior_samples,
   if (have_prior) {
     plot <- plot +
       ggplot2::geom_histogram(ggplot2::aes(x = value,
-                                             y = ggplot2::after_stat(density),
-                                             fill = density_type),
-                               bins = 30,
-                               position = "identity",
-                               alpha = 0.6) +
+                                           y = ggplot2::after_stat(density),
+                                           fill = density_type),
+                              bins = 30,
+                              position = "identity",
+                              alpha = 0.6) +
       ggplot2::labs(y = "probability density",
-                     fill = "distribution") +
+                    fill = "distribution") +
       ggplot2::scale_fill_brewer(palette = "Set1")
   } else {
     plot <- plot +
       ggplot2::geom_histogram(ggplot2::aes(x = value,
-                                             y = ggplot2::after_stat(density)),
-                               bins = 30) +
+                                           y = ggplot2::after_stat(density)),
+                              bins = 30) +
       ggplot2::labs(y = "posterior density")
   }
   if (have_true_param_values) {
     plot <- plot +
       ggplot2::geom_vline(data = dt_true,
-                           ggplot2::aes(xintercept = value))
+                          ggplot2::aes(xintercept = value))
   }
   plot
 }
