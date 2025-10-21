@@ -112,7 +112,7 @@ estimate_mixture_of_two_normals <- function(
     sample_posterior_not_prior = TRUE,
     cores = 1,
     report_stan_progress = FALSE,
-    ... ) {
+    ...) {
 
   # Check args
   stopifnot(is.numeric(y))
@@ -185,20 +185,20 @@ estimate_mixture_of_two_normals <- function(
   }
 
   if (report_stan_progress) {
-    samples <- rstan::sampling( stanmodels$mixture_of_two_normals,
+    samples <- rstan::sampling(stanmodels$mixture_of_two_normals,
                                 data = stan_input,
                                 cores = cores,
                                 pars = params_to_ignore,
                                 include = FALSE,
-                                ... )
+                                ...)
   } else {
-    capture.output( samples <- rstan::sampling( stanmodels$mixture_of_two_normals,
+    capture.output(samples <- rstan::sampling(stanmodels$mixture_of_two_normals,
                                                 data = stan_input,
                                                 cores = cores,
                                                 pars = params_to_ignore,
                                                 include = FALSE,
                                                 refresh = -1,
-                                                ... )  )
+                                                ...))
   }
 
   # Rename variables like "p_by_group[1]" to "p_for_ (then the value of

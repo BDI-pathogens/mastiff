@@ -1,3 +1,5 @@
+# TODO: add regexp to expect_error
+
 test_that("good inputs to check_numeric are accepted", {
   expect_true(check_numeric(0))
   expect_true(check_numeric(0L))

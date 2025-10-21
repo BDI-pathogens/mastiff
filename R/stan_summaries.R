@@ -13,52 +13,52 @@
 #'   stanfit_to_matrix(eg)
 #'   stanfit_to_dt(eg)
 #' @export
-stanfit_to_matrix <- function( stanfit,
-                               params_desired = NA ) {
-  stopifnot( class( stanfit )[[ 1 ]] == "stanfit" )
-  stanfit_as_matrix <- as.matrix( stanfit )
-  if ( ! identical(NA, params_desired ) ) {
-    stopifnot( is.character( params_desired ) )
-    stopifnot( length( params_desired ) > 0L )
+stanfit_to_matrix <- function(stanfit,
+                               params_desired = NA) {
+  stopifnot(class(stanfit)[[ 1 ]] == "stanfit")
+  stanfit_as_matrix <- as.matrix(stanfit)
+  if (! identical(NA, params_desired)) {
+    stopifnot(is.character(params_desired))
+    stopifnot(length(params_desired) > 0L)
     if (anyDuplicated(params_desired)) {
       warning("Duplicates are present in params_desired. Ignoring them.")
       params_desired <- unique(params_desired)
     }
     for (param in params_desired) {
-      if (! param %in% colnames( stanfit_as_matrix ) ) {
+      if (! param %in% colnames(stanfit_as_matrix)) {
         stop(paste("Parameter", param, "not present in stanfit object"))
       }
     }
     stanfit_as_matrix <- stanfit_as_matrix[ , params_desired, drop = FALSE ]
   } else {
     stanfit_as_matrix <-
-      stanfit_as_matrix[ , colnames( stanfit_as_matrix ) != "lp__", drop = FALSE ]
+      stanfit_as_matrix[ , colnames(stanfit_as_matrix) != "lp__", drop = FALSE ]
   }
   stanfit_as_matrix
 }
 
 #' @rdname stanfit_to_matrix
 #' @export
-stanfit_to_dt <- function( stanfit,
-                           params_desired = NA ) {
-  stopifnot( class( stanfit )[[ 1 ]] == "stanfit" )
-  stanfit_as_dt <- data.table::as.data.table( stanfit )
-  if ( ! identical(NA, params_desired ) ) {
-    stopifnot( is.character( params_desired ) )
-    stopifnot( length( params_desired ) > 0L )
+stanfit_to_dt <- function(stanfit,
+                           params_desired = NA) {
+  stopifnot(class(stanfit)[[ 1 ]] == "stanfit")
+  stanfit_as_dt <- data.table::as.data.table(stanfit)
+  if (! identical(NA, params_desired)) {
+    stopifnot(is.character(params_desired))
+    stopifnot(length(params_desired) > 0L)
     if (anyDuplicated(params_desired)) {
       warning("Duplicates are present in params_desired. Ignoring them.")
       params_desired <- unique(params_desired)
     }
     for (param in params_desired) {
-      if (! param %in% colnames( stanfit_as_dt ) ) {
+      if (! param %in% colnames(stanfit_as_dt)) {
         stop(paste("Parameter", param, "not present in stanfit object"))
       }
     }
     stanfit_as_dt <- stanfit_as_dt[ , params_desired, with = FALSE ]
   } else {
     stanfit_as_dt <-
-      stanfit_as_dt[ , colnames( stanfit_as_dt ) != "lp__", with = FALSE ]
+      stanfit_as_dt[ , colnames(stanfit_as_dt) != "lp__", with = FALSE ]
   }
   stanfit_as_dt
 }
@@ -82,31 +82,31 @@ stanfit_to_dt <- function( stanfit,
 #'    the stanfit object.
 #' @examples
 #'    eg <- mastiff::stan_example_regression
-#'    posterior_means(  list(eg$posterior_samples, eg$prior_samples))
+#'    posterior_means( list(eg$posterior_samples, eg$prior_samples))
 #'    posterior_medians(list(eg$posterior_samples, eg$prior_samples))
 #' @export
-posterior_means <- function( stanfit_list,
-                             params_desired = NA ) {
-  stopifnot( is.list( stanfit_list ) )
-  results_list <- lapply( stanfit_list, function( samples_one_stanfit ) {
+posterior_means <- function(stanfit_list,
+                             params_desired = NA) {
+  stopifnot(is.list(stanfit_list))
+  results_list <- lapply(stanfit_list, function(samples_one_stanfit) {
     samples_one_stanfit <-
-      stanfit_to_matrix( samples_one_stanfit, params_desired )
-    apply( samples_one_stanfit, 2, mean )
-  } )
-  simplify2array( results_list )
+      stanfit_to_matrix(samples_one_stanfit, params_desired)
+    apply(samples_one_stanfit, 2, mean)
+  })
+  simplify2array(results_list)
 }
 
 #' @rdname posterior_means
 #' @export
-posterior_medians <- function( stanfit_list,
-                               params_desired = NA ) {
-  stopifnot( is.list( stanfit_list ) )
-  results_list <- lapply( stanfit_list, function( samples_one_stanfit ) {
+posterior_medians <- function(stanfit_list,
+                               params_desired = NA) {
+  stopifnot(is.list(stanfit_list))
+  results_list <- lapply(stanfit_list, function(samples_one_stanfit) {
     samples_one_stanfit <-
-      stanfit_to_matrix( samples_one_stanfit, params_desired )
-    apply( samples_one_stanfit, 2, stats::median )
-  } )
-  simplify2array( results_list )
+      stanfit_to_matrix(samples_one_stanfit, params_desired)
+    apply(samples_one_stanfit, 2, stats::median)
+  })
+  simplify2array(results_list)
 }
 
 #' Calculates central probability intervals for each parameter for each stanfit
@@ -138,20 +138,20 @@ posterior_medians <- function( stanfit_list,
 #'    posterior_intervals(list(eg$posterior_samples, eg$prior_samples), prob =
 #'    0.95)
 #' @export
-posterior_intervals <- function( stanfit_list,
+posterior_intervals <- function(stanfit_list,
                                  prob,
                                  params_desired = NA,
-                                 ... ) {
+                                 ...) {
   check_numeric(prob, lower = 0, upper = 1)
-  stopifnot( is.list( stanfit_list ) )
-  results_list <- lapply( stanfit_list, function( samples_one_stanfit ) {
+  stopifnot(is.list(stanfit_list))
+  results_list <- lapply(stanfit_list, function(samples_one_stanfit) {
     samples_one_stanfit <-
-      stanfit_to_matrix( samples_one_stanfit, params_desired )
-    rstantools::posterior_interval( samples_one_stanfit,
+      stanfit_to_matrix(samples_one_stanfit, params_desired)
+    rstantools::posterior_interval(samples_one_stanfit,
                                     prob = prob,
-                                    ... )
-  } )
-  simplify2array( results_list )
+                                    ...)
+  })
+  simplify2array(results_list)
 }
 
 #' Calculates the amount of probability (mass) a parameter has in a range
@@ -173,15 +173,15 @@ posterior_intervals <- function( stanfit_list,
 #'   eg <- mastiff::stan_example_regression$posterior_samples
 #'   posterior_mass_in_range(eg, "m", c(-Inf, 2))
 #' @export
-posterior_mass_in_range <- function( stanfit, param, range ) {
-  stopifnot( class( stanfit )[[ 1 ]] == "stanfit" )
-  stopifnot( is.character( param ) )
-  stopifnot( length( param ) == 1 )
-  stopifnot( is.numeric( range ) )
-  stopifnot( length( range ) == 2 )
-  stopifnot( range[[1]] <= range[[2]] )
-  m <- stanfit_to_matrix( stanfit, params_desired = param )
-  mean( m[ , param ] > range[[ 1 ]] & m[ , param ] < range[[ 2 ]] )
+posterior_mass_in_range <- function(stanfit, param, range) {
+  stopifnot(class(stanfit)[[ 1 ]] == "stanfit")
+  stopifnot(is.character(param))
+  stopifnot(length(param) == 1)
+  stopifnot(is.numeric(range))
+  stopifnot(length(range) == 2)
+  stopifnot(range[[1]] <= range[[2]])
+  m <- stanfit_to_matrix(stanfit, params_desired = param)
+  mean(m[ , param ] > range[[ 1 ]] & m[ , param ] < range[[ 2 ]])
 }
 
 
