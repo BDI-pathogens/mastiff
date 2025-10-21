@@ -29,6 +29,17 @@
 #'   plot of the posterior for x reflects the log transformation.
 #' @param bins A positive integer for the number of bins, passed to
 #'   [ggplot2::geom_histogram()]. The default is 30.
+#' @param lower A lower value for the x axis for one or more params. Any sampled
+#'   values that are less than `lower` are increased to exactly equal `lower`,
+#'   such that the left-most bin of the histogram will occur at `lower` and will
+#'   contain the overflow. Use this arg to specify either a single value to be
+#'   used for all params, or a named numeric vector whose names are params.
+#' @param upper An upper value for the x axis for one or more params. Any
+#'   sampled values that are greater than `upper` are decreased to exactly equal
+#'   `upper`, such that the right-most bin of the histogram will occur at
+#'   `upper` and will contain the overflow. Use this arg to specify either a
+#'   single value to be used for all params, or a named numeric vector whose
+#'   names are params.
 #' @param skip_stanfit_to_dt If this argument is set to `TRUE`, the
 #'   `posterior_samples` argument (and the `prior_samples` argument if used)
 #'   should be used to provide a datatable of samples instead of a stanfit
@@ -44,6 +55,7 @@
 #'                prior_samples = eg$prior_samples,
 #'                true_param_values = eg$true_values)
 #' @importFrom data.table :=
+#' @importFrom data.table set
 #' @export
 plot_posterior <- function(posterior_samples,
                            prior_samples = NA,
@@ -51,6 +63,8 @@ plot_posterior <- function(posterior_samples,
                            params_desired = NA,
                            transforms = NA,
                            labels = NA,
+                           lower = NA,
+                           upper = NA,
                            skip_stanfit_to_dt = NA,
                            bins = 30) {
 
@@ -60,6 +74,8 @@ plot_posterior <- function(posterior_samples,
   have_true_param_values <- ! identical(NA, true_param_values)
   have_transforms <- ! identical(NA, transforms)
   have_labels <- ! identical(NA, labels)
+  have_lower <- ! identical(NA, lower)
+  have_upper <- ! identical(NA, upper)
 
   check_numeric(bins, lower = 1)
 
@@ -137,6 +153,93 @@ plot_posterior <- function(posterior_samples,
     if (! length(true_param_values)) have_true_param_values <- FALSE
   }
 
+  # Silently ignore any params named in lower that are not in params.
+  # Noisily ignore any params named in lower that are not in params_all.
+  if (have_lower) {
+    stopifnot(is.numeric(lower))
+    stopifnot(length(lower) > 0)
+    stopifnot(!anyNA(lower))
+    if (is.null(names(lower))) {
+      if (length(lower) > 1) stop(paste(
+        "If the 'lower' arg has length > 1, it must be a named numeric vector"
+      ))
+      have_lower_names <- FALSE
+    } else {
+      stopifnot(! anyDuplicated(names(lower)))
+      noisy_params_to_skip <- names(lower)[! names(lower) %in% params_all ]
+      if (length(noisy_params_to_skip)) {
+        warning(paste("Ignoring the following params which had lower values",
+                      "specified, but were not found in the posterior samples:",
+                      paste(noisy_params_to_skip, collapse = " ")))
+      }
+      lower <- lower[ names(lower) %in% params ]
+      if (length(lower)) {
+        have_lower_names <- TRUE
+      } else {
+        have_lower <- FALSE
+      }
+    }
+  }
+
+  # Silently ignore any params named in upper that are not in params.
+  # Noisily ignore any params named in upper that are not in params_all.
+  if (have_upper) {
+    stopifnot(is.numeric(upper))
+    stopifnot(length(upper) > 0)
+    stopifnot(!anyNA(upper))
+    if (is.null(names(upper))) {
+      if (length(upper) > 1) stop(paste(
+        "If the 'upper' arg has length > 1, it must be a named numeric vector"
+      ))
+      have_upper_names <- FALSE
+    } else {
+      stopifnot(! anyDuplicated(names(upper)))
+      noisy_params_to_skip <- names(upper)[! names(upper) %in% params_all ]
+      if (length(noisy_params_to_skip)) {
+        warning(paste("Ignoring the following params which had upper values",
+                      "specified, but were not found in the posterior samples:",
+                      paste(noisy_params_to_skip, collapse = " ")))
+      }
+      upper <- upper[ names(upper) %in% params ]
+      if (length(upper)) {
+        have_upper_names <- TRUE
+      } else {
+        have_upper <- FALSE
+      }
+    }
+  }
+
+  # Check there are no upper values less than associated lower values
+  if (have_lower && have_upper) {
+    if (have_lower_names) {
+      if (have_upper_names) {
+        for (param in names(lower)) {
+          if (param %in% names(upper) && upper[[param]] < lower[[param]]) {
+            stop(paste("For param", param, "a lower value of", lower[[param]],
+                       "and an upper value of", upper[[param]],
+                       "were specified. Upper values must be greater than lower values."))
+          }
+        }
+      } else {
+        if (any(upper < lower)) {
+          stop(paste("At least one of the lower values is greater than the",
+                     "single upper value that applies to all params."))
+        }
+      }
+    } else {
+      if (have_upper_names) {
+        if (any(upper < lower)) {
+          stop(paste("At least one of the upper values is less than the",
+                     "single lower value that applies to all params."))
+        }
+      } else {
+        if (upper < lower) {
+          stop("The upper value is less than the lower value")
+        }
+      }
+    }
+  }
+
   # Check remaining args (after possible exclusion of some params)
   if (have_transforms) {
     stopifnot(is.list (transforms))
@@ -174,6 +277,30 @@ plot_posterior <- function(posterior_samples,
       for (param in names(transforms)) {
         true_param_values[[ param ]] <-
           transforms[[ param ]](true_param_values[[ param ]])
+      }
+    }
+  }
+
+  # Impose lower and upper values if desired
+  if (have_lower) {
+    if (is.null(names(lower))) {
+      for (j in colnames(dt)) {
+        data.table::set(dt, j = j, value = pmax(dt[[j]], lower))
+      }
+    } else {
+      for (j in names(lower)) {
+        data.table::set(dt, j = j, value = pmax(dt[[j]], lower[[j]]))
+      }
+    }
+  }
+  if (have_upper) {
+    if (is.null(names(upper))) {
+      for (j in colnames(dt)) {
+        data.table::set(dt, j = j, value = pmin(dt[[j]], upper))
+      }
+    } else {
+      for (j in names(upper)) {
+        data.table::set(dt, j = j, value = pmin(dt[[j]], upper[[j]]))
       }
     }
   }
@@ -230,6 +357,10 @@ plot_posterior <- function(posterior_samples,
     plot <- plot +
       ggplot2::geom_vline(data = dt_true,
                           ggplot2::aes(xintercept = value))
+  }
+  if (have_lower | have_upper) {
+    plot <- plot +
+      ggplot2::labs(subtitle = "Edge bins contain overflow")
   }
   plot
 }

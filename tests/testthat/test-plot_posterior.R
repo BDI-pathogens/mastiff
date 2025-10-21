@@ -161,6 +161,40 @@ test_that("bad inputs give appropriate errors or warnings", {
                fixed = TRUE, regexp = "is.numeric(x) is not TRUE")
   expect_error(plot_posterior(posterior, bins = 0),
                fixed = TRUE, regexp = "x >= lower is not TRUE")
+  expect_error(plot_posterior(posterior, lower = "foo"),
+               fixed = TRUE, regexp = "is.numeric(lower) is not TRUE")
+  expect_error(plot_posterior(posterior, lower = numeric()),
+               fixed = TRUE, regexp = "length(lower) > 0 is not TRUE")
+  expect_error(plot_posterior(posterior, lower = 1:2),
+               fixed = TRUE,
+               regexp = "If the 'lower' arg has length > 1, it must be a named numeric vector")
+  expect_error(plot_posterior(posterior, lower = c(a=1, a=2)),
+               fixed = TRUE, regexp = "!anyDuplicated(names(lower)) is not TRUE")
+  expect_error(plot_posterior(posterior, lower = NA_real_),
+               fixed = TRUE, regexp = "!anyNA(lower) is not TRUE")
+  expect_error(plot_posterior(posterior, upper = "foo"),
+               fixed = TRUE, regexp = "is.numeric(upper) is not TRUE")
+  expect_error(plot_posterior(posterior, upper = numeric()),
+               fixed = TRUE, regexp = "length(upper) > 0 is not TRUE")
+  expect_error(plot_posterior(posterior, upper = 1:2),
+               fixed = TRUE,
+               regexp = "If the 'upper' arg has length > 1, it must be a named numeric vector")
+  expect_error(plot_posterior(posterior, upper = c(a=1, a=2)),
+               fixed = TRUE, regexp = "!anyDuplicated(names(upper)) is not TRUE")
+  expect_error(plot_posterior(posterior, upper = NA_real_),
+               fixed = TRUE, regexp = "!anyNA(upper) is not TRUE")
+  expect_error(plot_posterior(posterior, lower = 2, upper = 1),
+               fixed = TRUE, regexp = "The upper value is less than the lower value")
+  expect_error(plot_posterior(posterior, lower = 2, upper = c(m=3, sigma=1)),
+               fixed = TRUE,
+               regexp = "At least one of the upper values is less than the single lower value that applies to all params.")
+  expect_error(plot_posterior(posterior, lower = c(m=3, sigma=1), upper = 2),
+               fixed = TRUE,
+               regexp = "At least one of the lower values is greater than the single upper value that applies to all params.")
+  expect_error(plot_posterior(posterior, lower = c(m=1, sigma=2), upper = c(m=3, sigma=1)),
+               fixed = TRUE,
+               regexp = "For param sigma a lower value of 2 and an upper value of 1 were specified. Upper values must be greater than lower values.")
+
 })
 
 # Visually confirm that plots look correct? Not part of automated testing.
@@ -203,6 +237,11 @@ if (do_manual_visual_testing) {
   plot_posterior(posterior, labels = c(sigma = "log(sigma)"), transform = list(sigma = log), params_desired = c("m", "sigma"), true_param_values = true_vals)
   plot_posterior(posterior, labels = c(sigma = "log(sigma)"), transform = list(sigma = log), params_desired = c("m", "sigma"), prior_samples = prior)
   plot_posterior(posterior, labels = c(sigma = "log(sigma)"), transform = list(sigma = log), params_desired = c("m", "sigma"), prior_samples = prior, true_param_values = true_vals)
+  plot_posterior(posterior, prior_samples = prior,
+                 lower = c(c=1, m = 2.8, sigma = 0, foo = 4, spam = 2),
+                 upper = c(c = 2, m = 3.1, sigma = 1.5))
+  plot_posterior(posterior, prior_samples = prior,
+                 lower = c(foo = 4,spam = 2)) # ignore unknown params
 
   # Test on prior & posterior dataframe objects
   posterior_dt <- data.frame(m = stats::rnorm(100),

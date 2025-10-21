@@ -11,6 +11,8 @@ plot_posterior(
   params_desired = NA,
   transforms = NA,
   labels = NA,
+  lower = NA,
+  upper = NA,
   skip_stanfit_to_dt = NA,
   bins = 30
 )
@@ -48,6 +50,19 @@ parameters as they are named within the stanfit object, and the values
 being new names to use instead. e.g. if \code{transforms=list(x=log)} were
 specified, \verb{labels=c(x="log(x))"} would make sense, so that the label of the
 plot of the posterior for x reflects the log transformation.}
+
+\item{lower}{A lower value for the x axis for one or more params. Any sampled
+values that are less than \code{lower} are increased to exactly equal \code{lower},
+such that the left-most bin of the histogram will occur at \code{lower} and will
+contain the overflow. Use this arg to specify either a single value to be
+used for all params, or a named numeric vector whose names are params.}
+
+\item{upper}{An upper value for the x axis for one or more params. Any
+sampled values that are greater than \code{upper} are decreased to exactly equal
+\code{upper}, such that the right-most bin of the histogram will occur at
+\code{upper} and will contain the overflow. Use this arg to specify either a
+single value to be used for all params, or a named numeric vector whose
+names are params.}
 
 \item{skip_stanfit_to_dt}{If this argument is set to \code{TRUE}, the
 \code{posterior_samples} argument (and the \code{prior_samples} argument if used)
