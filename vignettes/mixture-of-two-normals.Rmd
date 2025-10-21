@@ -43,7 +43,12 @@ Set up our session
 
 ```{r setup}
 suppressPackageStartupMessages(library(mastiff))
-suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(magrittr))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(stringr))
+
 theme_set(theme_classic())
 set.seed(12345) # For reproducibility
 ```

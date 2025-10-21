@@ -194,9 +194,11 @@ posterior_mass_in_range <- function(stanfit, param, range) {
 #' assuming this will provide nearly universal coverage; tensors with more
 #' indices will not be renamed, like scalar parameters.
 #'
-#' @param param_names
+#' @param param_names A character vector of param names, before renaming i.e. as
+#'   found in cmdstan output files.
 #'
-#' @returns A character vector of the same length as `param_names`
+#' @returns A character vector of the same length as `param_names`, after
+#'   renaming.
 #' @importFrom stringr str_replace_all
 #' @importFrom magrittr %>%
 #' @export

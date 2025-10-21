@@ -103,7 +103,31 @@ simulate_mixture_of_two_normals <- function(
 }
 
 
+
+#' Estimate the parameters of a mixture of two normal distributions
+#'
+#' @param y A numeric vector of observations (values drawn from the
+#'   distribution).
+#' @param prior_boundaries A data.frame specifying the upper and lower
+#'   boundaries for the priors of the params. It should include columns "param",
+#'   "lower", and "upper". The "param" column should include values "mu_0",
+#'   "mu_1", "sd_0", "sd_1", "sd_groups" and "p".
+#' @param groups A character vector of the same length as `y` encoding which
+#'   group each observation came from.
+#' @param sample_posterior_not_prior A logical value: if this equals TRUE we
+#'   sample from the posterior; if it equals FALSE we sample from the prior.
+#' @param cores A positive integer: the number of cores to use to run MCMC
+#'   chains in parallel.
+#' @param report_stan_progress A logical value: if this equals TRUE we report
+#'   the progress of the stan calculation; if it equals FALSE we suppress this
+#'   reporting. An unsolved bug means that if `cores > 1`, progress will be
+#'   reported even if `report_stan_progress = FALSE`.
+#' @param ... Extra parameters are passed to [rstan::sampling()].
+#'
+#' @returns A data.table with one row per param and one column per sample from
+#'   the joint probability distribution (posterior or prior).
 #' @importFrom data.table setnames
+#' @importFrom utils capture.output
 #' @export
 estimate_mixture_of_two_normals <- function(
     y,
@@ -192,7 +216,7 @@ estimate_mixture_of_two_normals <- function(
                                include = FALSE,
                                ...)
   } else {
-    capture.output(samples <- rstan::sampling(stanmodels$mixture_of_two_normals,
+    utils::capture.output(samples <- rstan::sampling(stanmodels$mixture_of_two_normals,
                                               data = stan_input,
                                               cores = cores,
                                               pars = params_to_ignore,
