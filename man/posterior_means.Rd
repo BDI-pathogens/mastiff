@@ -31,6 +31,6 @@ for each simulated trial.
 }
 \examples{
    eg <- mastiff::stan_example_regression
-   posterior_means(  list(eg$posterior_samples, eg$prior_samples))
+   posterior_means(list(eg$posterior_samples, eg$prior_samples))
    posterior_medians(list(eg$posterior_samples, eg$prior_samples))
 }
