@@ -11,7 +11,8 @@ plot_posterior(
   params_desired = NA,
   transforms = NA,
   labels = NA,
-  skip_stanfit_to_dt = NA
+  skip_stanfit_to_dt = NA,
+  bins = 30
 )
 }
 \arguments{
@@ -54,6 +55,9 @@ should be used to provide a datatable of samples instead of a stanfit
 object of samples, for example after having already run
 \code{\link[=stanfit_to_dt]{stanfit_to_dt()}} on the stanfit objects. This allows e.g. manual
 renaming of parameters before plotting.}
+
+\item{bins}{A positive integer for the number of bins, passed to
+\code{\link[ggplot2:geom_histogram]{ggplot2::geom_histogram()}}. The default is 30.}
 }
 \value{
 A ggplot object.

@@ -27,6 +27,8 @@
 #'   being new names to use instead. e.g. if `transforms=list(x=log)` were
 #'   specified, `labels=c(x="log(x))"` would make sense, so that the label of the
 #'   plot of the posterior for x reflects the log transformation.
+#' @param bins A positive integer for the number of bins, passed to
+#'   [ggplot2::geom_histogram()]. The default is 30.
 #' @param skip_stanfit_to_dt If this argument is set to `TRUE`, the
 #'   `posterior_samples` argument (and the `prior_samples` argument if used)
 #'   should be used to provide a datatable of samples instead of a stanfit
@@ -49,7 +51,8 @@ plot_posterior <- function(posterior_samples,
                            params_desired = NA,
                            transforms = NA,
                            labels = NA,
-                           skip_stanfit_to_dt = NA) {
+                           skip_stanfit_to_dt = NA,
+                           bins = 30) {
 
   # What options were set to non-defaults
   have_params_desired <- ! identical(NA, params_desired)
@@ -57,6 +60,8 @@ plot_posterior <- function(posterior_samples,
   have_true_param_values <- ! identical(NA, true_param_values)
   have_transforms <- ! identical(NA, transforms)
   have_labels <- ! identical(NA, labels)
+
+  check_numeric(bins, lower = 1)
 
   # Get the posterior samples into a dt with only the desired params
   if (identical(skip_stanfit_to_dt, NA)) {
@@ -208,7 +213,7 @@ plot_posterior <- function(posterior_samples,
       ggplot2::geom_histogram(ggplot2::aes(x = value,
                                            y = ggplot2::after_stat(density),
                                            fill = density_type),
-                              bins = 30,
+                              bins = bins,
                               position = "identity",
                               alpha = 0.6) +
       ggplot2::labs(y = "probability density",
@@ -218,7 +223,7 @@ plot_posterior <- function(posterior_samples,
     plot <- plot +
       ggplot2::geom_histogram(ggplot2::aes(x = value,
                                            y = ggplot2::after_stat(density)),
-                              bins = 30) +
+                              bins = bins) +
       ggplot2::labs(y = "posterior density")
   }
   if (have_true_param_values) {

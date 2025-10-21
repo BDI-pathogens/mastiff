@@ -157,6 +157,10 @@ test_that("bad inputs give appropriate errors or warnings", {
                fixed = TRUE, regexp = "!anyDuplicated(names(labels)) is not TRUE")
   expect_error(plot_posterior(posterior, labels = c(foo = "foo")),
                fixed = TRUE, regexp = "all(names(labels) %in% params) is not TRUE")
+  expect_error(plot_posterior(posterior, bins = "foo"),
+               fixed = TRUE, regexp = "is.numeric(x) is not TRUE")
+  expect_error(plot_posterior(posterior, bins = 0),
+               fixed = TRUE, regexp = "x >= lower is not TRUE")
 })
 
 # Visually confirm that plots look correct? Not part of automated testing.
