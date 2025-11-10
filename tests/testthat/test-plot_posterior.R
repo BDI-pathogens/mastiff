@@ -284,4 +284,9 @@ if (do_manual_visual_testing) {
   plot_posterior(posterior_dt, labels = c(sigma = "log(sigma)"), transform = list(sigma = log), params_desired = c("m", "sigma"), prior_samples = prior_dt, skip_stanfit_to_dt = TRUE)
   plot_posterior(posterior_dt, labels = c(sigma = "log(sigma)"), transform = list(sigma = log), params_desired = c("m", "sigma"), prior_samples = prior_dt, true_param_values = true_vals_dt, skip_stanfit_to_dt = TRUE)
 
+  # Extra tests for new args
+  plot_posterior(posterior_dt, prior_samples = prior_dt, upper = 10, skip_stanfit_to_dt = TRUE)
+  plot_posterior(posterior_dt, prior_samples = prior_dt, lower = 2, skip_stanfit_to_dt = TRUE)
+  plot_posterior(posterior_dt, prior_samples = prior_dt, lower = 2, upper = 10, skip_stanfit_to_dt = TRUE)
+
 }

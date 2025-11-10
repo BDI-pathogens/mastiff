@@ -285,6 +285,7 @@ plot_posterior <- function(posterior_samples,
   if (have_lower) {
     if (is.null(names(lower))) {
       for (j in colnames(dt)) {
+        if (j == "density_type") next
         data.table::set(dt, j = j, value = pmax(dt[[j]], lower))
       }
     } else {
@@ -296,6 +297,7 @@ plot_posterior <- function(posterior_samples,
   if (have_upper) {
     if (is.null(names(upper))) {
       for (j in colnames(dt)) {
+        if (j == "density_type") next
         data.table::set(dt, j = j, value = pmin(dt[[j]], upper))
       }
     } else {
