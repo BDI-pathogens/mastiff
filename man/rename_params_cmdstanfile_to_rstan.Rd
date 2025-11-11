@@ -17,13 +17,10 @@ renaming.
 \description{
 In cmdstan output files, tensor parameters are named with their indices at the
 end separated by dots, e.g. my_matrix.2.1; in rstan they are named with their
-indices at the end internally separated by dots and then wrapped in square
-brackets, e.g. my_matrix[2,1]. We only look for tensors with up to 6 indices,
-assuming this will provide nearly universal coverage; tensors with more
-indices will not be renamed, like scalar parameters.
+indices at the end internally separated by commas and then wrapped in square
+brackets, e.g. my_matrix[2,1].
 }
 \examples{
-param_names <- c("foo", "foo.1", "foo.1.2", "foo.1.2.3", "foo.1.2.3.4",
-"foo.1.2.3.4.5", "foo.1.2.3.4.5.6", "foo.1.2.3.4.5.6.7")
+param_names <- c("foo", "foo.1", "foo.1.2", "foo_1.1.2.3")
 rename_params_cmdstanfile_to_rstan(param_names)
 }

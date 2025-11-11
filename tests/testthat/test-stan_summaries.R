@@ -127,9 +127,8 @@ test_that("Bad args give appropriate errors", {
 })
 
 test_that("rename_params_cmdstanfile_to_rstan works as expected", {
-  param_names <- c("foo", "foo.1", "foo.1.2", "foo.1.2.3", "foo.1.2.3.4",
-                   "foo.1.2.3.4.5", "foo.1.2.3.4.5.6", "foo.1.2.3.4.5.6.7")
-  expected_output <- c("foo", "foo[1]", "foo[1,2]", "foo[1,2,3]", "foo[1,2,3,4]",
-                       "foo[1,2,3,4,5]", "foo[1,2,3,4,5,6]", "foo.1.2.3.4.5.6.7")
+  param_names <- c("foo", "", "foo.1", "foo.1.2", "foo_1.1.2.3", ".1.2", "1.2")
+  expected_output <- c("foo", "", "foo[1]", "foo[1,2]", "foo_1[1,2,3]", "[1,2]",
+                       "1[2]")
   expect_equal(rename_params_cmdstanfile_to_rstan(param_names), expected_output)
 })

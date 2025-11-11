@@ -189,10 +189,8 @@ posterior_mass_in_range <- function(stanfit, param, range) {
 #'
 #' In cmdstan output files, tensor parameters are named with their indices at the
 #' end separated by dots, e.g. my_matrix.2.1; in rstan they are named with their
-#' indices at the end internally separated by dots and then wrapped in square
-#' brackets, e.g. my_matrix\[2,1\]. We only look for tensors with up to 6 indices,
-#' assuming this will provide nearly universal coverage; tensors with more
-#' indices will not be renamed, like scalar parameters.
+#' indices at the end internally separated by commas and then wrapped in square
+#' brackets, e.g. my_matrix\[2,1\].
 #'
 #' @param param_names A character vector of param names, before renaming i.e. as
 #'   found in cmdstan output files.
@@ -200,32 +198,21 @@ posterior_mass_in_range <- function(stanfit, param, range) {
 #' @returns A character vector of the same length as `param_names`, after
 #'   renaming.
 #' @importFrom stringr str_replace_all
+#' @importFrom stringr str_match
 #' @importFrom magrittr %>%
 #' @export
 #'
 #' @examples
-#' param_names <- c("foo", "foo.1", "foo.1.2", "foo.1.2.3", "foo.1.2.3.4",
-#' "foo.1.2.3.4.5", "foo.1.2.3.4.5.6", "foo.1.2.3.4.5.6.7")
+#' param_names <- c("foo", "foo.1", "foo.1.2", "foo_1.1.2.3")
 #' rename_params_cmdstanfile_to_rstan(param_names)
 rename_params_cmdstanfile_to_rstan <- function(param_names) {
   stopifnot(is.character(param_names))
-  param_names %>%
-    stringr::str_replace_all(
-      "([^0-9])\\.([0-9]+)$",
-      "\\1\\[\\2\\]") %>%
-    stringr::str_replace_all(
-      "([^0-9])\\.([0-9]+)\\.([0-9]+)$",
-      "\\1\\[\\2,\\3\\]") %>%
-    stringr::str_replace_all(
-      "([^0-9])\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)$",
-      "\\1\\[\\2,\\3,\\4\\]") %>%
-    stringr::str_replace_all(
-      "([^0-9])\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)$",
-      "\\1\\[\\2,\\3,\\4,\\5\\]") %>%
-    stringr::str_replace_all(
-      "([^0-9])\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)$",
-      "\\1\\[\\2,\\3,\\4,\\5,\\6\\]") %>%
-    stringr::str_replace_all(
-      "([^0-9])\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)\\.([0-9]+)$",
-      "\\1\\[\\2,\\3,\\4,\\5,\\6,\\7\\]")
+  map_chr(param_names, function(name) {
+    tensor_suffix <- str_match(name, "\\.([.0-9]+)$")[,2]
+    if (is.na(tensor_suffix)) return(name)
+    tensor_suffix_length <- nchar(tensor_suffix)
+    piece_before_suffix <- substr(name, 1, nchar(name) - tensor_suffix_length - 1)
+    tensor_suffix <- str_replace_all(tensor_suffix, "\\.", ",")
+    paste0(piece_before_suffix, "[", tensor_suffix, "]")
+  })
 }
