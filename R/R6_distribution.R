@@ -16,16 +16,25 @@
 #' 
 #' 
 #' @field name         The name of the distribution
-#' @field param_names  The names of parameters included in the 
+#' @field param_names  The names of all distribution parameters
+#' @field params       Named list of distribution parameters
+#' @field interfaces   The list of available class interfaces
 #' 
 #' @include R6_util_class.R
-distribution.abstract.class <- R6::R6Class(
+distribution.abstract.class <- utils.class(
   "distribution.abstract.class",
   private = list(
-    .name   = NULL,
-    .params = list(),
-    .param_names = c(),
+    .name   = NULL, # Distribution name
+    .params = list(), # Named list of distribution parameters
+    .param_names = character(), # Character vector of names for params list
+    .check_params = function( params ){
+      # Verify all input parameters are plausible - should be updated on every
+      # derived class
+      return( TRUE )
+    },
     .staticReturn = function( val, name ){
+      # Creates static active binding `name` with value `val` which cannot be
+      # updated after class creation
       if( !missing( val ) )
         stop( sprintf( "cannot set %s", name ) )
       
@@ -51,14 +60,31 @@ distribution.abstract.class <- R6::R6Class(
   ),
   active  = list(
     name         = function( val ) private$.staticReturn( val, "name" ),
-    param_names  = function( val ) private$.staticReturn( val, "param_names" )
+    param_names  = function( val ) private$.staticReturn( val, "param_names" ),
+    params = function( new_val ){
+      if ( missing( new_val ) ) return( private$.params )
+      
+      nv_names <- names( new_val )
+      if ( length( nv_names ) == 0 )
+        stop( sprintf( "`$param` must be a named list with elements `%s`",
+              paste( private$.param_names, sep = '`, ' ) ) )
+      if ( !all( nv_names %in% private$.param_names,
+                 private$.param_names %in% nv_names ) )
+        stop( sprintf( "`$param` must be a named list with elements `%s`. Input list contained elements `%s`",
+                       paste( private$.param_names, sep = '`, ' ),
+                       paste( nv_names, sep = '`, ' ) ) )
+      
+      private$.check_params( new_val )
+      private$.params <- new_val
+    }
   ),
   public = list(
     ##############################################################################/
     # initialize
     ##############################################################################/
     #' @description Create a new object of class `distribution.abstract.class`
-    initialize = function() stop( "Object of class `distribution.abstract.class`"),
+    initialize = function()
+      stop( "Object of class `distribution.abstract.class`"),
     ##############################################################################/
     # density
     ##############################################################################/

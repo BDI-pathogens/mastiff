@@ -1,7 +1,7 @@
 Package: mastiff
 Title: Mathematical and Statistical Utilities by the Fraser Group at Oxford
 Version: 0.0.0.9000
-Authors@R:  person( "Chris", "Wymant",
+Authors@R: person( "Chris", "Wymant",
                     email = "chris.wymant@bdi.ox.ac.uk",
                     role = c("aut", "cre") )
 Description: Provides assorted mathematical and statistical tools we have
@@ -50,6 +50,7 @@ Collate:
     'R6_distribution.R'
     'aliases.R'
     'check_types.R'
+    'continuous_distributions.R'
     'data.R'
     'mastiff-package.R'
     'mixture_of_two_normals.R'

@@ -6,12 +6,19 @@
 \description{
 Base class for all derived distributions
 }
+\section{Super class}{
+\code{mastiff::utils.class.class} -> \code{distribution.abstract.class}
+}
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}
 \describe{
 \item{\code{name}}{The name of the distribution}
 
-\item{\code{param_names}}{The names of parameters included in the}
+\item{\code{param_names}}{The names of all distribution parameters}
+
+\item{\code{params}}{Named list of distribution parameters}
+
+\item{\code{interfaces}}{The list of available class interfaces}
 }
 \if{html}{\out{</div>}}
 }
