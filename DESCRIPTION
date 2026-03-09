@@ -1,15 +1,16 @@
 Package: mastiff
 Title: Mathematical and Statistical Utilities by the Fraser Group at Oxford
 Version: 0.0.0.9000
-Authors@R: 
-    person("Chris", "Wymant", , "chris.wymant@bdi.ox.ac.uk", role = c("aut", "cre"))
+Authors@R:  person( "Chris", "Wymant",
+                    email = "chris.wymant@bdi.ox.ac.uk",
+                    role = c("aut", "cre") )
 Description: Provides assorted mathematical and statistical tools we have
     written for our work on infectious disease epidemiology, which should be of
     broader use. 
 License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 URL: https://github.com/BDI-pathogens/mastiff
 BugReports: https://github.com/BDI-pathogens/mastiff/issues
 Suggests: 
@@ -32,7 +33,8 @@ Imports:
     dplyr,
     magrittr,
     purrr,
-    stringr
+    stringr,
+    R6 (>= 2.4.1)
 VignetteBuilder: knitr
 Biarch: true
 LinkingTo: 
@@ -43,3 +45,16 @@ LinkingTo:
     rstan (>= 2.18.1),
     StanHeaders (>= 2.18.0)
 SystemRequirements: GNU make
+Collate: 
+    'R6_util_class.R'
+    'R6_distribution.R'
+    'aliases.R'
+    'check_types.R'
+    'data.R'
+    'mastiff-package.R'
+    'mixture_of_two_normals.R'
+    'plot_posterior.R'
+    'stan_summaries.R'
+    'stanmodels.R'
+    'tmp_distribution.R'
+    'utils_misc.R'
