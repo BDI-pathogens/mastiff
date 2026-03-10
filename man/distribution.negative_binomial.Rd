@@ -4,7 +4,7 @@
 \alias{distribution.negative_binomial}
 \title{distribution.negative_binomial}
 \usage{
-distribution.negative_binomial(size, prob = 0.5, mu = size * (1 - prob)/prob)
+distribution.negative_binomial(size, prob, mu)
 }
 \arguments{
 \item{size}{target for number of successful trials, or dispersion parameter

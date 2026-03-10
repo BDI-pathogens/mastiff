@@ -1,9 +1,9 @@
 # Include R6_util_class.R and R6_distribution.R to guarantee base classes exist
 # when loading the package prior to defining classes
 
-##################################################################/
+################################################################################/
 #  distribution.discrete.class
-###################################################################/
+################################################################################/
 #' Class: `distribution.discrete.class`
 #' @description Base class for univariate discrete distributions
 #'
@@ -23,9 +23,9 @@ distribution.discrete.class <- utils.class(
     .support = c( 0, Inf )
   ),
   public = list(
-    ##############################################################################/
+    ############################################################################/
     # initialize
-    ##############################################################################/
+    ############################################################################/
     #' @description Create a new object of class `distribution.discrete.class`
     initialize = function( support = c( 0, Inf ) ){
       private$.support <- support
@@ -40,9 +40,9 @@ distribution.discrete.class <- utils.class(
   )
 )
 
-##################################################################/
+################################################################################/
 #  distribution.discrete.binomial
-###################################################################/
+################################################################################/
 #' Class: `distribution.discrete.binomial.class`
 #' @description Derived class for an binomially-distributed random variable.
 #'
@@ -91,47 +91,47 @@ distribution.discrete.binomial.class <- utils.class(
     }
   ),
   public = list(
-    ##############################################################################/
+    ############################################################################/
     # initialize
-    ##############################################################################/
+    ############################################################################/
     #' @description Create a new object of class `distribution.discrete.class`
     initialize = function( size, prob ){
       private$.check_params( list( size = size,
                                    prob = prob ) )
       super$initialize( support = c( 0, size ) )
-      private$.params <- list( size = size,
-                               prob = prob )
+      self$params <- list( size = size,
+                           prob = prob )
     },
-    ##############################################################################/
+    ############################################################################/
     # density
-    ##############################################################################/
+    ############################################################################/
     #' @description Density function for a binomial random variable with size
     #'   `params$size` and success probability `params$prob`.
     d = function( x, log = FALSE ){
       stats::dbinom( x, size = private$.params$size, prob = private$.params$prob,
                      log = log )
     },
-    ##############################################################################/
+    ############################################################################/
     # distribution function
-    ##############################################################################/
+    ############################################################################/
     #' @description Cumulative density function for a binomial random variable
     #'   with size `params$size` and success probability `params$prob`.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
       stats::pbinom( q, size = private$.params$size, prob = private$.params$prob,
                      lower.tail = lower.tail, log.p = log.p )
     },
-    ##############################################################################/
+    ############################################################################/
     # quantile function
-    ##############################################################################/
+    ############################################################################/
     #' @description Quantile function for a binomial random variable with size
     #'   `params$size` and success probability `params$prob`.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
       stats::qbinom( p, size = private$.params$size, prob = private$.params$prob,
                      lower.tail = lower.tail, log.p = log.p )
     },
-    ##############################################################################/
+    ############################################################################/
     # random deviates
-    ##############################################################################/
+    ############################################################################/
     #' @description Generates random deviates for a binomial random variable
     #'   with size `params$size` and success probability `params$prob`.
     r = function( n ){
@@ -139,25 +139,25 @@ distribution.discrete.binomial.class <- utils.class(
     }
   ),
   active = list(
-    ##############################################################################/
+    ############################################################################/
     # mean
-    ##############################################################################/
+    ############################################################################/
     mean = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$mean`" )
       return( private$.params$size * private$.params$prob )
     },
-    ##############################################################################/
+    ############################################################################/
     # standard deviation
-    ##############################################################################/
+    ############################################################################/
     sd = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$sd`" )
       return( sqrt( self$var ) )
     },
-    ##############################################################################/
+    ############################################################################/
     # variance
-    ##############################################################################/
+    ############################################################################/
     var = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$var`" )
@@ -181,9 +181,9 @@ distribution.binomial <- function( size, prob ){
   distribution.discrete.binomial.class$new( size = size, prob = prob )
 }
 
-##################################################################/
+################################################################################/
 #  distribution.discrete.poisson
-###################################################################/
+################################################################################/
 #' Class: `distribution.discrete.poisson.class`
 #' @description Derived class for an Poisson-distributed random variable.
 #'
@@ -224,44 +224,44 @@ distribution.discrete.poisson.class <- utils.class(
     }
   ),
   public = list(
-    ##############################################################################/
+    ############################################################################/
     # initialize
-    ##############################################################################/
+    ############################################################################/
     #' @description Create a new object of class `distribution.discrete.class`
     initialize = function( lambda ){
       super$initialize( support = c( 0, Inf ) )
-      private$.params <- list( lambda = lambda )
+      self$params <- list( lambda = lambda )
     },
-    ##############################################################################/
+    ############################################################################/
     # density
-    ##############################################################################/
+    ############################################################################/
     #' @description Density function for a poisson random variable with size
     #'   `params$size` and success probability `params$prob`.
     d = function( x, log = FALSE ){
       stats::dpois( x, lambda = private$.params$lambda,
-                     log = log )
+                    log = log )
     },
-    ##############################################################################/
+    ############################################################################/
     # distribution function
-    ##############################################################################/
+    ############################################################################/
     #' @description Cumulative density function for a poisson random variable
     #'   with size `params$size` and success probability `params$prob`.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
       stats::ppois( q, lambda = private$.params$lambda,
-                     lower.tail = lower.tail, log.p = log.p )
+                    lower.tail = lower.tail, log.p = log.p )
     },
-    ##############################################################################/
+    ############################################################################/
     # quantile function
-    ##############################################################################/
+    ############################################################################/
     #' @description Quantile function for a poisson random variable with size
     #'   `params$size` and success probability `params$prob`.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
       stats::qpois( p, lambda = private$.params$lambda,
-                     lower.tail = lower.tail, log.p = log.p )
+                    lower.tail = lower.tail, log.p = log.p )
     },
-    ##############################################################################/
+    ############################################################################/
     # random deviates
-    ##############################################################################/
+    ############################################################################/
     #' @description Generates random deviates for a poisson random variable
     #'   with size `params$size` and success probability `params$prob`.
     r = function( n ){
@@ -269,25 +269,25 @@ distribution.discrete.poisson.class <- utils.class(
     }
   ),
   active = list(
-    ##############################################################################/
+    ############################################################################/
     # mean
-    ##############################################################################/
+    ############################################################################/
     mean = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$mean`" )
       return( private$.params$lambda )
     },
-    ##############################################################################/
+    ############################################################################/
     # standard deviation
-    ##############################################################################/
+    ############################################################################/
     sd = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$sd`" )
       return( sqrt( private$.params$lambda ) )
     },
-    ##############################################################################/
+    ############################################################################/
     # variance
-    ##############################################################################/
+    ############################################################################/
     var = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$var`" )
@@ -310,9 +310,9 @@ distribution.poisson <- function( lambda ){
   distribution.discrete.poisson.class$new( lambda = lambda )
 }
 
-##################################################################/
+################################################################################/
 #  distribution.discrete.negative_binomial
-###################################################################/
+################################################################################/
 #' Class: `distribution.discrete.negative_binomial.class`
 #' @description Derived class for an negative binomially-distributed random
 #'   variable.
@@ -375,47 +375,47 @@ distribution.discrete.negative_binomial.class <- utils.class(
     }
   ),
   public = list(
-    ##############################################################################/
+    ############################################################################/
     # initialize
-    ##############################################################################/
+    ############################################################################/
     #' @description Create a new object of class
     #'   `distribution.discrete.negative_binomial.class`
     initialize = function( size, prob, mu ){
       super$initialize( support = c( 0, Inf ) )
-      private$.params <- list( size = size,
-                               prob = prob,
-                               mu   = mu )
+      self$params <- list( size = size,
+                           prob = prob,
+                           mu   = mu )
     },
-    ##############################################################################/
+    ############################################################################/
     # density
-    ##############################################################################/
+    ############################################################################/
     #' @description Density function for a negative_binomial random variable with size
     #'   `params$size` and success probability `params$prob`.
     d = function( x, log = FALSE ){
       stats::dnbinom( x, size = private$.params$size, prob = private$.params$prob,
-                     log = log )
+                      log = log )
     },
-    ##############################################################################/
+    ############################################################################/
     # distribution function
-    ##############################################################################/
+    ############################################################################/
     #' @description Cumulative density function for a negative_binomial random variable
     #'   with size `params$size` and success probability `params$prob`.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
       stats::pnbinom( q, size = private$.params$size, prob = private$.params$prob,
-                     lower.tail = lower.tail, log.p = log.p )
+                      lower.tail = lower.tail, log.p = log.p )
     },
-    ##############################################################################/
+    ############################################################################/
     # quantile function
-    ##############################################################################/
+    ############################################################################/
     #' @description Quantile function for a negative_binomial random variable with size
     #'   `params$size` and success probability `params$prob`.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
       stats::qnbinom( p, size = private$.params$size, prob = private$.params$prob,
-                     lower.tail = lower.tail, log.p = log.p )
+                      lower.tail = lower.tail, log.p = log.p )
     },
-    ##############################################################################/
+    ############################################################################/
     # random deviates
-    ##############################################################################/
+    ############################################################################/
     #' @description Generates random deviates for a negative_binomial random variable
     #'   with size `params$size` and success probability `params$prob`.
     r = function( n ){
@@ -423,9 +423,9 @@ distribution.discrete.negative_binomial.class <- utils.class(
     }
   ),
   active = list(
-    ##############################################################################/
+    ############################################################################/
     # params
-    ##############################################################################/
+    ############################################################################/
     # Allow either prob or mu to be input and fill any missing parameters (which
     # can be determined) given input values before dispatching to parent class
     params = function( new_val ){
@@ -442,25 +442,25 @@ distribution.discrete.negative_binomial.class <- utils.class(
       
       super$params <- new_val
     },
-    ##############################################################################/
+    ############################################################################/
     # mean
-    ##############################################################################/
+    ############################################################################/
     mean = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$mean`" )
       return( private$.params$mu )
     },
-    ##############################################################################/
+    ############################################################################/
     # standard deviation
-    ##############################################################################/
+    ############################################################################/
     sd = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$sd`" )
       return( sqrt( self$var ) )
     },
-    ##############################################################################/
+    ############################################################################/
     # variance
-    ##############################################################################/
+    ############################################################################/
     var = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$var`" )
@@ -483,13 +483,22 @@ distribution.discrete.negative_binomial.class <- utils.class(
 #' 
 #' @export
 
-distribution.negative_binomial <- function( size, prob = 0.5, mu = size * ( 1 - prob ) / prob ){
+distribution.negative_binomial <- function( size, prob, mu ){
+  if ( missing( prob ) && missing( mu ) )
+    stop( "At least one of `prob` and `mu` must be set." )
+  
+  if ( missing( prob ) && !missing( size ) )
+    prob <- size / ( mu + size )
+  
+  if ( missing( mu ) && !missing( size ) )
+    mu <- size * ( 1 - prob ) / prob
+  
   distribution.discrete.negative_binomial.class$new( size, prob, mu )
 }
 
-##################################################################/
+################################################################################/
 #  distribution.discrete.point_mass
-###################################################################/
+################################################################################/
 #' Class: `distribution.discrete.point_mass.class`
 #' @description Derived class for a point mass at `$params$value`
 #'
@@ -528,17 +537,17 @@ distribution.discrete.point_mass.class <- utils.class(
     }
   ),
   public = list(
-    ##############################################################################/
+    ############################################################################/
     # initialize
-    ##############################################################################/
+    ############################################################################/
     #' @description Create a new object of class `distribution.discrete.class`
     initialize = function( value ){
       super$initialize( support = c( -Inf, Inf ) )
-      private$.params <- list( value = value )
+      self$params <- list( value = value )
     },
-    ##############################################################################/
+    ############################################################################/
     # density
-    ##############################################################################/
+    ############################################################################/
     #' @description Density function for a point mass at `params$value`.
     d = function( x, log = FALSE ){
       if ( log ){
@@ -547,9 +556,9 @@ distribution.discrete.point_mass.class <- utils.class(
         ifelse( x == private$.params$value, 1, 0 )
       }
     },
-    ##############################################################################/
+    ############################################################################/
     # distribution function
-    ##############################################################################/
+    ############################################################################/
     #' @description Cumulative density function for a point mass at
     #'   `params$value`.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
@@ -567,9 +576,9 @@ distribution.discrete.point_mass.class <- utils.class(
         }
       }
     },
-    ##############################################################################/
+    ############################################################################/
     # quantile function
-    ##############################################################################/
+    ############################################################################/
     #' @description Quantile function for a point mass at `params$value`.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
       if ( log.p ) p <- exp( p )
@@ -581,9 +590,9 @@ distribution.discrete.point_mass.class <- utils.class(
       out[ invalid_p ] <- NaN
       return( out )
     },
-    ##############################################################################/
+    ############################################################################/
     # random deviates
-    ##############################################################################/
+    ############################################################################/
     #' @description Generates random deviates for a point mass at
     #'   `params$value`.
     r = function( n ){
@@ -591,25 +600,25 @@ distribution.discrete.point_mass.class <- utils.class(
     }
   ),
   active = list(
-    ##############################################################################/
+    ############################################################################/
     # mean
-    ##############################################################################/
+    ############################################################################/
     mean = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$mean`" )
       return( private$.params$value )
     },
-    ##############################################################################/
+    ############################################################################/
     # standard deviation
-    ##############################################################################/
+    ############################################################################/
     sd = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$sd`" )
       return( 0 )
     },
-    ##############################################################################/
+    ############################################################################/
     # variance
-    ##############################################################################/
+    ############################################################################/
     var = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$var`" )
@@ -620,7 +629,7 @@ distribution.discrete.point_mass.class <- utils.class(
 
 #' distribution.point_mass
 #' 
-#' Constructor function for an object of class [[distribution.discrete.point_mass]]
+#' Constructor function for an object of class [[distribution.discrete.point_mass.class]]
 #' 
 #' @param value The point with mass 1.
 #' 
