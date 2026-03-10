@@ -170,7 +170,7 @@ distribution.exponential <- function( rate = 1 ){
 #  distribution.continuous.gamma
 ################################################################################/
 #' Class: `distribution.continuous.gamma.class`
-#' @description Derived class for an gamma-distributed random variable.
+#' @description Derived class for a gamma-distributed random variable.
 #'
 #' @param shape The shape of the gamma distribution
 #' @param rate The rate of the gamma distribution
@@ -187,11 +187,11 @@ distribution.exponential <- function( rate = 1 ){
 #' 
 #' @field interfaces The list of available class interfaces
 #' @field params       Named list of distribution parameters
-#' @field mean The mean of an gamma distribution with shape `$params$shape` and
+#' @field mean The mean of a gamma distribution with shape `$params$shape` and
 #'   rate `$params$rate`.
-#' @field sd The standard deviation of an gamma distribution with shape
+#' @field sd The standard deviation of a gamma distribution with shape
 #'   `$params$shape` and rate `$params$rate`.
-#' @field var The variance of an gamma distribution with shape `$params$shape`
+#' @field var The variance of a gamma distribution with shape `$params$shape`
 #'   and rate `$params$rate`.
 
 distribution.continuous.gamma.class <- utils.class(
@@ -243,7 +243,7 @@ distribution.continuous.gamma.class <- utils.class(
     ############################################################################/
     # density
     ############################################################################/
-    #' @description Density function for an gamma random variable with
+    #' @description Density function for a gamma random variable with
     #'   rate `params$rate`.
     d = function( x, log = FALSE ){
       stats::dgamma( x, shape = private$.params$shape, rate = private$.params$rate,
@@ -252,7 +252,7 @@ distribution.continuous.gamma.class <- utils.class(
     ############################################################################/
     # distribution function
     ############################################################################/
-    #' @description Cumulative density function for an gamma random
+    #' @description Cumulative density function for a gamma random
     #'   variable with rate `params$rate`.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
       stats::pgamma( q, shape = private$.params$shape, rate = private$.params$rate,
@@ -261,7 +261,7 @@ distribution.continuous.gamma.class <- utils.class(
     ############################################################################/
     # quantile function
     ############################################################################/
-    #' @description Quantile function for an gamma random variable with
+    #' @description Quantile function for a gamma random variable with
     #'   rate `params$rate`.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
       stats::qgamma( p, shape = private$.params$shape, rate = private$.params$rate,
@@ -270,7 +270,7 @@ distribution.continuous.gamma.class <- utils.class(
     ############################################################################/
     # random deviates
     ############################################################################/
-    #' @description Generates random deviates for an gamma random variable
+    #' @description Generates random deviates for a gamma random variable
     #'   with rate `params$rate`.
     r = function( n ){
       stats::rgamma( n, shape = private$.params$shape, rate = private$.params$rate )
@@ -358,7 +358,7 @@ distribution.gamma <- function( shape, rate, scale ){
 #  distribution.continuous.normal
 ################################################################################/
 #' Class: `distribution.continuous.normal.class`
-#' @description Derived class for an normally-distributed random variable.
+#' @description Derived class for a normally-distributed random variable.
 #'
 #' @param mean The mean of the normal distribution.
 #' @param sd The standard deviation of the normal distribution.
@@ -373,10 +373,10 @@ distribution.gamma <- function( shape, rate, scale ){
 #'   \eqn{P[ X \leq x ]}, otherwise, \eqn{P[X>x]}.
 #' 
 #' @field interfaces The list of available class interfaces
-#' @field mean The mean of an normal distribution with rate `$params$rate`.
-#' @field sd The standard deviation of an normal distribution with rate
+#' @field mean The mean of a normal distribution with rate `$params$rate`.
+#' @field sd The standard deviation of a normal distribution with rate
 #'   `$params$rate`.
-#' @field var The variance of an normal distribution with rate
+#' @field var The variance of a normal distribution with rate
 #'   `$params$rate`.
 distribution.continuous.normal.class <- utils.class(
   classname = "distribution.continuous.normal.class",

@@ -4,7 +4,7 @@
 \alias{distribution.continuous.gamma.class}
 \title{Class: \code{distribution.continuous.gamma.class}}
 \description{
-Derived class for an gamma-distributed random variable.
+Derived class for a gamma-distributed random variable.
 }
 \section{Super classes}{
 \code{mastiff::utils.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{mastiff::distribution.continuous.class}} -> \code{distribution.continuous.gamma.class}
@@ -16,13 +16,13 @@ Derived class for an gamma-distributed random variable.
 
 \item{\code{params}}{Named list of distribution parameters}
 
-\item{\code{mean}}{The mean of an gamma distribution with shape \verb{$params$shape} and
+\item{\code{mean}}{The mean of a gamma distribution with shape \verb{$params$shape} and
 rate \verb{$params$rate}.}
 
-\item{\code{sd}}{The standard deviation of an gamma distribution with shape
+\item{\code{sd}}{The standard deviation of a gamma distribution with shape
 \verb{$params$shape} and rate \verb{$params$rate}.}
 
-\item{\code{var}}{The variance of an gamma distribution with shape \verb{$params$shape}
+\item{\code{var}}{The variance of a gamma distribution with shape \verb{$params$shape}
 and rate \verb{$params$rate}.}
 }
 \if{html}{\out{</div>}}
@@ -63,7 +63,7 @@ Create a new object of class \code{distribution.continuous.gamma.class}
 \if{html}{\out{<a id="method-distribution.continuous.gamma.class-d"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.gamma.class-d}{}}}
 \subsection{Method \code{d()}}{
-Density function for an gamma random variable with
+Density function for a gamma random variable with
 rate \code{params$rate}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.gamma.class$d(x, log = FALSE)}\if{html}{\out{</div>}}
@@ -83,7 +83,7 @@ rate \code{params$rate}.
 \if{html}{\out{<a id="method-distribution.continuous.gamma.class-p"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.gamma.class-p}{}}}
 \subsection{Method \code{p()}}{
-Cumulative density function for an gamma random
+Cumulative density function for a gamma random
 variable with rate \code{params$rate}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.gamma.class$p(q, lower.tail = TRUE, log.p = FALSE)}\if{html}{\out{</div>}}
@@ -106,7 +106,7 @@ otherwise, \eqn{P[X>x]}.}
 \if{html}{\out{<a id="method-distribution.continuous.gamma.class-q"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.gamma.class-q}{}}}
 \subsection{Method \code{q()}}{
-Quantile function for an gamma random variable with
+Quantile function for a gamma random variable with
 rate \code{params$rate}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.gamma.class$q(p, lower.tail = TRUE, log.p = FALSE)}\if{html}{\out{</div>}}
@@ -129,7 +129,7 @@ otherwise, \eqn{P[X>x]}.}
 \if{html}{\out{<a id="method-distribution.continuous.gamma.class-r"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.gamma.class-r}{}}}
 \subsection{Method \code{r()}}{
-Generates random deviates for an gamma random variable
+Generates random deviates for a gamma random variable
 with rate \code{params$rate}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.gamma.class$r(n)}\if{html}{\out{</div>}}

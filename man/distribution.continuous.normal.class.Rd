@@ -4,7 +4,7 @@
 \alias{distribution.continuous.normal.class}
 \title{Class: \code{distribution.continuous.normal.class}}
 \description{
-Derived class for an normally-distributed random variable.
+Derived class for a normally-distributed random variable.
 }
 \section{Super classes}{
 \code{mastiff::utils.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{mastiff::distribution.continuous.class}} -> \code{distribution.continuous.normal.class}
@@ -14,12 +14,12 @@ Derived class for an normally-distributed random variable.
 \describe{
 \item{\code{interfaces}}{The list of available class interfaces}
 
-\item{\code{mean}}{The mean of an normal distribution with rate \verb{$params$rate}.}
+\item{\code{mean}}{The mean of a normal distribution with rate \verb{$params$rate}.}
 
-\item{\code{sd}}{The standard deviation of an normal distribution with rate
+\item{\code{sd}}{The standard deviation of a normal distribution with rate
 \verb{$params$rate}.}
 
-\item{\code{var}}{The variance of an normal distribution with rate
+\item{\code{var}}{The variance of a normal distribution with rate
 \verb{$params$rate}.}
 }
 \if{html}{\out{</div>}}
