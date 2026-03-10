@@ -7,7 +7,11 @@
 distribution.gamma(shape, rate, scale)
 }
 \arguments{
-\item{rate}{vector of rates}
+\item{shape}{The shape of the gamma distribution}
+
+\item{rate}{The rate of the gamma distribution}
+
+\item{scale}{an alternative way to specify the rate}
 }
 \value{
 An object of class [\link{distribution.continuous.gamma.class}]

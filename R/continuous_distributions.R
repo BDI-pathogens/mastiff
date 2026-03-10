@@ -173,7 +173,7 @@ distribution.exponential <- function( rate = 1 ){
 #' @description Derived class for a gamma-distributed random variable.
 #'
 #' @param shape The shape of the gamma distribution
-#' @param rate The rate of the gamma distribution
+#' @param rate  The rate of the gamma distribution
 #' @param scale an alternative way to specify the rate
 #' @param x          vector of quantiles.
 #' @param q          vector of quantiles.
@@ -330,7 +330,9 @@ distribution.continuous.gamma.class <- utils.class(
 #' 
 #' Constructor function for an object of class `distribution.continuous.gamma.class`
 #' 
-#' @param rate vector of rates
+#' @param shape The shape of the gamma distribution
+#' @param rate  The rate of the gamma distribution
+#' @param scale an alternative way to specify the rate
 #' 
 #' @returns An object of class [[distribution.continuous.gamma.class]]
 #'
