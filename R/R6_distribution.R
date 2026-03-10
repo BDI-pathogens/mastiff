@@ -1,3 +1,46 @@
+# Include R6_util_class.R to guarantee utils.class() and utils.class.interface()
+# exist when loading the package prior to defining classes
+
+#' @include R6_util_class.R
+
+##################################################################/
+#  distribution.abstract.class
+###################################################################/
+# Interface for all distributions, enforcing the definition of
+#   - d: density function
+#   - p: distribution function
+#   - q: quantile function
+#   - r: random deviates
+distribution.interface <- utils.class.interface(
+  interfacename = "distribution.interface",
+  public = list(
+    ############################################################################
+    # density
+    ############################################################################
+    d = function( x, log = FALSE ){
+      stop( "`d` not implemented on derived class" )
+    },
+    ############################################################################
+    # distribution function
+    ############################################################################
+    p = function( q, lower.tail = TRUE, log.p = FALSE ){
+      stop( "`p` not implemented on derived class" )
+    },
+    ############################################################################
+    # quantile function
+    ############################################################################
+    q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      stop( "`q` not implemented on derived class" )
+    },
+    ############################################################################
+    # random deviates
+    ############################################################################
+    r = function( n ){
+      stop( "`r` not implemented on derived class" )
+    }
+  )
+)
+
 ##################################################################/
 #  distribution.abstract.class
 ###################################################################/
@@ -19,18 +62,31 @@
 #' @field param_names  The names of all distribution parameters
 #' @field params       Named list of distribution parameters
 #' @field interfaces   The list of available class interfaces
-#' 
-#' @include R6_util_class.R
 distribution.abstract.class <- utils.class(
   "distribution.abstract.class",
+  interfaces = list( distribution.interface ),
   private = list(
     .name   = NULL, # Distribution name
     .params = list(), # Named list of distribution parameters
     .param_names = character(), # Character vector of names for params list
     .check_params = function( params ){
-      # Verify all input parameters are plausible - should be updated on every
-      # derived class
-      return( TRUE )
+      # Generic .check_params() verifies that params stores only elements listed
+      # in param_names.
+      #   - Should be updated on all derived classes to check input 
+      #     parameter values are also plausible.
+      if ( ( !is.list( params ) ) || length( names( params ) ) == 0 ){
+        stop( sprintf( "`$params` must be a named list with elements `%s`",
+                       paste0( private$.param_names, collapse = "`, " ) ) )
+      }
+      
+      input_names <- names( params )
+      if ( !all( input_names %in% private$.param_names,
+                 private$.param_names %in% input_names ) )
+        stop( sprintf( "`$params` must be a named list with elements `%s`. Input list contained elements `%s`",
+                       paste( private$.param_names, collapse = '`, ' ),
+                       paste( input_names, collapse = '`, ' ) ) )
+      
+      return( NULL )
     },
     .staticReturn = function( val, name ){
       # Creates static active binding `name` with value `val` which cannot be
@@ -63,17 +119,6 @@ distribution.abstract.class <- utils.class(
     param_names  = function( val ) private$.staticReturn( val, "param_names" ),
     params = function( new_val ){
       if ( missing( new_val ) ) return( private$.params )
-      
-      nv_names <- names( new_val )
-      if ( length( nv_names ) == 0 )
-        stop( sprintf( "`$param` must be a named list with elements `%s`",
-              paste( private$.param_names, sep = '`, ' ) ) )
-      if ( !all( nv_names %in% private$.param_names,
-                 private$.param_names %in% nv_names ) )
-        stop( sprintf( "`$param` must be a named list with elements `%s`. Input list contained elements `%s`",
-                       paste( private$.param_names, sep = '`, ' ),
-                       paste( nv_names, sep = '`, ' ) ) )
-      
       private$.check_params( new_val )
       private$.params <- new_val
     }
@@ -107,7 +152,7 @@ distribution.abstract.class <- utils.class(
     q = function( p, lower.tail = TRUE, log.p = FALSE )
       stop( "`q` not implemented on derived class"),
     ##############################################################################/
-    # random variates
+    # random deviates
     ##############################################################################/
     #' @description Template base class function for sampling random variates
     r = function( n )

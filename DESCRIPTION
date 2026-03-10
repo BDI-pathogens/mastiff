@@ -52,6 +52,7 @@ Collate:
     'check_types.R'
     'continuous_distributions.R'
     'data.R'
+    'discrete_distributions.R'
     'mastiff-package.R'
     'mixture_of_two_normals.R'
     'plot_posterior.R'
