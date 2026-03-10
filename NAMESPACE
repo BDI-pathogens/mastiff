@@ -2,6 +2,10 @@
 
 export(check_logical)
 export(check_numeric)
+export(distribution.binomial)
+export(distribution.exponential)
+export(distribution.negative_binomial)
+export(distribution.poisson)
 export(estimate_mixture_of_two_normals)
 export(logistic)
 export(logit)
