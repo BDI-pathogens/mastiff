@@ -486,3 +486,148 @@ distribution.discrete.negative_binomial.class <- utils.class(
 distribution.negative_binomial <- function( size, prob = 0.5, mu = size * ( 1 - prob ) / prob ){
   distribution.discrete.negative_binomial.class$new( size, prob, mu )
 }
+
+##################################################################/
+#  distribution.discrete.point_mass
+###################################################################/
+#' Class: `distribution.discrete.point_mass.class`
+#' @description Derived class for a point mass at `$params$value`
+#'
+#' @param value The point with mass 1.
+#' @param x          vector of quantiles.
+#' @param q          vector of quantiles.
+#' @param p          vector of probabilities.
+#' @param n          number of observations. If `length( n ) > 1`, the length is
+#'   taken to be the number required.
+#' @param log        logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+#'   otherwise, \eqn{P[X>x]}.
+#' 
+#' @field interfaces The list of available class interfaces
+#' @field mean The mean of a point mass at `$params$value`.
+#' @field sd The standard deviation of a point mass at `$params$value`.
+#' @field var The variance of a point mass at `$params$value`.
+distribution.discrete.point_mass.class <- utils.class(
+  classname = "distribution.discrete.point_mass.class",
+  inherit   = distribution.discrete.class,
+  interfaces = list( distribution.interface ),
+  private   = list(
+    .name    = "point_mass",
+    .param_names = c( "value" ),
+    .check_params = function( params ){
+      # Check that params contains all elements of private$.param_names
+      super$.check_params( params )
+      
+      # Check that value is numeric
+      if ( !is.numeric( params$value ) ){
+        stop( "`$params$value` must by a numeric value.")
+      }
+      
+      return( NULL )
+    }
+  ),
+  public = list(
+    ##############################################################################/
+    # initialize
+    ##############################################################################/
+    #' @description Create a new object of class `distribution.discrete.class`
+    initialize = function( value ){
+      super$initialize( support = c( -Inf, Inf ) )
+      private$.params <- list( value = value )
+    },
+    ##############################################################################/
+    # density
+    ##############################################################################/
+    #' @description Density function for a point mass at `params$value`.
+    d = function( x, log = FALSE ){
+      if ( log ){
+        ifelse( x == private$.params$value, 0, -Inf )
+      } else {
+        ifelse( x == private$.params$value, 1, 0 )
+      }
+    },
+    ##############################################################################/
+    # distribution function
+    ##############################################################################/
+    #' @description Cumulative density function for a point mass at
+    #'   `params$value`.
+    p = function( q, lower.tail = TRUE, log.p = FALSE ){
+      if ( log.p ){
+        if ( lower.tail ){
+          ifelse( q < private$.params$value, -Inf, 0 )
+        } else {
+          ifelse( q >= private$.params$value, -Inf, 0 )
+        }
+      } else {
+        if ( lower.tail ){
+          ifelse( q < private$.params$value, 0, 1 )
+        } else {
+          ifelse( q >= private$.params$value, 0, 1 )
+        }
+      }
+    },
+    ##############################################################################/
+    # quantile function
+    ##############################################################################/
+    #' @description Quantile function for a point mass at `params$value`.
+    q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      if ( log.p ) p <- exp( p )
+      if ( !lower.tail ) p <- 1 - p
+      
+      invalid_p <- is.na( p ) | p < 0 | p > 1
+      
+      out <- rep( private$.params$value, length( p ) )
+      out[ invalid_p ] <- NaN
+      return( out )
+    },
+    ##############################################################################/
+    # random deviates
+    ##############################################################################/
+    #' @description Generates random deviates for a point mass at
+    #'   `params$value`.
+    r = function( n ){
+      rep( private$.params$value, n )
+    }
+  ),
+  active = list(
+    ##############################################################################/
+    # mean
+    ##############################################################################/
+    mean = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$mean`" )
+      return( private$.params$value )
+    },
+    ##############################################################################/
+    # standard deviation
+    ##############################################################################/
+    sd = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$sd`" )
+      return( 0 )
+    },
+    ##############################################################################/
+    # variance
+    ##############################################################################/
+    var = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$var`" )
+      return( 0 )
+    }
+  )
+)
+
+#' distribution.point_mass
+#' 
+#' Constructor function for an object of class [[distribution.discrete.point_mass]]
+#' 
+#' @param value The point with mass 1.
+#' 
+#' @returns An object of class [[distribution.discrete.point_mass.class]]
+#' 
+#' @export
+
+distribution.point_mass <- function( value ){
+  distribution.discrete.point_mass.class$new( value )
+}

@@ -110,3 +110,30 @@ test_that( "distribution.negative_binomial constructs a valid class", {
   expect_error( X$params$size <- 0.5 )
   expect_error( X$params$size <- 'a' )
 })
+
+test_that( "distribution.point_mass constructs a valid class", {
+  n <- 1e5
+  tol <- 3 / sqrt( n )
+  
+  X <- distribution.point_mass( value = 1 )
+  
+  # Test that density is correct for initial rate parameter
+  expect_equal( X$d( x = 0 ), 0 )
+  expect_equal( X$d( x = 1 ), 1 )
+  
+  # Test that $params can be updated via named list
+  expect_no_error( X$params <- list( value = 5 ) )
+  expect_equal( { X$params <- list( value = 5 )
+  X$d( x = 5 ) }, 1 )
+  
+  # Test that elements of $params can be updated by name
+  expect_no_error( X$params$value <- 5 )
+  
+  # Test that invalid values of $params fail (via private$.check_params())
+  expect_error( X$params$value <- 'a' )
+  expect_error( X$params$value <- FALSE )
+  
+  # Test that incorrectly named list $params is rejected
+  expect_error( X$params <- list( foo = 1 ) )
+  expect_error( X$params <- list( 1 ) )
+})
