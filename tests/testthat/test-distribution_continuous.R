@@ -87,7 +87,39 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
       r = function( n ) stats::rnorm( n, mean = private$.params$mean, sd = private$.params$sd ) )
   )$new( mean = norm_mean, sd = norm_sd )
   norm_class <- distribution.normal( mean = norm_mean, sd = norm_sd )
-  # test_p_q( norm_test_class, norm_class, min_quantile = 0.1 )
+  
+  ## Due to numerical instability of integrate on normal density, test quantile
+  ## function using pnorm
+  
+  q_range <- norm_class$q( c( 0.01, 0.99 ) )
+  q <- seq( q_range[ 1 ], q_range[ 2 ], length.out = 20 )
+  p <- norm_class$p( q )
+  
+  expect_equal( norm_test_class$p( q, lower.tail = TRUE, log.p = FALSE ),
+                norm_class$p( q, lower.tail = TRUE, log.p = FALSE ),
+                tolerance = tol )
+  
+  norm_test_class <- utils.class(
+    classname = "distribution.continuous.normal.class",
+    inherit   = distribution.continuous.class,
+    private   = list(
+      .name    = "normal",
+      .param_names = c( "mean",
+                        "sd" ),
+      .check_params = function( params ) return( NULL )
+    ),
+    public = list(
+      initialize = function( mean, sd ){
+        super$initialize( support = c( -Inf, Inf ) )
+        self$params <- list( mean = mean, sd   = sd )
+      },
+      d = function( x, log = FALSE ) stats::dnorm( x, mean = private$.params$mean, sd = private$.params$sd, log = log ),
+      p = function( q, lower.tail = TRUE, log.p = FALSE ) stats::pnorm( q, mean = private$.params$mean, sd = private$.params$sd, lower.tail = lower.tail, log.p = log.p ),
+      r = function( n ) stats::rnorm( n, mean = private$.params$mean, sd = private$.params$sd ) )
+  )$new( mean = norm_mean, sd = norm_sd )
+  expect_equal( norm_test_class$q( p, lower.tail = TRUE, log.p = FALSE ),
+                norm_class$q( p, lower.tail = TRUE, log.p = FALSE ),
+                tolerance = tol )
 })
 
 test_that( "distribution.exponential constructs a valid class", {
