@@ -1,7 +1,7 @@
 # Include R6_util_class.R to guarantee utils.class() and utils.class.interface()
 # exist when loading the package prior to defining classes
 
-#' @include R6_util_class.R
+#' @include utils_R6.R
 
 ##################################################################/
 #  distribution.abstract.class

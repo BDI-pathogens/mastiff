@@ -1,4 +1,4 @@
-# Include R6_util_class.R and R6_distribution.R to guarantee base classes exist
+# Include R6_util_class.R and distribution_R6_class.R to guarantee base classes exist
 # when loading the package prior to defining classes
 
 ################################################################################/
@@ -15,7 +15,8 @@
 #' @field support    The support of the continuous distribution, i.e. the subset
 #'   of values for which the density is positive,
 #' 
-#' @include R6_util_class.R R6_distribution.R
+#' @include utils_R6.R
+#' @include distribution_R6_class.R
 distribution.continuous.class <- utils.class(
   classname = "distribution.continuous.class",
   inherit   = distribution.abstract.class,

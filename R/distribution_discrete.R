@@ -1,4 +1,4 @@
-# Include R6_util_class.R and R6_distribution.R to guarantee base classes exist
+# Include utils_R6.R and distribution_R6_class.R to guarantee base classes exist
 # when loading the package prior to defining classes
 
 ################################################################################/
@@ -9,13 +9,18 @@
 #'
 #' @param support The support of the distribution, i.e. the subset of integers
 #'   for which the density is positive.
-#' 
+#' @param q          vector of quantiles.
+#' @param p          vector of probabilities.
+#' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+#'   otherwise, \eqn{P[X>x]}.
 #' 
 #' @field interfaces The list of available class interfaces.
 #' @field support    The support of the continuous distribution, i.e. the subset
 #'   of values for which the density is positive,
 #' 
-#' @include R6_util_class.R R6_distribution.R
+#' @include utils_R6.R
+#' @include distribution_R6_class.R
 distribution.discrete.class <- utils.class(
   classname = "distribution.discrete.class",
   inherit   = distribution.abstract.class,
@@ -29,9 +34,87 @@ distribution.discrete.class <- utils.class(
     #' @description Create a new object of class `distribution.discrete.class`
     initialize = function( support = c( 0, Inf ) ){
       private$.support <- support
+    },
+    ##############################################################################/
+    # cumulative distribution function
+    ##############################################################################/
+    #' @description Evaluates the distribution function of a discrete random
+    #'   variable with finite integer support given density function `$d()`
+    p = function( q, lower.tail = TRUE, log.p = FALSE ){
+      if ( any( !is.finite( private$.support ) ) ){
+        stop( "`p` not implemented for discrete distributions with infinite support" )
+      }
+      q <- floor( q )
+      
+      # Bounds for first and last integer values x within private$.support
+      support_lower <- ceiling( private$.support[ 1 ] )
+      support_upper <- floor( private$.support[ 2 ] )
+      
+      q_max <- max( q, na.rm = TRUE )
+      if ( q_max >= support_lower ){
+        x <- support_lower : min( support_upper, q_max )
+        pdf <- self$d( x, log = FALSE )
+        cdf <- cumsum( pdf )
+        
+        out <- sapply( q, function( q_ ){
+          if ( is.na( q_ ) ){
+            return( NA )
+          } else if ( q_ < support_lower ){
+            return( 0 )
+          } else if ( q_ > support_upper ){
+            return( 1 )
+          } else {
+            idx <- 1 + q_ - support_lower
+            return( cdf[ idx ] )
+          }
+        })
+      } else {
+        out <- rep( 0, length( q ) )
+      }
+      
+      if ( !lower.tail ) out <- 1 - out
+      
+      if ( log.p ){
+        return( log( out ) )
+      } else {
+        return( out )
+      }
+    },
+    ##############################################################################/
+    # quantile function
+    ##############################################################################/
+    #' @description Evaluates the distribution function of a discrete random
+    #'   variable with finite integer support given distribution function `$p()`
+    q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      if ( any( !is.finite( private$.support ) ) ){
+        stop( "`q` not implemented for discrete distributions with infinite support" )
+      }
+      if ( log.p ) p <- exp( p )
+      if ( !lower.tail ) p <- 1 - p
+      if ( any( is.na( p ), p < 0, p > 1 ) )
+        stop( "Values in `p` must be numeric values between 0 and 1.")
+      if ( length( p ) == 0 ) return( numeric( 0 ) )
+      # Bounds for first and last integer values x within private$.support
+      support_lower <- ceiling( private$.support[ 1 ] )
+      support_upper <- floor( private$.support[ 2 ] )
+      x <- seq.int( support_lower, support_upper )
+
+      lpdf <- self$d( x, log = TRUE )
+      lcdf <- sapply( seq_along( x ), function( idx ){
+        matrixStats::logSumExp( lpdf, idxs = 1 : idx )
+      })
+      cdf <- exp( lcdf )
+
+      eps <- 10 * .Machine$double.eps
+      idx <- findInterval( p - eps, c( 0, cdf[ - length( cdf ) ] ),
+                           left.open = FALSE,
+                           rightmost.closed = TRUE )
+
+      idx[ p < eps ] <- 1
+      idx[ p > 1 - eps ] <- length( cdf )
+
+      return( x[ idx ] )
     }
-    
-    ### TODO: Add generic p, q and r functions for discrete base class
   ),
   active = list(
     support = function( val ){

@@ -1,3 +1,61 @@
+test_that( "Default $p() and $q() return the correct CDF and quantile function on distribution.discrete.class", {
+  # Define a temporary class for binomial distribution with $p() and $r()
+  # defined but not $p() or $q()
+  partial_discrete.class <- utils.class(
+    classname = "distribution.discrete.tmp.class",
+    inherit   = distribution.discrete.class,
+    interfaces = list( distribution.interface ),
+    private   = list(
+      .name    = "Binomial",
+      .param_names = c( "size", "prob" ),
+      .check_params = function( params ){
+        return( NULL )
+      }
+    ),
+    public = list(
+      ############################################################################/
+      # initialize
+      ############################################################################/
+      #' @description Create a new object of class `distribution.discrete.class`
+      initialize = function( size, prob ){
+        private$.check_params( list( size = size,
+                                     prob = prob ) )
+        super$initialize( support = c( 0, size ) )
+        self$params <- list( size = size,
+                             prob = prob )
+      },
+      d = function( x, log = FALSE ){
+        stats::dbinom( x, size = private$.params$size, prob = private$.params$prob,
+                       log = log )
+      },
+      r = function( n ){
+        stats::rbinom( n, size = private$.params$size, prob = private$.params$prob )
+      }
+    )
+  )
+  
+  size <- 50
+  prob <- 0.05
+  tol <- 1e-10
+  
+  test_class <- partial_discrete.class$new( size = size, prob = prob )
+  binom_class <- distribution.discrete.binomial.class$new( size = size, prob = prob )
+  
+  
+  q <- seq( -1, size + 1, by = 1 )
+  expect_equal( test_class$p( q, lower.tail = TRUE, log.p = FALSE ),
+                binom_class$p( q, lower.tail = TRUE, log.p = FALSE ),
+                tolerance = tol )
+  
+  
+  # Test only up to 1% tails of the distribution
+  x_max <- stats::qbinom( p = 0.99, size = size, prob = prob )
+  p <- binom_class$p( 0 : x_max )
+  expect_equal( test_class$q( p, lower.tail = TRUE, log.p = FALSE ),
+                binom_class$q( p, lower.tail = TRUE, log.p = FALSE ),
+                tolerance = tol )
+})
+
 test_that( "distribution.binomial constructs a valid class", {
   n <- 1e5
   tol <- 3 / sqrt( n )
