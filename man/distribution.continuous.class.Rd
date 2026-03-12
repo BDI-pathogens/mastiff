@@ -23,6 +23,8 @@ of values for which the density is positive,}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-distribution.continuous.class-new}{\code{distribution.continuous.class$new()}}
+\item \href{#method-distribution.continuous.class-p}{\code{distribution.continuous.class$p()}}
+\item \href{#method-distribution.continuous.class-q}{\code{distribution.continuous.class$q()}}
 \item \href{#method-distribution.continuous.class-clone}{\code{distribution.continuous.class$clone()}}
 }
 }
@@ -30,8 +32,6 @@ of values for which the density is positive,}
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="d"><a href='../../mastiff/html/distribution.abstract.class.html#method-distribution.abstract.class-d'><code>mastiff::distribution.abstract.class$d()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="p"><a href='../../mastiff/html/distribution.abstract.class.html#method-distribution.abstract.class-p'><code>mastiff::distribution.abstract.class$p()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="q"><a href='../../mastiff/html/distribution.abstract.class.html#method-distribution.abstract.class-q'><code>mastiff::distribution.abstract.class$q()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="r"><a href='../../mastiff/html/distribution.abstract.class.html#method-distribution.abstract.class-r'><code>mastiff::distribution.abstract.class$r()</code></a></span></li>
 </ul>
 </details>
@@ -50,6 +50,52 @@ Create a new object of class \code{distribution.continuous.class}
 \describe{
 \item{\code{support}}{The support of the distribution, i.e. the subset of values for
 which the density is positive.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-distribution.continuous.class-p"></a>}}
+\if{latex}{\out{\hypertarget{method-distribution.continuous.class-p}{}}}
+\subsection{Method \code{p()}}{
+Evaluates the distribution function of a discrete random
+variable with finite integer support given density function \verb{$d()}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.class$p(q, lower.tail = TRUE, log.p = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{q}}{vector of quantiles.}
+
+\item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+otherwise, \eqn{P[X>x]}.}
+
+\item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-distribution.continuous.class-q"></a>}}
+\if{latex}{\out{\hypertarget{method-distribution.continuous.class-q}{}}}
+\subsection{Method \code{q()}}{
+Evaluates the distribution function of a discrete random
+variable with finite integer support given distribution function \verb{$p()}
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.class$q(p, lower.tail = TRUE, log.p = FALSE)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{p}}{vector of probabilities.}
+
+\item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+otherwise, \eqn{P[X>x]}.}
+
+\item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
 }
 \if{html}{\out{</div>}}
 }

@@ -46,7 +46,6 @@ LinkingTo:
     StanHeaders (>= 2.18.0)
 SystemRequirements: GNU make
 Collate: 
-    'R6_util_class.R'
     'aliases.R'
     'check_types.R'
     'data.R'

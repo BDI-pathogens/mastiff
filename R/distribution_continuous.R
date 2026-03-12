@@ -9,7 +9,11 @@
 #'
 #' @param support The support of the distribution, i.e. the subset of values for
 #'   which the density is positive.
-#' 
+#' @param q          vector of quantiles.
+#' @param p          vector of probabilities.
+#' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+#'   otherwise, \eqn{P[X>x]}.
 #' 
 #' @field interfaces The list of available class interfaces.
 #' @field support    The support of the continuous distribution, i.e. the subset
@@ -30,9 +34,84 @@ distribution.continuous.class <- utils.class(
     #' @description Create a new object of class `distribution.continuous.class`
     initialize = function( support = c( -Inf, Inf ) ){
       private$.support <- support
+    },
+    ##############################################################################/
+    # cumulative distribution function
+    ##############################################################################/
+    #' @description Evaluates the distribution function of a discrete random
+    #'   variable with finite integer support given density function `$d()`
+    p = function( q, lower.tail = TRUE, log.p = FALSE ){
+      # Bounds of private$.support
+      support_lower <- private$.support[ 1 ]
+      support_upper <- private$.support[ 2 ]
+
+      out <- sapply( q, function( q_ ){
+        if ( is.na( q_ ) ){
+          return( NA )
+        } else if ( q_ <= support_lower ){
+          return( 0 )
+        } else if ( q_ > support_upper ){
+          return( 1 )
+        } else {
+          return( integrate( self$d,
+                             lower = support_lower, upper = q_,
+                             log = FALSE )$value )
+        }
+      })
+      
+      if ( !lower.tail ) out <- 1 - out
+
+      if ( log.p ){
+        return( log( out ) )
+      } else {
+        return( out )
+      }
+    },
+    ##############################################################################/
+    # quantile function
+    ##############################################################################/
+    #' @description Evaluates the distribution function of a discrete random
+    #'   variable with finite integer support given distribution function `$p()`
+    q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      if ( log.p ) p <- exp( p )
+      if ( !lower.tail ) p <- 1 - p
+      if ( any( is.na( p ), p < 0, p > 1 ) )
+        stop( "Values in `p` must be numeric values between 0 and 1.")
+      if ( length( p ) == 0 ) return( numeric( 0 ) )
+      
+      # Bounds for first and last integer values x within private$.support
+      support_lower <- private$.support[ 1 ]
+      support_upper <- private$.support[ 2 ]
+      
+      transform <- if ( is.finite( support_lower ) ){
+        if ( is.finite( support_upper ) ){
+          # Mapping [0,1] -> [support_lower, support_upper]
+          function( x ) support_lower + x * ( support_upper - support_lower )
+        }
+        else {
+          # Mapping [0,1] -> [support_lower, Inf)
+          function( x ) support_lower + x / ( 1 - x )
+        }
+      } else {
+        if ( is.finite( support_upper ) ){
+          # Mapping [0,1] -> (-Inf, support_upper]
+          function( x ) support_upper - ( 1 - x ) / x
+        } else {
+          # Mapping [0,1] -> (-Inf, Inf)
+          function( x ) tan( pi * ( x - 0.5 ) )
+        }
+      }
+      
+      density_p_shift <- function( x ){ self$p( transform( x ), log = FALSE ) - p }
+      num_p         <- length( p )
+      q <- utils.uniroot.vectorized(
+        f = density_p_shift,
+        lower = rep( 0, num_p ),
+        upper = rep( 1, num_p )
+      )
+      
+      return( transform( q ) )
     }
-    
-    ### TODO: Add generic p, q and r functions for continuous base class
   ),
   active = list(
     support = function( val ){
@@ -40,6 +119,136 @@ distribution.continuous.class <- utils.class(
     }
   )
 )
+
+################################################################################/
+#  distribution.continuous.uniform
+################################################################################/
+#' Class: `distribution.continuous.uniform.class`
+#' @description Derived class for an uniformly-distributed random variable on \code{[min, max]}
+#'
+#' @param min The lower bound of the uniform distribution
+#' @param max The max bound of the uniform distribution
+#' @param x          vector of quantiles.
+#' @param q          vector of quantiles.
+#' @param p          vector of probabilities.
+#' @param n          number of observations. If `length( n ) > 1`, the length is
+#'   taken to be the number required.
+#' @param log        logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+#'   otherwise, \eqn{P[X>x]}.
+#' 
+#' @field interfaces The list of available class interfaces
+#' @field mean The mean of a uniform random variable on \code{[min, max]}.
+#' @field sd The standard deviation of a uniform random variable on
+#'   \code{[min, max]}.
+#' @field var The variance of a uniform random variable on \code{[min,
+#'   max]}.
+distribution.continuous.uniform.class <- utils.class(
+  classname = "distribution.continuous.uniform.class",
+  inherit   = distribution.continuous.class,
+  private   = list(
+    .name    = "Uniform",
+    .param_names = c( "min", "max" ),
+    .check_params = function( params ){
+      # Check that params contains all elements of private$.param_names
+      super$.check_params( params )
+      if ( !( is.numeric( params$min ) && is.numeric( params$max ) ) )
+        stop( "`min` and `max` must be numeric values.")
+      if ( params$min > params$max )
+        stop( "`min` must be strictly less than `max`.")
+      return( NULL )
+    }
+  ),
+  public = list(
+    ############################################################################/
+    # initialize
+    ############################################################################/
+    #' @description Create a new object of class `distribution.continuous.exponential.class`
+    initialize = function( min = 0, max = 1 ){
+      super$initialize( support = c( min, max ) )
+      self$params <- list( min = min,
+                           max = max )
+    },
+    ############################################################################/
+    # density
+    ############################################################################/
+    #' @description Density function for a uniform random variable on
+    #'   \code{[min, max]}.
+    d = function( x, log = FALSE ){
+      stats::dunif( x, min = private$.params$min, max = private$.params$max,
+                    log = log )
+    },
+    ############################################################################/
+    # distribution function
+    ############################################################################/
+    #' @description Cumulative density function for a uniform random variable on
+    #'   \code{[min, max]}.
+    p = function( q, lower.tail = TRUE, log.p = FALSE ){
+      stats::punif( q, min = private$.params$min, max = private$.params$max,
+                   lower.tail = lower.tail, log.p = log.p )
+    },
+    ############################################################################/
+    # quantile function
+    ############################################################################/
+    #' @description Quantile function for a uniform random variable on
+    #'   \code{[min, max]}.
+    #'   rate `params$rate`.
+    q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      stats::qunif( p, min = private$.params$min, max = private$.params$max,
+                   lower.tail = lower.tail, log.p = log.p )
+    },
+    ############################################################################/
+    # random deviates
+    ############################################################################/
+    #' @description Generates random deviates for a uniform random variable on
+    #'   \code{[min, max]}.
+    r = function( n ){
+      stats::runif( n, min = private$.params$min, max = private$.params$max )
+    }
+  ),
+  active = list(
+    ############################################################################/
+    # mean
+    ############################################################################/
+    mean = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$mean`" )
+      return( ( private$.params$lower + private$.params$max ) / 2 )
+    },
+    ############################################################################/
+    # standard deviation
+    ############################################################################/
+    sd = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$sd`" )
+      return( sqrt( self$var ) )
+    },
+    ############################################################################/
+    # variance
+    ############################################################################/
+    var = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$var`" )
+      return( ( private$.params$max - private$.params$lower )^2 / 12 )
+    }
+  )
+)
+
+#' distribution.exponential
+#' 
+#' Constructor function for an object of class `distribution.continuous.uniform.class`
+#' 
+#' @param min The lower bound of the uniform distribution
+#' @param max The max bound of the uniform distribution
+#' 
+#' @returns An object of class [[distribution.continuous.uniform.class]]
+#'
+#' @export
+distribution.uniform <- function( min = 0, max = 1 ){
+  distribution.continuous.uniform.class$new( min = min,
+                                             max = max )
+}
 
 ################################################################################/
 #  distribution.continuous.exponential

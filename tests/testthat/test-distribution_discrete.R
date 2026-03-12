@@ -13,10 +13,6 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
       }
     ),
     public = list(
-      ############################################################################/
-      # initialize
-      ############################################################################/
-      #' @description Create a new object of class `distribution.discrete.class`
       initialize = function( size, prob ){
         private$.check_params( list( size = size,
                                      prob = prob ) )
