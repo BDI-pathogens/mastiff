@@ -58,4 +58,5 @@ Collate:
     'plot_posterior.R'
     'stan_summaries.R'
     'stanmodels.R'
+    'utils.R'
     'utils_misc.R'

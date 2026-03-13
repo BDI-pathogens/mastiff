@@ -4,7 +4,7 @@
 \alias{distribution.abstract.class}
 \title{Class: \code{distribution.abstract.class}}
 \description{
-Base class for all derived distributions
+Base class for derived distributions
 }
 \section{Super class}{
 \code{mastiff::utils.class.class} -> \code{distribution.abstract.class}
