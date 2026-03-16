@@ -142,10 +142,6 @@ utils.class = function(
   interfaceNames = c()
   nInterfaces    = length( interfaces )
   if( nInterfaces ){
-    # publicNames  <- names( publicMethods )
-    # privateNames <- names( privateMethods )
-    # activeNames  <- names( activeMethods )
-    
     for( k in 1:nInterfaces ){
       if( interfaces[[ k ]]$inherit != "utils.class.interface.class" )
         stop( "interfaces must be created by utils.class.interface (i.e. must inherit utils.class.interface.class" )
