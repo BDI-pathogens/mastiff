@@ -1,4 +1,4 @@
-# Include R6_util_class.R to guarantee utils.class() and utils.class.interface()
+# Include R6_util_class.R to guarantee R6.class() and R6.class.interface()
 # exist when loading the package prior to defining classes
 
 #' @include utils_R6.R
@@ -11,7 +11,7 @@
 #   - p: distribution function
 #   - q: quantile function
 #   - r: random deviates
-distribution.interface <- utils.class.interface(
+distribution.interface <- R6.class.interface(
   interfacename = "distribution.interface",
   public = list(
     ############################################################################
@@ -63,7 +63,7 @@ distribution.interface <- utils.class.interface(
 #' @field params       Named list of distribution parameters
 #' @field interfaces   The list of available class interfaces
 
-distribution.abstract.class <- utils.class(
+distribution.abstract.class <- R6.class(
   "distribution.abstract.class",
   interfaces = list( distribution.interface ),
   private = list(
@@ -160,3 +160,19 @@ distribution.abstract.class <- utils.class(
       stop( "`r` not implemented on derived class")
   )
 )
+
+################################################################################/
+# is.distribution
+################################################################################/
+#' @rdname distribution
+#' @title Distribution Classes
+#'
+#' @description Available distributions implemented in `mastiff`.
+#'
+#' @param x An R object.
+#' 
+#' `is.distribution( x )` checks where an object `x` inherits from either
+#' [distribution.discrete.class] or [distribution.continuous.class]
+#' 
+#' `mastiff`
+is.distribution <- function( x ) inherits( x, 'distribution.abstract.class' )

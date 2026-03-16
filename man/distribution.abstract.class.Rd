@@ -7,7 +7,7 @@
 Base class for derived distributions
 }
 \section{Super class}{
-\code{mastiff::utils.class.class} -> \code{distribution.abstract.class}
+\code{mastiff::R6.class.class} -> \code{distribution.abstract.class}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

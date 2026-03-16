@@ -7,7 +7,7 @@
 Base class for univariate continuous distributions
 }
 \section{Super classes}{
-\code{mastiff::utils.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{distribution.continuous.class}
+\code{mastiff::R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{distribution.continuous.class}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

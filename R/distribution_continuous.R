@@ -21,7 +21,7 @@
 #' 
 #' @include utils_R6.R
 #' @include distribution_R6_class.R
-distribution.continuous.class <- utils.class(
+distribution.continuous.class <- R6.class(
   classname = "distribution.continuous.class",
   inherit   = distribution.abstract.class,
   private   = list(
@@ -144,7 +144,7 @@ distribution.continuous.class <- utils.class(
 #'   \code{[min, max]}.
 #' @field var The variance of a uniform random variable on \code{[min,
 #'   max]}.
-distribution.continuous.uniform.class <- utils.class(
+distribution.continuous.uniform.class <- R6.class(
   classname = "distribution.continuous.uniform.class",
   inherit   = distribution.continuous.class,
   private   = list(
@@ -273,7 +273,7 @@ distribution.uniform <- function( min = 0, max = 1 ){
 #'   `$params$rate`.
 #' @field var The variance of an exponential distribution with rate
 #'   `$params$rate`.
-distribution.continuous.exponential.class <- utils.class(
+distribution.continuous.exponential.class <- R6.class(
   classname = "distribution.continuous.exponential.class",
   inherit   = distribution.continuous.class,
   private   = list(
@@ -404,7 +404,7 @@ distribution.exponential <- function( rate = 1 ){
 #' @field var The variance of a gamma distribution with shape `$params$shape`
 #'   and rate `$params$rate`.
 
-distribution.continuous.gamma.class <- utils.class(
+distribution.continuous.gamma.class <- R6.class(
   classname = "distribution.continuous.gamma.class",
   inherit   = distribution.continuous.class,
   private   = list(
@@ -590,7 +590,7 @@ distribution.gamma <- function( shape, rate, scale ){
 #'   `$params$rate`.
 #' @field var The variance of a normal distribution with rate
 #'   `$params$rate`.
-distribution.continuous.normal.class <- utils.class(
+distribution.continuous.normal.class <- R6.class(
   classname = "distribution.continuous.normal.class",
   inherit   = distribution.continuous.class,
   private   = list(

@@ -7,7 +7,7 @@
 Derived class for an exponentially-distributed random variable.
 }
 \section{Super classes}{
-\code{mastiff::utils.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{mastiff::distribution.continuous.class}} -> \code{distribution.continuous.exponential.class}
+\code{mastiff::R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{mastiff::distribution.continuous.class}} -> \code{distribution.continuous.exponential.class}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

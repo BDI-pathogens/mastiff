@@ -3,7 +3,7 @@ test_that( "distribution.abstract.class can not be created on its own", {
 })
 
 test_that( "A derived distribution returns errors on all interface functions assuming they are not redefined", {
-  distribution.test.class <- utils.class(
+  distribution.test.class <- R6.class(
     classname = "distribution.test.class",
     inherit = distribution.abstract.class,
     private = list(),

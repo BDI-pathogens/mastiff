@@ -21,7 +21,7 @@
 #' 
 #' @include utils_R6.R
 #' @include distribution_R6_class.R
-distribution.discrete.class <- utils.class(
+distribution.discrete.class <- R6.class(
   classname = "distribution.discrete.class",
   inherit   = distribution.abstract.class,
   private   = list(
@@ -148,7 +148,7 @@ distribution.discrete.class <- utils.class(
 #'   `$params$size` and success probability `$params$prob`.
 #' @field var The variance of a binomial distribution with size
 #'   `$params$size` and success probability `$params$prob`.
-distribution.discrete.binomial.class <- utils.class(
+distribution.discrete.binomial.class <- R6.class(
   classname = "distribution.discrete.binomial.class",
   inherit   = distribution.discrete.class,
   interfaces = list( distribution.interface ),
@@ -287,7 +287,7 @@ distribution.binomial <- function( size, prob ){
 #'   `$params$lambda`.
 #' @field var The variance of a Poisson distribution with mean `$params$lambda`.
 
-distribution.discrete.poisson.class <- utils.class(
+distribution.discrete.poisson.class <- R6.class(
   classname = "distribution.discrete.poisson.class",
   inherit   = distribution.discrete.class,
   interfaces = list( distribution.interface ),
@@ -422,7 +422,7 @@ distribution.poisson <- function( lambda ){
 #'   `$params$lambda`.
 #' @field var The variance of a negative_binomial distribution with mean `$params$lambda`.
 
-distribution.discrete.negative_binomial.class <- utils.class(
+distribution.discrete.negative_binomial.class <- R6.class(
   classname = "distribution.discrete.negative_binomial.class",
   inherit   = distribution.discrete.class,
   interfaces = list( distribution.interface ),
@@ -600,7 +600,7 @@ distribution.negative_binomial <- function( size, prob, mu ){
 #' @field mean The mean of a point mass at `$params$value`.
 #' @field sd The standard deviation of a point mass at `$params$value`.
 #' @field var The variance of a point mass at `$params$value`.
-distribution.discrete.point_mass.class <- utils.class(
+distribution.discrete.point_mass.class <- R6.class(
   classname = "distribution.discrete.point_mass.class",
   inherit   = distribution.discrete.class,
   interfaces = list( distribution.interface ),
