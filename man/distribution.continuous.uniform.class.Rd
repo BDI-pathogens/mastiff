@@ -4,7 +4,7 @@
 \alias{distribution.continuous.uniform.class}
 \title{Class: \code{distribution.continuous.uniform.class}}
 \description{
-Derived class for an uniformly-distributed random variable on \code{[lower, upper]}
+Derived class for an uniformly-distributed random variable on \code{[min, max]}
 }
 \section{Super classes}{
 \code{mastiff::utils.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{mastiff::distribution.continuous.class}} -> \code{distribution.continuous.uniform.class}
@@ -14,13 +14,13 @@ Derived class for an uniformly-distributed random variable on \code{[lower, uppe
 \describe{
 \item{\code{interfaces}}{The list of available class interfaces}
 
-\item{\code{mean}}{The mean of an exponential distribution with rate \verb{$params$rate}.}
+\item{\code{mean}}{The mean of a uniform random variable on \code{[min, max]}.}
 
-\item{\code{sd}}{The standard deviation of an exponential distribution with rate
-\verb{$params$rate}.}
+\item{\code{sd}}{The standard deviation of a uniform random variable on
+\code{[min, max]}.}
 
-\item{\code{var}}{The variance of an exponential distribution with rate
-\verb{$params$rate}.}
+\item{\code{var}}{The variance of a uniform random variable on \code{[min,
+max]}.}
 }
 \if{html}{\out{</div>}}
 }
@@ -41,13 +41,15 @@ Derived class for an uniformly-distributed random variable on \code{[lower, uppe
 \subsection{Method \code{new()}}{
 Create a new object of class \code{distribution.continuous.exponential.class}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$new(rate = 1)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$new(min = 0, max = 1)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{rate}}{The rate of the exponential distribution}
+\item{\code{min}}{The lower bound of the uniform distribution}
+
+\item{\code{max}}{The max bound of the uniform distribution}
 }
 \if{html}{\out{</div>}}
 }
@@ -56,8 +58,8 @@ Create a new object of class \code{distribution.continuous.exponential.class}
 \if{html}{\out{<a id="method-distribution.continuous.uniform.class-d"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-d}{}}}
 \subsection{Method \code{d()}}{
-Density function for an exponential random variable with
-rate \code{params$rate}.
+Density function for a uniform random variable on
+\code{[min, max]}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$d(x, log = FALSE)}\if{html}{\out{</div>}}
 }
@@ -76,8 +78,8 @@ rate \code{params$rate}.
 \if{html}{\out{<a id="method-distribution.continuous.uniform.class-p"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-p}{}}}
 \subsection{Method \code{p()}}{
-Cumulative density function for an exponential random
-variable with rate \code{params$rate}.
+Cumulative density function for a uniform random variable on
+\code{[min, max]}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$p(q, lower.tail = TRUE, log.p = FALSE)}\if{html}{\out{</div>}}
 }
@@ -99,7 +101,8 @@ otherwise, \eqn{P[X>x]}.}
 \if{html}{\out{<a id="method-distribution.continuous.uniform.class-q"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-q}{}}}
 \subsection{Method \code{q()}}{
-Quantile function for an exponential random variable with
+Quantile function for a uniform random variable on
+\code{[min, max]}.
 rate \code{params$rate}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$q(p, lower.tail = TRUE, log.p = FALSE)}\if{html}{\out{</div>}}
@@ -122,8 +125,8 @@ otherwise, \eqn{P[X>x]}.}
 \if{html}{\out{<a id="method-distribution.continuous.uniform.class-r"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-r}{}}}
 \subsection{Method \code{r()}}{
-Generates random deviates for an exponential random variable
-with rate \code{params$rate}.
+Generates random deviates for a uniform random variable on
+\code{[min, max]}.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$r(n)}\if{html}{\out{</div>}}
 }

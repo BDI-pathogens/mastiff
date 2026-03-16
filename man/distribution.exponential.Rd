@@ -5,19 +5,13 @@
 \title{distribution.exponential}
 \usage{
 distribution.exponential(rate = 1)
-
-distribution.exponential(rate = 1)
 }
 \arguments{
 \item{rate}{vector of rates}
 }
 \value{
 An object of class [\link{distribution.continuous.exponential.class}]
-
-An object of class [\link{distribution.continuous.exponential.class}]
 }
 \description{
-Constructor function for an object of class \code{distribution.continuous.exponential.class}
-
 Constructor function for an object of class \code{distribution.continuous.exponential.class}
 }

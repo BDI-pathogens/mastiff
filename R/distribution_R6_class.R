@@ -45,7 +45,7 @@ distribution.interface <- utils.class.interface(
 #  distribution.abstract.class
 ###################################################################/
 #' Class: `distribution.abstract.class`
-#' @description Base class for all derived distributions
+#' @description Base class for derived distributions
 #'
 #' @param x          vector of quantiles.
 #' @param q          vector of quantiles.
@@ -62,6 +62,7 @@ distribution.interface <- utils.class.interface(
 #' @field param_names  The names of all distribution parameters
 #' @field params       Named list of distribution parameters
 #' @field interfaces   The list of available class interfaces
+
 distribution.abstract.class <- utils.class(
   "distribution.abstract.class",
   interfaces = list( distribution.interface ),
