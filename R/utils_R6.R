@@ -22,8 +22,6 @@
 
 ################################################################################/
 # R6.class
-#
-# Author: Rob Hinch
 ################################################################################/
 ##### NOTE: All derived R6 classes using interfaces in mastiff should include
 ##### this file via Roxygen using the include tag: #' @include R6_util_class.R
@@ -162,10 +160,8 @@ R6.class = function(
                      interfaces )
   }
   
-  # if multiple interfaces have the same name, keep the first one only
-  iNames <- sapply( interfaces, function( x ) x$classname )
-  interfaces <- interfaces[ !duplicated( iNames ) ]
-  
+  # if an interface is included multiple times, keep the first instance only
+  interfaces <- interfaces[ !duplicated( interfaces ) ]
   
   # if at least 2 interfaces are defined, check that multiple interfaces don't
   # define incompatible method signatures
