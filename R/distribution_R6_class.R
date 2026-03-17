@@ -11,7 +11,7 @@
 #   - p: distribution function
 #   - q: quantile function
 #   - r: random deviates
-distribution.interface <- R6.class.interface(
+distribution.interface <- R6.interface(
   interfacename = "distribution.interface",
   public = list(
     ############################################################################
@@ -64,9 +64,9 @@ distribution.interface <- R6.class.interface(
 #' @field interfaces   The list of available class interfaces
 
 distribution.abstract.class <- R6.class(
-  "distribution.abstract.class",
+  classname  = "distribution.abstract.class",
   interfaces = list( distribution.interface ),
-  private = list(
+  private    = list(
     .name   = NULL, # Distribution name
     .params = list(), # Named list of distribution parameters
     .param_names = character(), # Character vector of names for params list
@@ -115,7 +115,7 @@ distribution.abstract.class <- R6.class(
       return( private[[ privateType ]][[ param ]] )
     }
   ),
-  active  = list(
+  active = list(
     name         = function( val ) private$.staticReturn( val, "name" ),
     param_names  = function( val ) private$.staticReturn( val, "param_names" ),
     params = function( new_val ){

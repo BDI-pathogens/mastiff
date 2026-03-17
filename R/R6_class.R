@@ -209,7 +209,7 @@ R6.class = function(
   # Check that new class defines all methods specified by all interfaces with
   # the correct required arguments
   for ( interface in interfaces ){
-    if ( interface$inherit != "R6.class.interface.class")
+    if ( interface$inherit != "R6.interface.class")
       stop( "Interfaces must be created by R6.interface (i.e. must inherit R6.interface.class" )
     
     iName <- interface$classname
@@ -282,16 +282,16 @@ R6.class.class = R6::R6Class(
 )
 
 ################################################################################/
-# R6.class.interface.class
+# R6.interface.class
 #
 # add interfaces to R6 class infrastructure
 ################################################################################/
-#' Class: `R6.class.interface.class`
+#' Class: `R6.interface.class`
 #' 
 #' @description R6 class acting as base interface class.
 
-R6.class.interface.class = R6::R6Class(
-  "R6.class.interface.class",
+R6.interface.class = R6::R6Class(
+  "R6.interface.class",
   public = list(
     ############################################################################/
     # is.interface
@@ -303,31 +303,32 @@ R6.class.interface.class = R6::R6Class(
 )
 
 ################################################################################/
-# R6.class.interface
+# R6.interface
 # add interfaces to R6 class infrastructure
 ################################################################################/
-#' R6.class.interface
+#' R6.interface
 #' 
-#' Constructor function for objects of class [R6.class.interface.class]
+#' Constructor function for an interface for use with [R6.class]
 #' 
 #' @param interfacename Name of the interface. The interface name is useful
 #'   primarily for S3 method dispatch.
 #' @inheritParams R6::R6Class
 #' 
+#' @returns Object of class [R6.interface.class]
+#' 
 #' @export
 
-R6.class.interface = function(
+R6.interface = function(
     interfacename = NULL,
     public = list(),
     private = list(),
     active = list()
-)
-{
-  return( R6::R6Class( interfacename,
-                       public  = public,
-                       private = private,
-                       active  = active,
-                       inherit = R6.class.interface.class ) )
+){
+  return( R6::R6Class( classname = interfacename,
+                       public    = public,
+                       private   = private,
+                       active    = active,
+                       inherit   = R6.interface.class ) )
 }
 
 ################################################################################/
