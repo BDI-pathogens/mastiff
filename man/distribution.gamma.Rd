@@ -19,3 +19,6 @@ An object of class [\link{distribution.continuous.gamma.class}]
 \description{
 Constructor function for an object of class \code{distribution.continuous.gamma.class}
 }
+\seealso{
+\link{Mastiff-Distributions}
+}

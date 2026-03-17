@@ -21,3 +21,6 @@ An object of class [\link{distribution.discrete.negative_binomial.class}]
 \description{
 Constructor function for an object of class [\link{distribution.discrete.negative_binomial.class}]
 }
+\seealso{
+\link{Mastiff-Distributions}
+}

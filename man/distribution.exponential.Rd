@@ -15,3 +15,6 @@ An object of class [\link{distribution.continuous.exponential.class}]
 \description{
 Constructor function for an object of class \code{distribution.continuous.exponential.class}
 }
+\seealso{
+\link{Mastiff-Distributions}
+}

@@ -292,8 +292,8 @@ R6.interface.class = R6::R6Class(
     ############################################################################/
     # is.interface
     ############################################################################/
-    #' @description Logical function indicating whether an object is an
-    #'   interface.
+    # @description Logical function indicating whether an object is an
+    #   interface.
     is.interface  = function() return( TRUE )
   )
 )

@@ -259,6 +259,7 @@ distribution.discrete.binomial.class <- R6.class(
 #' 
 #' @returns An object of class [[distribution.discrete.binomial.class]]
 #' 
+#' @seealso [Mastiff-Distributions]
 #' @export
 
 distribution.binomial <- function( size, prob ){
@@ -388,6 +389,7 @@ distribution.discrete.poisson.class <- R6.class(
 #' 
 #' @returns An object of class [[distribution.discrete.poisson.class]]
 #' 
+#' @seealso [Mastiff-Distributions]
 #' @export
 
 distribution.poisson <- function( lambda ){
@@ -565,6 +567,7 @@ distribution.discrete.negative_binomial.class <- R6.class(
 #' 
 #' @returns An object of class [[distribution.discrete.negative_binomial.class]]
 #' 
+#' @seealso [Mastiff-Distributions]
 #' @export
 
 distribution.negative_binomial <- function( size, prob, mu ){
@@ -719,6 +722,7 @@ distribution.discrete.point_mass.class <- R6.class(
 #' 
 #' @returns An object of class [[distribution.discrete.point_mass.class]]
 #' 
+#' @seealso [Mastiff-Distributions]
 #' @export
 
 distribution.point_mass <- function( value ){

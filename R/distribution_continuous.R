@@ -235,7 +235,7 @@ distribution.continuous.uniform.class <- R6.class(
   )
 )
 
-#' distribution.exponential
+#' distribution.uniform
 #' 
 #' Constructor function for an object of class `distribution.continuous.uniform.class`
 #' 
@@ -244,6 +244,7 @@ distribution.continuous.uniform.class <- R6.class(
 #' 
 #' @returns An object of class [[distribution.continuous.uniform.class]]
 #'
+#' @seealso [Mastiff-Distributions]
 #' @export
 distribution.uniform <- function( min = 0, max = 1 ){
   distribution.continuous.uniform.class$new( min = min,
@@ -371,6 +372,7 @@ distribution.continuous.exponential.class <- R6.class(
 #' 
 #' @returns An object of class [[distribution.continuous.exponential.class]]
 #'
+#' @seealso [Mastiff-Distributions]
 #' @export
 distribution.exponential <- function( rate = 1 ){
   distribution.continuous.exponential.class$new( rate = rate )
@@ -546,6 +548,7 @@ distribution.continuous.gamma.class <- R6.class(
 #' 
 #' @returns An object of class [[distribution.continuous.gamma.class]]
 #'
+#' @seealso [Mastiff-Distributions]
 #' @export
 distribution.gamma <- function( shape, rate, scale ){
   if ( missing( rate ) ){
@@ -693,6 +696,7 @@ distribution.continuous.normal.class <- R6.class(
 #' 
 #' @returns An object of class [[distribution.continuous.normal.class]]
 #'
+#' @seealso [Mastiff-Distributions]
 #' @export
 distribution.normal <- function( mean, sd ){
   distribution.continuous.normal.class$new( mean = mean,

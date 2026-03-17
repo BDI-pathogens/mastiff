@@ -15,3 +15,6 @@ An object of class [\link{distribution.discrete.poisson.class}]
 \description{
 Constructor function for an object of class [\link{distribution.discrete.poisson.class}]
 }
+\seealso{
+\link{Mastiff-Distributions}
+}
