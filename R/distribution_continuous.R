@@ -19,9 +19,9 @@
 #' @field support    The support of the continuous distribution, i.e. the subset
 #'   of values for which the density is positive,
 #' 
-#' @include utils_R6.R
+#' @include R6_class.R
 #' @include distribution_R6_class.R
-distribution.continuous.class <- utils.class(
+distribution.continuous.class <- R6.class(
   classname = "distribution.continuous.class",
   inherit   = distribution.abstract.class,
   private   = list(
@@ -104,7 +104,7 @@ distribution.continuous.class <- utils.class(
       
       density_p_shift <- function( x ){ self$p( transform( x ), log = FALSE ) - p }
       num_p         <- length( p )
-      q <- utils.uniroot.vectorized(
+      q <- uniroot.vectorized(
         f = density_p_shift,
         lower = rep( 0, num_p ),
         upper = rep( 1, num_p )
@@ -144,7 +144,7 @@ distribution.continuous.class <- utils.class(
 #'   \code{[min, max]}.
 #' @field var The variance of a uniform random variable on \code{[min,
 #'   max]}.
-distribution.continuous.uniform.class <- utils.class(
+distribution.continuous.uniform.class <- R6.class(
   classname = "distribution.continuous.uniform.class",
   inherit   = distribution.continuous.class,
   private   = list(
@@ -235,7 +235,7 @@ distribution.continuous.uniform.class <- utils.class(
   )
 )
 
-#' distribution.exponential
+#' distribution.uniform
 #' 
 #' Constructor function for an object of class `distribution.continuous.uniform.class`
 #' 
@@ -244,6 +244,7 @@ distribution.continuous.uniform.class <- utils.class(
 #' 
 #' @returns An object of class [[distribution.continuous.uniform.class]]
 #'
+#' @seealso [Mastiff-Distributions]
 #' @export
 distribution.uniform <- function( min = 0, max = 1 ){
   distribution.continuous.uniform.class$new( min = min,
@@ -273,7 +274,7 @@ distribution.uniform <- function( min = 0, max = 1 ){
 #'   `$params$rate`.
 #' @field var The variance of an exponential distribution with rate
 #'   `$params$rate`.
-distribution.continuous.exponential.class <- utils.class(
+distribution.continuous.exponential.class <- R6.class(
   classname = "distribution.continuous.exponential.class",
   inherit   = distribution.continuous.class,
   private   = list(
@@ -371,6 +372,7 @@ distribution.continuous.exponential.class <- utils.class(
 #' 
 #' @returns An object of class [[distribution.continuous.exponential.class]]
 #'
+#' @seealso [Mastiff-Distributions]
 #' @export
 distribution.exponential <- function( rate = 1 ){
   distribution.continuous.exponential.class$new( rate = rate )
@@ -404,7 +406,7 @@ distribution.exponential <- function( rate = 1 ){
 #' @field var The variance of a gamma distribution with shape `$params$shape`
 #'   and rate `$params$rate`.
 
-distribution.continuous.gamma.class <- utils.class(
+distribution.continuous.gamma.class <- R6.class(
   classname = "distribution.continuous.gamma.class",
   inherit   = distribution.continuous.class,
   private   = list(
@@ -546,6 +548,7 @@ distribution.continuous.gamma.class <- utils.class(
 #' 
 #' @returns An object of class [[distribution.continuous.gamma.class]]
 #'
+#' @seealso [Mastiff-Distributions]
 #' @export
 distribution.gamma <- function( shape, rate, scale ){
   if ( missing( rate ) ){
@@ -590,7 +593,7 @@ distribution.gamma <- function( shape, rate, scale ){
 #'   `$params$rate`.
 #' @field var The variance of a normal distribution with rate
 #'   `$params$rate`.
-distribution.continuous.normal.class <- utils.class(
+distribution.continuous.normal.class <- R6.class(
   classname = "distribution.continuous.normal.class",
   inherit   = distribution.continuous.class,
   private   = list(
@@ -693,6 +696,7 @@ distribution.continuous.normal.class <- utils.class(
 #' 
 #' @returns An object of class [[distribution.continuous.normal.class]]
 #'
+#' @seealso [Mastiff-Distributions]
 #' @export
 distribution.normal <- function( mean, sd ){
   distribution.continuous.normal.class$new( mean = mean,

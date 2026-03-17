@@ -7,7 +7,7 @@
 Derived class for an uniformly-distributed random variable on \code{[min, max]}
 }
 \section{Super classes}{
-\code{mastiff::utils.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{mastiff::distribution.continuous.class}} -> \code{distribution.continuous.uniform.class}
+\code{mastiff::R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{mastiff::distribution.continuous.class}} -> \code{distribution.continuous.uniform.class}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

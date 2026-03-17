@@ -7,7 +7,7 @@
 Derived class for a point mass at \verb{$params$value}
 }
 \section{Super classes}{
-\code{mastiff::utils.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.discrete.class]{mastiff::distribution.discrete.class}} -> \code{distribution.discrete.point_mass.class}
+\code{mastiff::R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.discrete.class]{mastiff::distribution.discrete.class}} -> \code{distribution.discrete.point_mass.class}
 }
 \section{Active bindings}{
 \if{html}{\out{<div class="r6-active-bindings">}}

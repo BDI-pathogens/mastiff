@@ -15,3 +15,6 @@ An object of class [\link{distribution.discrete.point_mass.class}]
 \description{
 Constructor function for an object of class [\link{distribution.discrete.point_mass.class}]
 }
+\seealso{
+\link{Mastiff-Distributions}
+}

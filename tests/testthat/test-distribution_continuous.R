@@ -23,7 +23,7 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
   # Finite support -- test with uniform distribution
   unif_min <- 0
   unif_max <- 10
-  unif_test_class <- distribution.continuous.uniform.class <- utils.class(
+  unif_test_class <- distribution.continuous.uniform.class <- R6.class(
     classname = "distribution.continuous.uniform.class",
     inherit   = distribution.continuous.class,
     private   = list(
@@ -45,7 +45,7 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
   
   # Support [0, Inf) -- test via exponential distribution
   exp_rate <- 0.1
-  exp_test_class <- utils.class(
+  exp_test_class <- R6.class(
     classname = "distribution.continuous.tmp.class",
     inherit   = distribution.continuous.class,
     interfaces = list( distribution.interface ),
@@ -69,7 +69,7 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
   # Support (-Inf, Inf) -- test via normal distribution
   norm_mean <- 0
   norm_sd <- 10
-  norm_test_class <- utils.class(
+  norm_test_class <- R6.class(
     classname = "distribution.continuous.normal.class",
     inherit   = distribution.continuous.class,
     private   = list(
@@ -99,7 +99,7 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
                 norm_class$p( q, lower.tail = TRUE, log.p = FALSE ),
                 tolerance = tol )
   
-  norm_test_class <- utils.class(
+  norm_test_class <- R6.class(
     classname = "distribution.continuous.normal.class",
     inherit   = distribution.continuous.class,
     private   = list(

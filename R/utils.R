@@ -1,5 +1,5 @@
 ###################################################################/
-# Name:        utils.uniroot.vectorized
+# Name:        uniroot.vectorized
 # Description: vectorized version of the Brent Root  algorithm
 #              useful for when solving many similar optimization problems
 #              where evaluation of the objective can be calculated far more
@@ -30,11 +30,11 @@
 #' f <- function( x ) ( x^2 - 1 ) * ( x^2 - 2 )
 #' lower <- c( -2,  -1.2,   0, 1.2 )
 #' upper <- c( -1.2,   0, 1.2,   2 )
-#' utils.uniroot.vectorized( f, lower, upper )
+#' uniroot.vectorized( f, lower, upper )
 #' 
 #' @export
 
-utils.uniroot.vectorized = function( f, lower, upper, tol = 1e-8, itmax = 100, eps = 1e-10 ){
+uniroot.vectorized = function( f, lower, upper, tol = 1e-8, itmax = 100, eps = 1e-10 ){
   # check the initial bracket
   f_lower <- f( lower )
   f_upper <- f( upper )
@@ -100,7 +100,7 @@ utils.uniroot.vectorized = function( f, lower, upper, tol = 1e-8, itmax = 100, e
 }
 
 ###################################################################/
-# Name:        utils.optimise.vectorized
+# Name:        optimise.vectorized
 # Description: vectorized version of the Brent Minimisation algorithm
 #              useful for when solving many similar optimization problems
 #              where evaluation of the objective can be calculated far more
@@ -112,7 +112,7 @@ utils.uniroot.vectorized = function( f, lower, upper, tol = 1e-8, itmax = 100, e
 # Return:      TRUE/FALSE
 # Author:      Rob Hinch
 ###################################################################/
-utils.optimise.vectorized = function( f, a, v, b, tol = 1e-6, maximum = F, itmax = 100 )
+optimise.vectorized = function( f, a, v, b, tol = 1e-6, maximum = F, itmax = 100 )
 {
   # constants
   cgold = 0.3819660

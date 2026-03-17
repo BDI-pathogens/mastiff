@@ -1,7 +1,7 @@
 test_that( "Default $p() and $q() return the correct CDF and quantile function on distribution.discrete.class", {
   # Define a temporary class for binomial distribution with $p() and $r()
   # defined but not $p() or $q()
-  partial_discrete.class <- utils.class(
+  partial_discrete.class <- R6.class(
     classname = "distribution.discrete.tmp.class",
     inherit   = distribution.discrete.class,
     interfaces = list( distribution.interface ),

@@ -18,7 +18,7 @@ test_that( "utils.uniroot.vectorised() returns the same root as stats::uniroot()
   interval_lower <- sapply( intervals, min, na.rm = TRUE )
   interval_upper <- sapply( intervals, max, na.rm = TRUE )
 
-  mastiff_uniroot <- utils.uniroot.vectorized(
+  mastiff_uniroot <- uniroot.vectorized(
     f = test_func,
     lower = interval_lower,
     upper = interval_upper,

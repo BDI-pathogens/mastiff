@@ -17,3 +17,6 @@ An object of class [\link{distribution.continuous.normal.class}]
 \description{
 Constructor function for an object of class \code{distribution.continuous.normal.class}
 }
+\seealso{
+\link{Mastiff-Distributions}
+}

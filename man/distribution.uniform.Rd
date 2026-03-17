@@ -2,7 +2,7 @@
 % Please edit documentation in R/distribution_continuous.R
 \name{distribution.uniform}
 \alias{distribution.uniform}
-\title{distribution.exponential}
+\title{distribution.uniform}
 \usage{
 distribution.uniform(min = 0, max = 1)
 }
@@ -16,4 +16,7 @@ An object of class [\link{distribution.continuous.uniform.class}]
 }
 \description{
 Constructor function for an object of class \code{distribution.continuous.uniform.class}
+}
+\seealso{
+\link{Mastiff-Distributions}
 }
