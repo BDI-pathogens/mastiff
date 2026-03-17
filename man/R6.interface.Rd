@@ -24,7 +24,7 @@ and non-functions.}
 \item{active}{An optional list of active binding functions.}
 }
 \value{
-Object of class \link{R6.interface.class}
+Object of class \link{R6.interface}
 }
 \description{
 Constructor function for an interface for use with \link{R6.class}

@@ -19,6 +19,12 @@ Base class for derived distributions
 \item{\code{params}}{Named list of distribution parameters}
 
 \item{\code{interfaces}}{The list of available class interfaces}
+
+\item{\code{mean}}{Mean of the distribution}
+
+\item{\code{sd}}{Standard deviation of the distribution}
+
+\item{\code{var}}{Variance of the distribution}
 }
 \if{html}{\out{</div>}}
 }

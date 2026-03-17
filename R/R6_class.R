@@ -199,7 +199,7 @@ R6.class = function(
   }
   
   if ( is.null( active ) ) active <- list()
-  if ( is.null( inherit$active_methods ) ){
+  if ( is.null( inherit$active ) ){
     activeMethods <- active
   } else {
     activeMethods <- utils::modifyList( inherit$active,
@@ -286,10 +286,6 @@ R6.class.class = R6::R6Class(
 #
 # add interfaces to R6 class infrastructure
 ################################################################################/
-#' Class: `R6.interface.class`
-#' 
-#' @description R6 class acting as base interface class.
-
 R6.interface.class = R6::R6Class(
   "R6.interface.class",
   public = list(
@@ -314,7 +310,7 @@ R6.interface.class = R6::R6Class(
 #'   primarily for S3 method dispatch.
 #' @inheritParams R6::R6Class
 #' 
-#' @returns Object of class [R6.interface.class]
+#' @returns Object of class [R6.interface]
 #' 
 #' @export
 

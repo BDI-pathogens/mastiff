@@ -1,10 +1,38 @@
 # Include R6_util_class.R to guarantee R6.class() and R6.class.interface()
 # exist when loading the package prior to defining classes
 
+#' @name distribution
+#' @title Distribution Classes
+#' 
+#' @description Distributions implemented as R6 classes in [mastiff]
+#' @format NULL
+#' @usage NULL
+#' 
+#' @section Discrete Distributions:
+#'
+#' Discrete distributions with class [distribution.discrete.class]
+#' \tabular{ll}{
+#' [distribution.binomial] \tab Binomial distribution with size `size` and success probability `prob` \cr
+#' [distribution.negative_binomial] \tab Negative Binomial distribution with size `size` and success probability `prob` \cr
+#' [distribution.point_mass] \tab Point mass at `value` \cr
+#' [distribution.poisson]  \tab Poisson distribution with mean `lambda` \cr
+#' }
+#' 
+#' @section Continuous Distributions:
+#' 
+#' Discrete distributions with class [distribution.continuous.class]
+#' \tabular{ll}{
+#' [distribution.exponential] \tab Exponential distribution with rate `rate` \cr
+#' [distribution.gamma] \tab Gamma distribution with shape `shape` and rate `rate` \cr
+#' [distribution.normal]  \tab Normal distribution with mean `mean` and standard deviation `sd` \cr
+#' [distribution.uniform] \tab Uniform distribution on `[min, max]` \cr
+#' }
+#' 
 #' @include R6_class.R
+NULL
 
 ##################################################################/
-#  distribution.abstract.class
+#  distribution.interface
 ###################################################################/
 # Interface for all distributions, enforcing the definition of
 #   - d: density function
@@ -62,6 +90,9 @@ distribution.interface <- R6.interface(
 #' @field param_names  The names of all distribution parameters
 #' @field params       Named list of distribution parameters
 #' @field interfaces   The list of available class interfaces
+#' @field mean         Mean of the distribution
+#' @field sd           Standard deviation of the distribution
+#' @field var          Variance of the distribution
 
 distribution.abstract.class <- R6.class(
   classname  = "distribution.abstract.class",
@@ -122,7 +153,10 @@ distribution.abstract.class <- R6.class(
       if ( missing( new_val ) ) return( private$.params )
       private$.check_params( new_val )
       private$.params <- new_val
-    }
+    },
+    mean = function( val ) stop( "`mean` not implemented on derived class" ),
+    sd   = function( val ) stop( "`sd` not implemented on derived class" ),
+    var  = function( val ) stop( "`var` not implemented on derived class" )
   ),
   public = list(
     ##############################################################################/
@@ -164,7 +198,6 @@ distribution.abstract.class <- R6.class(
 ################################################################################/
 # is.distribution
 ################################################################################/
-#' @rdname distribution
 #' @title Distribution Classes
 #'
 #' @description Available distributions implemented in `mastiff`.

@@ -403,8 +403,6 @@ test_that( "Arguments of class methods can be defined in any order", {
   )
 })
 
-######################
-
 test_that( "Derived classes inherit and check interfaces from parent class", {
   interfaceA <- R6.interface( 
     interfacename = "interfaceA",
@@ -459,6 +457,61 @@ test_that( "Derived classes inherit and check interfaces from parent class", {
       classname = "classB",
       inherit = classA,
       public  = list( funcA = function( x ) return( T ) )
+    )
+  )
+})
+
+test_that( "Derived classes inherit all public methods, private methods and active fields from parent class", {
+  interfaceA <- R6.interface( 
+    interfacename = "interfaceA",
+    public  = list( funcA = function( xA ) NULL ),
+    private = list( funcB = function( xB ) NULL ),
+    active  = list( funcC = function( xC ) NULL )
+  )
+  
+  expect_no_error(
+    classA <- R6.class(
+      classname  = "classA",
+      public     = list( funcA = function( xA ) return( T ) ),
+      private    = list( funcB = function( xB ) return( T ) ),
+      active     = list( funcC = function( xC ) return( T ) ),
+      interfaces = list( interfaceA )
+    )
+  )
+  
+  # Derived class inherits everything from parent class without adding anything
+  # new
+  expect_no_error(
+    R6.class(
+      classname = "classB",
+      inherit   = classA
+    )
+  )
+  
+  # Derived class inherits private and active but overwrites public
+  expect_no_error(
+    R6.class(
+      classname = "classB",
+      inherit   = classA,
+      public    = list( funcA = function( xA ) return( xA ) )
+    )
+  )
+  
+  # Derived class inherits public and active but overwrites private
+  expect_no_error(
+    R6.class(
+      classname = "classB",
+      inherit   = classA,
+      private   = list( funcB = function( xB ) return( xB ) )
+    )
+  )
+  
+  # Derived class inherits public and private but overwrites active
+  expect_no_error(
+    R6.class(
+      classname = "classB",
+      inherit   = classA,
+      active    = list( funcC = function( xC ) return( xC ) )
     )
   )
 })
