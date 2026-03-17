@@ -19,7 +19,7 @@
 #' @field support    The support of the continuous distribution, i.e. the subset
 #'   of values for which the density is positive,
 #' 
-#' @include utils_R6.R
+#' @include R6_class.R
 #' @include distribution_R6_class.R
 distribution.discrete.class <- R6.class(
   classname = "distribution.discrete.class",

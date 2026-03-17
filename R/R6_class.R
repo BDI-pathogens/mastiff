@@ -336,7 +336,7 @@ R6.interface = function(
 # implemented check private internal variable directly to prevent accidental
 # name mismatches
 ################################################################################/
-#' R6.class.interface.implements
+#' R6.interface.implements
 #'
 #' @description Checks to see whether interface `interfaceName` has been
 #'   implemented on object `object`.
@@ -347,7 +347,7 @@ R6.interface = function(
 #'
 #' @export
 
-R6.class.interface.implements = function(
+R6.interface.implements = function(
     object,
     interfaceName
 ){

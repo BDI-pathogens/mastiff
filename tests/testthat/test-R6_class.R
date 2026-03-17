@@ -1,5 +1,5 @@
 test_that( "Interface and class classnames are correctly assigned", {
-  interfaceA <- R6.class.interface(
+  interfaceA <- R6.interface(
     interfacename = "test_interface",
     private       = list( funcA = function( xA )     return( T ) ),
     public        = list( funcB = function( xB, yB ) return( T ) ),
@@ -15,11 +15,11 @@ test_that( "Interface and class classnames are correctly assigned", {
     interfaces = list( interfaceA )
   )
   expect_equal( classA$classname, "test_class" )
-  expect_true( R6.class.interface.implements( classA$new(), "test_interface" ) )
+  expect_true( R6.interface.implements( classA$new(), "test_interface" ) )
 })
 
 test_that( "A single interface can be passed in without wrapping in a list", {
-  interfaceA <- R6.class.interface(
+  interfaceA <- R6.interface(
     interfacename = "test_interface",
     private       = list( funcA = function( xA )     return( T ) ),
     public        = list( funcB = function( xB, yB ) return( T ) ),
@@ -38,7 +38,7 @@ test_that( "A single interface can be passed in without wrapping in a list", {
 })
 
 test_that( "Interface forces class to define all methods on interface", {
-  interfaceA <- R6.class.interface(
+  interfaceA <- R6.interface(
     interfacename = "test_interface",
     private       = list( funcA = function( xA )     return( T ) ),
     public        = list( funcB = function( xB, yB ) return( T ),
@@ -121,7 +121,7 @@ test_that( "Interface forces class to define all methods on interface", {
 })
 
 test_that( "Interface forces function signature of class' methods to contain required arguments", {
-  interfaceA <- R6.class.interface(
+  interfaceA <- R6.interface(
     interfacename = "test_interface",
     private       = list( funcA = function( xA )     return( T ) ),
     public        = list( funcB = function( xB, yB ) return( T ),
@@ -203,7 +203,7 @@ test_that( "Interface forces function signature of class' methods to contain req
 })
 
 test_that( "Class may include additional optional arguments compared to interface", {
-  interfaceA <- R6.class.interface(
+  interfaceA <- R6.interface(
     interfacename = "test_interface",
     public        = list( funcA = function( xA ) return( T ) )
   )
@@ -237,7 +237,7 @@ test_that( "Class may include additional optional arguments compared to interfac
 })
 
 test_that( "Multiple interfaces can be enforced on a class", {
-  interfaceA <- R6.class.interface( 
+  interfaceA <- R6.interface( 
     interfacename = "test_interface",
     private = list( funcA = function( xA )     return( T ) ),
     public  = list( funcB = function( xB, yB ) return( T ),
@@ -245,7 +245,7 @@ test_that( "Multiple interfaces can be enforced on a class", {
     active  = list( funcD = function( xD )     return( T ) )
   )
   
-  interfaceB <- R6.class.interface( 
+  interfaceB <- R6.interface( 
     interfacename = "test_interface2",
     public  = list( funcE = function( xE ) return( T ) ),
   )
@@ -291,12 +291,12 @@ test_that( "Multiple interfaces can be enforced on a class", {
 test_that( "Incompatible interfaces throw an error", {
   # If two interfaces define incompatible function signatures, a class calling
   # both interfaces shouldn't be created
-  interfaceA <- R6.class.interface( 
+  interfaceA <- R6.interface( 
     interfacename = "test_interface",
     public  = list( funcA = function( xA ) return( T ) )
   )
   
-  interfaceB <- R6.class.interface( 
+  interfaceB <- R6.interface( 
     interfacename = "test_interface",
     public  = list( funcA = function( xB ) return( T ) )
   )
@@ -329,7 +329,7 @@ test_that( "Incompatible interfaces throw an error", {
 })
 
 test_that( "Arguments of class methods can be defined in any order", {
-  interfaceA <- R6.class.interface(
+  interfaceA <- R6.interface(
     interfacename = "test_interface",
     public        = list( funcA = function( xA, yA ) return( T ) )
   )
@@ -406,7 +406,7 @@ test_that( "Arguments of class methods can be defined in any order", {
 ######################
 
 test_that( "Derived classes inherit and check interfaces from parent class", {
-  interfaceA <- R6.class.interface( 
+  interfaceA <- R6.interface( 
     interfacename = "interfaceA",
     public  = list( funcA = function( xA ) return( T ) )
   )

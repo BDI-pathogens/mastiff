@@ -19,7 +19,7 @@
 #' @field support    The support of the continuous distribution, i.e. the subset
 #'   of values for which the density is positive,
 #' 
-#' @include utils_R6.R
+#' @include R6_class.R
 #' @include distribution_R6_class.R
 distribution.continuous.class <- R6.class(
   classname = "distribution.continuous.class",
@@ -104,7 +104,7 @@ distribution.continuous.class <- R6.class(
       
       density_p_shift <- function( x ){ self$p( transform( x ), log = FALSE ) - p }
       num_p         <- length( p )
-      q <- utils.uniroot.vectorized(
+      q <- uniroot.vectorized(
         f = density_p_shift,
         lower = rep( 0, num_p ),
         upper = rep( 1, num_p )
