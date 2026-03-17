@@ -24,7 +24,7 @@
 # R6.class
 ################################################################################/
 ##### NOTE: All derived R6 classes using interfaces in mastiff should include
-##### this file via Roxygen using the include tag: #' @include R6_util_class.R
+##### this file via Roxygen using the include tag: #' @include R6_class.R
 ##### to update the collate field in DESCRIPTION.
 #####
 ##### Typically this is only for safety, but if a derived class is defined with
