@@ -2,18 +2,18 @@
 % Please edit documentation in R/distribution_R6_class.R
 \name{is.distribution}
 \alias{is.distribution}
-\title{Distribution Classes}
+\title{is.distribution}
 \usage{
 is.distribution(x)
 }
 \arguments{
-\item{x}{An R object.
-
-\code{is.distribution( x )} checks where an object \code{x} inherits from either
-\link{distribution.discrete.class} or \link{distribution.continuous.class}
-
-\code{mastiff}}
+\item{x}{An R object.}
 }
 \description{
-Available distributions implemented in \code{mastiff}.
+Checks whether an object \code{x} is a R6 distribution class implemented by
+\link[=Mastiff-Distributions]{mastiff}, i.e. inherits either
+\link{distribution.discrete.class} or \link{distribution.continuous.class}
+}
+\seealso{
+\link{Mastiff-Distributions}
 }
