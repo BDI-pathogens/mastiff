@@ -40,6 +40,8 @@
 #'   `upper` and will contain the overflow. Use this arg to specify either a
 #'   single value to be used for all params, or a named numeric vector whose
 #'   names are params.
+#' @param nrow,ncol Number of rows and columns for how the individual plots for
+#' each parameter are arranged into a grid. Passed to [ggplot2::facet_wrap()].
 #' @param skip_stanfit_to_dt If this argument is set to `TRUE`, the
 #'   `posterior_samples` argument (and the `prior_samples` argument if used)
 #'   should be used to provide a datatable of samples instead of a stanfit
@@ -65,6 +67,8 @@ plot_posterior <- function(posterior_samples,
                            labels = NA,
                            lower = NA,
                            upper = NA,
+                           nrow = NA,
+                           ncol = NA,
                            skip_stanfit_to_dt = NA,
                            bins = 30) {
 
@@ -78,6 +82,11 @@ plot_posterior <- function(posterior_samples,
   have_upper <- ! identical(NA, upper)
 
   check_numeric(bins, lower = 1)
+
+  # Recode defaults for nrow and ncol (NA, chosen so that they appear in the
+  # docs here) to NULL (their defaults in facet_wrap)
+  if (identical(NA, nrow)) nrow <- NULL
+  if (identical(NA, ncol)) ncol <- NULL
 
   # Get the posterior samples into a dt with only the desired params
   if (identical(skip_stanfit_to_dt, NA)) {
@@ -334,7 +343,10 @@ plot_posterior <- function(posterior_samples,
   }
 
   plot <- ggplot2::ggplot(dt) +
-    ggplot2::facet_wrap(~ param, scales = "free") +
+    ggplot2::facet_wrap(~ param,
+                        scales = "free",
+                        nrow = nrow,
+                        ncol = ncol) +
     ggplot2::theme_classic() +
     ggplot2::coord_cartesian(expand = FALSE)
   if (have_prior) {
