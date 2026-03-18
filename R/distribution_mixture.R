@@ -139,7 +139,7 @@ distribution.mixture.class <- R6.class(
 #' 
 #' Constructor function for an object of class `distribution.mixture.class`
 #' 
-#' @param distributions a list of distributions (all uniform or all discrete)
+#' @param distributions a list of distributions (all continuous)
 #' @param weights the mixture weight of each distribution (sum to 1)
 #' 
 #' @returns An object of class [[distribution.mixture.class]]
