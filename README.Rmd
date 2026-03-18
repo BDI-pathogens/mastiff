@@ -13,15 +13,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-# mastiff <img src="man/figures/mastiff_logo_2.svg" align="right" height="138" /></a>
+# mastiff <img src="man/figures/mastiff_logo_2.svg" align="right" height="148" /></a>
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-mastiff is short for MAthematical and STatistical utIlities by the Fraser group at oxFord.
+mastiff is short for **ma**thematical and **st**atistical ut**i**lities by the **F**raser group at Ox**f**ord.
 That's [Christophe Fraser's group](https://www.bdi.ox.ac.uk/research/fraser-pathogen-dynamics-group) in the [Pandemic Sciences Institute](https://www.psi.ox.ac.uk/), University of Oxford.
 We work on infectious disease epidemiology.
-This package will collect R and stan code we've written to implement mathematical and statistical methods (and bits of code that facilitate those) that has usefulness beyond infectious disease epidemiology.
+This package will collect mathematical and statistical methods we write in R (and stan) that have usefulness beyond infectious disease epidemiology.
 
 ## Installation
 
