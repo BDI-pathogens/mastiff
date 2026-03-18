@@ -54,6 +54,7 @@ Collate:
     'distribution_R6_class.R'
     'distribution_continuous.R'
     'distribution_discrete.R'
+    'distribution_mixture.R'
     'mastiff-package.R'
     'mixture_of_two_normals.R'
     'plot_posterior.R'

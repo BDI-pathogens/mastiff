@@ -237,14 +237,15 @@ distribution.abstract.class <- R6.class(
 ################################################################################/
 # is.distribution
 ################################################################################/
-#' @title Distribution Classes
+#' is.distribution
 #'
-#' @description Available distributions implemented in `mastiff`.
+#' Checks whether an object `x` is a R6 distribution class implemented by
+#' [mastiff][Mastiff-Distributions], i.e. inherits either
+#' [distribution.discrete.class] or [distribution.continuous.class]
 #'
 #' @param x An R object.
 #' 
-#' `is.distribution( x )` checks where an object `x` inherits from either
-#' [distribution.discrete.class] or [distribution.continuous.class]
-#' 
-#' `mastiff`
+#' @seealso [Mastiff-Distributions]
+#' @export
+
 is.distribution <- function( x ) inherits( x, 'distribution.abstract.class' )
