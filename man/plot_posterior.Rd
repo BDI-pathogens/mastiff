@@ -13,6 +13,8 @@ plot_posterior(
   labels = NA,
   lower = NA,
   upper = NA,
+  nrow = NA,
+  ncol = NA,
   skip_stanfit_to_dt = NA,
   bins = 30
 )
@@ -63,6 +65,9 @@ sampled values that are greater than \code{upper} are decreased to exactly equal
 \code{upper} and will contain the overflow. Use this arg to specify either a
 single value to be used for all params, or a named numeric vector whose
 names are params.}
+
+\item{nrow, ncol}{Number of rows and columns for how the individual plots for
+each parameter are arranged into a grid. Passed to \code{\link[ggplot2:facet_wrap]{ggplot2::facet_wrap()}}.}
 
 \item{skip_stanfit_to_dt}{If this argument is set to \code{TRUE}, the
 \code{posterior_samples} argument (and the \code{prior_samples} argument if used)

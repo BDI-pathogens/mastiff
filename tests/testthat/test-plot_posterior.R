@@ -288,5 +288,6 @@ if (do_manual_visual_testing) {
   plot_posterior(posterior_dt, prior_samples = prior_dt, upper = 10, skip_stanfit_to_dt = TRUE)
   plot_posterior(posterior_dt, prior_samples = prior_dt, lower = 2, skip_stanfit_to_dt = TRUE)
   plot_posterior(posterior_dt, prior_samples = prior_dt, lower = 2, upper = 10, skip_stanfit_to_dt = TRUE)
+  plot_posterior(posterior, nrow = 2)
 
 }
