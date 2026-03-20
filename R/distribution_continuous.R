@@ -702,3 +702,136 @@ distribution.normal <- function( mean, sd ){
   distribution.continuous.normal.class$new( mean = mean,
                                             sd   = sd )
 }
+
+################################################################################/
+#  distribution.continuous.lognormal
+################################################################################/
+#' Class: `distribution.continuous.lognormal.class`
+#' @description Derived class for a lognormally-distributed random variable.
+#'
+#' @param meanlog    the mean of log(X)
+#' @param sdlog      the standard deviation of log(X)
+#' @param x          vector of quantiles.
+#' @param q          vector of quantiles.
+#' @param p          vector of probabilities.
+#' @param n          number of observations. If `length( n ) > 1`, the length is
+#'   taken to be the number required.
+#' @param log        logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param lower.tail logical; if TRUE (default), probabilities are 
+#'   \eqn{P[ X \leq x ]}, otherwise, \eqn{P[X>x]}.
+#' 
+#' @field interfaces The list of available class interfaces
+#' @field mean      the mean of the distribution
+#' @field sd        the standard deviation of the distribution
+#' @field var       the variance of the distribution
+distribution.continuous.lognormal.class <- R6.class(
+  classname = "distribution.continuous.lognormal.class",
+  inherit   = distribution.continuous.class,
+  private   = list(
+    .name    = "lognormal",
+    .param_names = c( "meanlog",  "sdlog" ),
+    .check_params = function( params ){
+      # Check that params contains all elements of private$.param_names
+      super$.check_params( params )
+      
+      if ( !is.numeric( params$meanlog ) )
+        stop( "`params$meanlog` must be a numeric value.")
+      if ( params$sdlog < 0 || !is.numeric( params$sdlog ) )
+        stop( "`params$sdlog` must be a non-negative numeric value.")
+      
+      return( NULL )
+    }
+  ),
+  public = list(
+    ############################################################################/
+    # initialize
+    ############################################################################/
+    #' @description Create a new object of class
+    #'   `distribution.continuous.normal.class`
+    initialize = function( meanlog, sdlog ){
+      super$initialize( support = c( 0, Inf ) )
+      self$params <- list( meanlog = meanlog,
+                           sdlog   = sdlog )
+    },
+    ############################################################################/
+    # density
+    ############################################################################/
+    #' @description Density function for a lognormal random variable with mean log(X)
+    #'   `$params$meanlog` and standard deviation log(X) `$params$sdlog`.
+    d = function( x, log = FALSE ){
+      stats::dlnorm( x, meanlog = private$.params$meanlog, sdlog = private$.params$sdlog,
+                    log = log )
+    },
+    ############################################################################/
+    # distribution function
+    ############################################################################/
+    #' @description Cumulative density function for a lognormal random variable
+    #'   with mean log(X) `$params$meanlog` and standard deviation log(X) `$params$sdlog`.
+    p = function( q, lower.tail = TRUE, log.p = FALSE ){
+      stats::plnorm( q, meanlog = private$.params$meanlog, sdlog = private$.params$sdlog,
+                    lower.tail = lower.tail, log.p = log.p )
+    },
+    ############################################################################/
+    # quantile function
+    ############################################################################/
+    #' @description Quantile function for a lognormal random variable with mean
+    #'  log(X)  `$params$meanlog` and standard deviation log(X) `$params$sdlog`.
+    q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      stats::qlnorm( p, meanlog = private$.params$meanlog, sdlog = private$.params$sdlog,
+                    lower.tail = lower.tail, log.p = log.p )
+    },
+    ############################################################################/
+    # random deviates
+    ############################################################################/
+    #' @description Generates random deviates for a lognormal random variable with
+    #'   mean log(X) `$params$meanlog` and standard deviation logx(X) `$params$sdlog` .
+    r = function( n ){
+      stats::rlnorm( n, meanlog = private$.params$meanlog, sdlog = private$.params$sdlog )
+    }
+  ),
+  active = list(
+    ############################################################################/
+    # mean
+    ############################################################################/
+    mean = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$mean`" )
+      return( exp( private$.params$meanlog + 0.5 * private$.params$sdlog^2 ) )
+    },
+    ############################################################################/
+    # standard deviation
+    ############################################################################/
+    sd = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$sd`" )
+      return( sqrt( self$var ) )
+    },
+    ############################################################################/
+    # variance
+    ############################################################################/
+    var = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$var`" )
+      sigma2 <- private$.params$sdlog^2
+      mu     <- private$.params$meanlog
+      return( ( exp( sigma2) - 1 ) * exp( 2 * mu + sigma2 ) )
+    }
+  )
+)
+
+#' distribution.lognormal
+#' 
+#' Constructor function for an object of class `distribution.continuous.lognormal.class`
+#' 
+#' @param meanlog The mean of log(X)
+#' @param sdlog   The standard deviation log(X)
+#' 
+#' @returns An object of class [[distribution.continuous.lognormal.class]]
+#'
+#' @seealso [Mastiff-Distributions]
+#' @export
+distribution.lognormal <- function( meanlog, sdlog ){
+  distribution.continuous.lognormal.class$new( meanlog = meanlog,
+                                               sdlog   = sdlog )
+}

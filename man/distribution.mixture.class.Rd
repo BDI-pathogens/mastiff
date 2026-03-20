@@ -9,6 +9,19 @@ Class to describe the mixture of distributions
 \section{Super classes}{
 \code{mastiff::R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{mastiff::distribution.continuous.class}} -> \code{distribution.mixture.class}
 }
+\section{Active bindings}{
+\if{html}{\out{<div class="r6-active-bindings">}}
+\describe{
+\item{\code{n_distributions}}{the number of distributions in the mixture}
+
+\item{\code{distributions}}{the distributions in the mixture}
+
+\item{\code{weights}}{the weights of the distributions in the mixture}
+
+\item{\code{interfaces}}{the list of available class interfaces}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -29,6 +42,15 @@ Create a new object of class \code{distribution.mixture.class}
 \if{html}{\out{<div class="r">}}\preformatted{distribution.mixture.class$new(distributions, weights)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{distributions}}{list of distributions in the mixture}
+
+\item{\code{weights}}{vector of weights of the distributions in the mixture}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.mixture.class-d"></a>}}
@@ -39,6 +61,15 @@ Density function for a random variable of the mixture
 \if{html}{\out{<div class="r">}}\preformatted{distribution.mixture.class$d(x, log = FALSE)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{vector of quantiles.}
+
+\item{\code{log}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.mixture.class-p"></a>}}
@@ -93,6 +124,14 @@ Generates random samples of the mixture
 \if{html}{\out{<div class="r">}}\preformatted{distribution.mixture.class$r(n)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{n}}{number of observations. If \code{length( n ) > 1}, the length is
+taken to be the number required.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.mixture.class-clone"></a>}}
