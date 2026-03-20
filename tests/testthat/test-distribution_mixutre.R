@@ -50,11 +50,21 @@ test_that( "Test mixture distribution", {
       expect_equal( mix$d( c(1,2) ),       mix$distributions[[idx]]$d( c(1,2) ) )
       expect_equal( mix$p( c(0.25,0.75) ), mix$distributions[[idx]]$p( c(0.25,0.75) ) )
       expect_equal( mix$q( c(0.25,0.75) ), mix$distributions[[idx]]$q( c(0.25,0.75) ) )
+      
+      # add log version
+      expect_equal( mix$d( c(1,2), log = T ), mix$distributions[[idx]]$d( c(1,2), log = T ) )
+      expect_equal( mix$p( c(1,2), log = T ), mix$distributions[[idx]]$p( c(1,2), log = T ) )
     }
     
-    # check the distribution of random draws from mixture agree with CDF
+    # check log version for meaningful mixtures
     weights <- seq( 1:mix$n_distributions )
     mix$weights <- weights / sum( weights )
+    dd <- unlist( lapply( 1:mix$n_distributions, function( idx ) mix$distributions[[idx]]$d( 1.1 ) ) )
+    expect_equal( mix$d( 1.1, log = T ), log( sum( dd * mix$weights ) ) )
+    pd <- unlist( lapply( 1:mix$n_distributions, function( idx ) mix$distributions[[idx]]$p( 1.1 ) ) )
+    expect_equal( mix$p( 1.1, log = T ), log( sum( pd * mix$weights ) ) )
+    
+    # check the distribution of random draws from mixture agree with CDF
     n_samples <- 1e4
     xs <- mix$r( n_samples )
     
