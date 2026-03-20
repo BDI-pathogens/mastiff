@@ -33,6 +33,7 @@ Imports:
     rstantools (>= 2.4.0),
     dplyr,
     magrittr,
+    matrixStats,
     purrr,
     stringr,
     R6 (>= 2.4.1)
