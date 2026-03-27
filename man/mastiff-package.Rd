@@ -14,6 +14,7 @@ TODO: A DESCRIPTION OF THE PACKAGE
 Useful links:
 \itemize{
   \item \url{https://github.com/BDI-pathogens/mastiff}
+  \item \url{https://bdi-pathogens.github.io/mastiff/}
   \item Report bugs at \url{https://github.com/BDI-pathogens/mastiff/issues}
 }
 

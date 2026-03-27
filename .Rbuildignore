@@ -4,3 +4,6 @@
 ^data-raw$
 LICENSE
 ^README\.Rmd$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
