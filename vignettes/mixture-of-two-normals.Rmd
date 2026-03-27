@@ -2,12 +2,12 @@
 title: "Mixture of two normals"
 output: rmarkdown::html_vignette
 vignette: >
-%\VignetteIndexEntry{mixture-of-two-normals}
+  %\VignetteIndexEntry{mixture-of-two-normals}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  ---
+---
   
-  \newcommand{\|}{\: | \:}
+\newcommand{\|}{\: | \:}
   
 ```{r, include = FALSE}
 knitr::opts_chunk$set(

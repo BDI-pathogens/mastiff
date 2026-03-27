@@ -11,3 +11,4 @@ src/*.h
 mastiff_*.tar.gz
 *.DS_Store
 ..Rcheck/
+docs
