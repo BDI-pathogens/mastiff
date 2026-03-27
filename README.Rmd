@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# mastiff <img src="man/figures/mastiff_logo.svg" align="right" height="139" alt="mastiff logo" />
+# mastiff <img src="man/figures/logo.svg" align="right" height="139" alt="mastiff logo" />
 
 <!-- badges: start -->
 <!-- badges: end -->
