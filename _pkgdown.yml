@@ -1,3 +1,67 @@
 url: ~
 template:
   bootstrap: 5
+
+reference:
+  - contents:
+      - check_logical
+      - check_numeric
+      - estimate_mixture_of_two_normals
+      - logistic
+      - logit
+      - plot_posterior
+      - posterior_intervals
+      - posterior_mass_in_range
+      - posterior_means
+      - rename_params_cmdstanfile_to_rstan
+      - simulate_mixture_of_two_normals
+      - stan_example_regression
+      - stanfit_to_matrix
+      - uniroot.vectorized
+
+  - title: R6 Interface Classes
+    desc: >
+      Class definitions for an extension to R6 classes including interfaces
+    contents:
+      - R6.class
+      - R6.interface
+      - R6.interface.implements
+  
+  - title: R6 Distribution Classes
+    desc: >
+        Constructor functions for R6 distribution classes
+    contents:
+      - Mastiff-Distributions
+      - is.distribution
+      - distribution.mixture
+    
+  - subtitle: Discrete Distributions
+    contents:
+      - distribution.binomial
+      - distribution.negative_binomial
+      - distribution.point_mass
+      - distribution.poisson
+    
+  - subtitle: Continuous Distributions
+    contents:
+      - distribution.exponential
+      - distribution.gamma
+      - distribution.lognormal
+      - distribution.normal
+      - distribution.uniform
+
+  - title: Class Definitions
+    contents:
+      - distribution.abstract.class
+      - distribution.continuous.class
+      - distribution.continuous.exponential.class
+      - distribution.continuous.gamma.class
+      - distribution.continuous.lognormal.class
+      - distribution.continuous.normal.class
+      - distribution.continuous.uniform.class
+      - distribution.discrete.binomial.class 
+      - distribution.discrete.class
+      - distribution.discrete.negative_binomial.class
+      - distribution.discrete.point_mass.class
+      - distribution.discrete.poisson.class
+      - distribution.mixture.class
