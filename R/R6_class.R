@@ -154,7 +154,7 @@ R6.class = function(
   assign( "R6.class.parent", R6.class.parent, envir = envir )
   
   # add interfaces to R6 class
-  if( !is.list( interfaces ) ) interfaces = list( interfaces )
+  if ( !is.list( interfaces ) ) interfaces = list( interfaces )
   if ( !is.null( inherit$private_fields$.INTERNAL_INTERFACES ) ){
     interfaces <- c( inherit$private_fields$.INTERNAL_INTERFACES,
                      interfaces )
@@ -169,8 +169,10 @@ R6.class = function(
   if ( nInterfaces >= 2 ){
     for ( idx in 1 : ( nInterfaces - 1 ) ){
       interface1 <- interfaces[[ idx ]]
-      for ( jdx in 2 : nInterfaces ){
+      for ( jdx in ( idx + 1 ) : nInterfaces ){
         interface2 <- interfaces[[ jdx ]]
+        
+        # Validate public methods
         .validate_interface_methods(
           methodList1 = c( interface1$public_fields, interface1$public_methods ),
           methodList2 = c( interface2$public_fields, interface2$public_methods ),
@@ -178,39 +180,71 @@ R6.class = function(
           iName2      = interface2$classname,
           error_type  = "public method"
         )
+        
+        # Validate private methods
+        .validate_interface_methods(
+          methodList1 = c( interface1$private_fields, interface1$private_methods ),
+          methodList2 = c( interface2$private_fields, interface2$private_methods ),
+          iName1      = interface1$classname,
+          iName2      = interface2$classname,
+          error_type  = "private method"
+        )
       }
     }
   }
   
-  # if inheriting a class, we need to include all inherited methods
-  if ( is.null( inherit$public_methods ) ){
-    publicMethods <- public
-  } else {
-    publicMethods <- utils::modifyList( inherit$public_methods,
-                                        public )
-  }
+  # If inheriting a class, we need to include all public, private and active
+  # methods from all parent classes
   
-  if ( is.null( private ) ) private <- list()
-  if ( is.null( inherit$private_methods ) ){
-    privateMethods <- private
+  ## Instantiate publicMethods, privateMethods and activeMethods
+  ## Note: Creating publicMethods, privateMethods, activeMethods maintains the
+  ##       R6 generator style where inherited methods are only realised at
+  ##       instantiation - R6 generators don't see inherited methods by default.
+  ##       This could be changed by directly changing public, private and active
+  ##       instead.
+  publicMethods  <- public
+  if ( is.null( private ) ){
+    privateMethods <- list()
   } else {
-    privateMethods <- utils::modifyList( inherit$private_methods,
-                                         private )
+    privateMethods  <- private
   }
-  
-  if ( is.null( active ) ) active <- list()
-  if ( is.null( inherit$active ) ){
+  if ( is.null( active ) ){
+    activeMethods <- list()
+  } else {
     activeMethods <- active
-  } else {
-    activeMethods <- utils::modifyList( inherit$active,
-                                        active )
+  }
+  
+  ## Loop over parent classes to include all inherited methods and fields for
+  ## interface validation
+  inherited_class <- inherit
+  while( !is.null( inherited_class ) ){
+    ## Append public methods from inherited class (if there are any)
+    if ( !is.null( inherited_class$public_methods ) ){
+      publicMethods <- utils::modifyList( inherited_class$public_methods,
+                                          publicMethods )
+    }
+    
+    ## Append private methods from inherited class (if there are any)
+    if ( !is.null( inherited_class$private_methods ) ){
+      privateMethods <- utils::modifyList( inherited_class$private_methods,
+                                           privateMethods )
+    }
+    
+    ## Append public methods from inherited class (if there are any)
+    if ( !is.null( inherited_class$active ) ){
+      activeMethods <- utils::modifyList( inherited_class$active,
+                                          activeMethods )
+    }
+    
+    ## Update inherited class to its parent
+    inherited_class <- inherited_class$get_inherit()
   }
   
   # Check that new class defines all methods specified by all interfaces with
   # the correct required arguments
   for ( interface in interfaces ){
     if ( interface$inherit != "R6.interface.class")
-      stop( "Interfaces must be created by R6.interface (i.e. must inherit R6.interface.class" )
+      stop( "Interfaces must be created by R6.interface (i.e. must inherit R6.interface.class)" )
     
     iName <- interface$classname
     
