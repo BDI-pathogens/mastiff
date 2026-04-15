@@ -70,43 +70,72 @@ R6.class = function(
   # defined class.
   .validate_interface_method_args <- function( method_list, iMethod_list, iName,
                                                error_type = "public method" ){
-    # For each method defined on the interface of type `method_type`, check that
-    # the class defines a method with the same name and the same set of required
-    # arguments
-    methNames <- names( method_list )
-    for ( iMethod in iMethod_list ){
-      if ( !is.null( iMethod ) ){
-        for ( iMethName in names( iMethod ) ){
-          # clone method must exist on R6 class and does not need to be checked
-          if ( iMethName == "clone" ) next
-          
-          # Check iMethName is defined on class (with any set of arguments)
-          if ( !( iMethName %in% methNames ) ){
-            stop( sprintf( "must implement %s %s on interface %s",
-                           error_type, iMethName, iName))
-          }
-          
-          # Check required arguments for interface public method
-          iArgs <- formalArgs( iMethod[[ iMethName ]] )
-          r_iArgs <- .get_required_args( iMethod[[ iMethName ]] )
-          
-          # Check required arguments for new class public method
-          args  <- formalArgs( method_list[[ iMethName ]] )
-          r_args  <- .get_required_args( method_list[[ iMethName ]] )
-          
-          if( length( r_iArgs ) ) {
-            if( !all( r_iArgs %in% args ) )
-              stop( sprintf( "incorrect arguments for %s %s on interface %s",
-                             error_type, iMethName, iName ) )
-          }
-          if( length( r_args ) ) {
-            if( !all( r_args %in% iArgs ) )
-              stop( sprintf( "incorrect arguments for %s %s on interface %s",
-                             error_type, iMethName, iName ) )
-          }
-        }
+    # For each method defined on the interface, check that the class defines a
+    # method with the same name and the same set of required arguments
+    methNames  <- names( method_list )
+    iMethNames <- names( iMethod_list )
+    
+    # Verify that all interface methods are defined on class (with any set of
+    # function arguments)
+    if ( !all( iMethNames %in% methNames ) ){
+      missing_methods <- setdiff( iMethNames, methNames )
+      
+      # Change error message depending on how many methods are missed
+      if ( length( missing_methods ) == 1 ){
+        stop( sprintf( "must implement %s %s on interface %s",
+                       error_type, missing_methods, iName ) )
+      } else {
+        stop( sprintf( "must implement %ss %s on interface %s",
+                       error_type, paste( missing_methods, collapse = ', ' ),
+                       iName ) )
       }
     }
+    
+    # For each interface method, verify that the corresponding class method has
+    # the correct function signature
+    for ( iMethName in iMethNames ){
+      # clone method is created automatically and does not need to be checked
+      if ( iMethName == "clone" ) next
+      
+      iMethod <- iMethod_list[[ iMethName ]] # Interface method
+      cMethod <-  method_list[[ iMethName ]] # Class method
+      
+      # If iMethod is not a function, then the class should defined a field not
+      # a method. This error should never be thrown because fields and methods
+      # are split by the calling loop in R6.class, but is here for safety.
+      #
+      # The control flow here avoids a warning
+      #    `argument is not a function`
+      # thrown by formalArgs()
+      if ( !is.function( iMethod ) ){
+        if ( is.function( cMethod ) ){
+          stop( "class method %s is a function but should be a field",
+                iMethName )
+        }
+        next
+      }
+      
+      # Optional and required arguments for interface method
+      iArgs   <- formalArgs( iMethod )         # Optional and required arguments
+      r_iArgs <- .get_required_args( iMethod ) # Required arguments only
+      
+      # Optional and required arguments for class method
+      args   <- formalArgs( cMethod )         # Optional and required arguments
+      r_args <- .get_required_args( cMethod ) # Required arguments only
+      
+      if( length( r_iArgs ) ) {
+        if( !all( r_iArgs %in% args ) )
+          stop( sprintf( "incorrect arguments for %s %s on interface %s",
+                         error_type, iMethName, iName ) )
+      }
+      if( length( r_args ) ) {
+        if( !all( r_args %in% iArgs ) )
+          stop( sprintf( "incorrect arguments for %s %s on interface %s",
+                         error_type, iMethName, iName ) )
+      }
+    }
+    
+    
     return( invisible() )
   }
   
@@ -154,7 +183,7 @@ R6.class = function(
   assign( "R6.class.parent", R6.class.parent, envir = envir )
   
   # add interfaces to R6 class
-  if( !is.list( interfaces ) ) interfaces = list( interfaces )
+  if ( !is.list( interfaces ) ) interfaces = list( interfaces )
   if ( !is.null( inherit$private_fields$.INTERNAL_INTERFACES ) ){
     interfaces <- c( inherit$private_fields$.INTERNAL_INTERFACES,
                      interfaces )
@@ -169,8 +198,10 @@ R6.class = function(
   if ( nInterfaces >= 2 ){
     for ( idx in 1 : ( nInterfaces - 1 ) ){
       interface1 <- interfaces[[ idx ]]
-      for ( jdx in 2 : nInterfaces ){
+      for ( jdx in ( idx + 1 ) : nInterfaces ){
         interface2 <- interfaces[[ jdx ]]
+        
+        # Validate public methods
         .validate_interface_methods(
           methodList1 = c( interface1$public_fields, interface1$public_methods ),
           methodList2 = c( interface2$public_fields, interface2$public_methods ),
@@ -178,66 +209,130 @@ R6.class = function(
           iName2      = interface2$classname,
           error_type  = "public method"
         )
+        
+        # Validate private methods
+        .validate_interface_methods(
+          methodList1 = c( interface1$private_fields, interface1$private_methods ),
+          methodList2 = c( interface2$private_fields, interface2$private_methods ),
+          iName1      = interface1$classname,
+          iName2      = interface2$classname,
+          error_type  = "private method"
+        )
       }
     }
   }
   
-  # if inheriting a class, we need to include all inherited methods
-  if ( is.null( inherit$public_methods ) ){
-    publicMethods <- public
-  } else {
-    publicMethods <- utils::modifyList( inherit$public_methods,
-                                        public )
-  }
+  # If inheriting a class, we need to include all public, private and active
+  # methods from all parent classes
   
-  if ( is.null( private ) ) private <- list()
-  if ( is.null( inherit$private_methods ) ){
-    privateMethods <- private
+  ## Instantiate publicMethods, privateMethods and activeMethods
+  ## Note: Creating publicMethods, privateMethods, activeMethods maintains the
+  ##       R6 generator style where inherited methods are only realised at
+  ##       instantiation - R6 generators don't see inherited methods by default.
+  ##       This could be changed by directly changing public, private and active
+  ##       instead.
+  publicMethods  <- public[  vapply( public, is.function, logical( 1 ) ) ]
+  publicFields   <- public[ !vapply( public, is.function, logical( 1 ) ) ]
+  if ( is.null( private ) ){
+    privateMethods <- list()
+    privateFields  <- list()
   } else {
-    privateMethods <- utils::modifyList( inherit$private_methods,
-                                         private )
+    privateMethods  <- private[  vapply( private, is.function, logical( 1 ) ) ]
+    privateFields   <- private[ !vapply( private, is.function, logical( 1 ) ) ]
   }
-  
-  if ( is.null( active ) ) active <- list()
-  if ( is.null( inherit$active ) ){
+  if ( is.null( active ) ){
+    activeMethods <- list()
+  } else {
     activeMethods <- active
-  } else {
-    activeMethods <- utils::modifyList( inherit$active,
-                                        active )
+  }
+  
+  ## Loop over parent classes to include all inherited methods and fields for
+  ## interface validation
+  inherited_class <- inherit
+  while( !is.null( inherited_class ) ){
+    ## Append public methods from inherited class (if there are any)
+    if ( !is.null( inherited_class$public_methods ) ){
+      publicMethods <- utils::modifyList( inherited_class$public_methods,
+                                          publicMethods )
+    }
+    
+    ## Append public fields from inherited class (if there are any)
+    if ( !is.null( inherited_class$public_fields ) ){
+      publicFields <- utils::modifyList( inherited_class$public_fields,
+                                         publicFields )
+    }
+    
+    ## Append private methods from inherited class (if there are any)
+    if ( !is.null( inherited_class$private_methods ) ){
+      privateMethods <- utils::modifyList( inherited_class$private_methods,
+                                           privateMethods )
+    }
+    
+    ## Append private fields from inherited class (if there are any)
+    if ( !is.null( inherited_class$private_fields ) ){
+      privateFields <- utils::modifyList( inherited_class$private_fields,
+                                          privateFields )
+    }
+    
+    ## Append public methods from inherited class (if there are any)
+    if ( !is.null( inherited_class$active ) ){
+      activeMethods <- utils::modifyList( inherited_class$active,
+                                          activeMethods )
+    }
+    
+    ## Update inherited class to its parent
+    inherited_class <- inherited_class$get_inherit()
   }
   
   # Check that new class defines all methods specified by all interfaces with
   # the correct required arguments
   for ( interface in interfaces ){
     if ( interface$inherit != "R6.interface.class")
-      stop( "Interfaces must be created by R6.interface (i.e. must inherit R6.interface.class" )
+      stop( "Interfaces must be created by R6.interface (i.e. must inherit R6.interface.class)" )
     
     iName <- interface$classname
     
     # Validate public methods
     .validate_interface_method_args(
-      method_list = publicMethods,
-      iMethod_list = list( interface$public_methods,
-                           interface$public_fields ),
+      method_list  = publicMethods,
+      iMethod_list = interface$public_methods,
       iName,
-      error_type = "public method"
+      error_type   = "public method"
     )
     
     # Validate private methods
     .validate_interface_method_args(
-      method_list = privateMethods,
-      iMethod_list = list( interface$private_methods,
-                           interface$private_fields ),
+      method_list  = privateMethods,
+      iMethod_list = interface$private_methods,
       iName,
-      error_type = "private method"
+      error_type   = "private method"
     )
     
     # Validate active methods
     .validate_interface_method_args(
-      method_list = activeMethods,
-      iMethod_list = list( interface$active ),
+      method_list  = activeMethods,
+      iMethod_list = interface$active,
       iName,
-      error_type = "active field"
+      error_type   = "active field"
+    )
+    
+    # Validate public fields
+    ## TODO: Do we want to validate the type of the input fields?
+    .validate_interface_method_args(
+      method_list  = publicFields,
+      iMethod_list = interface$public_fields,
+      iName,
+      error_type   = "public field"
+    )
+    
+    
+    # Validate private fields
+    ## TODO: Do we want to validate the type of the input fields?
+    .validate_interface_method_args(
+      method_list  = privateFields,
+      iMethod_list = interface$private_fields,
+      iName,
+      error_type   = "private field"
     )
   }
   

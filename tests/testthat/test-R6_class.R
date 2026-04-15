@@ -292,12 +292,12 @@ test_that( "Incompatible interfaces throw an error", {
   # If two interfaces define incompatible function signatures, a class calling
   # both interfaces shouldn't be created
   interfaceA <- R6.interface( 
-    interfacename = "test_interface",
+    interfacename = "interfaceA",
     public  = list( funcA = function( xA ) return( T ) )
   )
   
   interfaceB <- R6.interface( 
-    interfacename = "test_interface",
+    interfacename = "interfaceB",
     public  = list( funcA = function( xB ) return( T ) )
   )
   
@@ -324,6 +324,41 @@ test_that( "Incompatible interfaces throw an error", {
       classname = "test_class",
       public    = list( funcA = function( xA ) return( T ) ),
       interface = list( interfaceA, interfaceB )
+    )
+  )
+  
+  # Also check there is an error if a private interface method is incompatible
+  interfaceC <- R6.interface( 
+    interfacename = "interfaceC",
+    private = list( funcB = function( xA ) return( T ) )
+  )
+  
+  interfaceD <- R6.interface( 
+    interfacename = "interfaceD",
+    private = list( funcB = function( xB ) return( T ) )
+  )
+  
+  expect_no_error(
+    R6.class(
+      classname = "test_class",
+      private   = list( funcB = function( xA ) return( T ) ),
+      interface = interfaceC
+    )
+  )
+  
+  expect_no_error(
+    R6.class(
+      classname = "test_class",
+      private   = list( funcB = function( xB ) return( T ) ),
+      interface = interfaceD
+    )
+  )
+  
+  expect_error(
+    R6.class(
+      classname = "test_class",
+      private   = list( funcB = function( xA ) return( T ) ),
+      interface = list( interfaceC, interfaceD )
     )
   )
 })
@@ -514,4 +549,90 @@ test_that( "Derived classes inherit all public methods, private methods and acti
       active    = list( funcC = function( xC ) return( xC ) )
     )
   )
+})
+
+test_that( "Interfaces are robust to inherited methods not being updated on the derived class", {
+  Interface <- R6.interface(
+    interfacename = "interface",
+    public = list( f = function( x ) NULL )
+  )
+  Base <- R6.class(
+    classname = "BaseClass",
+    public = list( f = function( x ) return( x ) ),
+    interface = Interface
+  )
+  
+  expect_no_error(
+    Derived1 <- R6.class(
+      classname = "DerivedClass1",
+      inherit = Base
+    )
+  )
+  
+  expect_no_error(
+    Derived2 <- R6.class(
+      classname = "DerivedClass2",
+      inherit = Derived1
+    )
+  )
+  
+  expect_true( !is.null( Derived1$new()$f ) )
+  expect_true( !is.null( Derived2$new()$f ) )
+})
+
+test_that( "Interfaces can also specify public and private fields", {
+  Interface <- R6.interface(
+    interfacename = "Interface",
+    public  = list( a = NA ),
+    private = list( b = NA )
+  )
+  
+  # Class is specified with both fields
+  expect_no_error(
+    R6.class(
+      classname = "BaseClass",
+      public    = list( a = 1 ),
+      private   = list( b = 1 ),
+      interface = Interface
+    )
+  )
+  
+  # Class is missing public field a
+  expect_error(
+    R6.class(
+      classname = "BaseClass",
+      private   = list( b = 1 ),
+      interface = Interface
+    )
+  )
+  
+  # Class is missing private field b
+  expect_error(
+    R6.class(
+      classname = "BaseClass",
+      public    = list( a = 1 ),
+      interface = Interface
+    )
+  )
+  
+  # Class defines public field a as a function, i.e. a method not a field
+  expect_error(
+    R6.class(
+      classname = "BaseClass",
+      public    = list( a = function( x ) return( 1 ) ),
+      private   = list( b = 1 ),
+      interface = Interface
+    )
+  )
+  
+  # Class defines private field b as a function, i.e. a method not a field
+  expect_error(
+    R6.class(
+      classname = "BaseClass",
+      public    = list( a = 1 ),
+      private   = list( b = function( x ) return( 1 ) ),
+      interface = Interface
+    )
+  )
+  
 })
