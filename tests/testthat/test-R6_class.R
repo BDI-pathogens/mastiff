@@ -579,3 +579,60 @@ test_that( "Interfaces are robust to inherited methods not being updated on the 
   expect_true( !is.null( Derived1$new()$f ) )
   expect_true( !is.null( Derived2$new()$f ) )
 })
+
+test_that( "Interfaces can also specify public and private fields", {
+  Interface <- R6.interface(
+    interfacename = "Interface",
+    public  = list( a = NA ),
+    private = list( b = NA )
+  )
+  
+  # Class is specified with both fields
+  expect_no_error(
+    R6.class(
+      classname = "BaseClass",
+      public    = list( a = 1 ),
+      private   = list( b = 1 ),
+      interface = Interface
+    )
+  )
+  
+  # Class is missing public field a
+  expect_error(
+    R6.class(
+      classname = "BaseClass",
+      private   = list( b = 1 ),
+      interface = Interface
+    )
+  )
+  
+  # Class is missing private field b
+  expect_error(
+    R6.class(
+      classname = "BaseClass",
+      public    = list( a = 1 ),
+      interface = Interface
+    )
+  )
+  
+  # Class defines public field a as a function, i.e. a method not a field
+  expect_error(
+    R6.class(
+      classname = "BaseClass",
+      public    = list( a = function( x ) return( 1 ) ),
+      private   = list( b = 1 ),
+      interface = Interface
+    )
+  )
+  
+  # Class defines private field b as a function, i.e. a method not a field
+  expect_error(
+    R6.class(
+      classname = "BaseClass",
+      public    = list( a = 1 ),
+      private   = list( b = function( x ) return( 1 ) ),
+      interface = Interface
+    )
+  )
+  
+})
