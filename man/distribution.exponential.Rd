@@ -4,7 +4,7 @@
 \alias{distribution.exponential}
 \title{distribution.exponential}
 \usage{
-distribution.exponential(rate = 1)
+distribution.exponential(rate = 1, offset = 0)
 }
 \arguments{
 \item{rate}{vector of rates}

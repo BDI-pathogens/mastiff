@@ -24,6 +24,9 @@ rate \verb{$params$rate}.}
 
 \item{\code{var}}{The variance of a gamma distribution with shape \verb{$params$shape}
 and rate \verb{$params$rate}.}
+
+\item{\code{offset}}{The amount by which the gamma distribution is shifted.
+Creates a random variable \code{X~offset}+Gamma(\code{params$shape}, \code{params$rate})}
 }
 \if{html}{\out{</div>}}
 }
@@ -44,7 +47,7 @@ and rate \verb{$params$rate}.}
 \subsection{Method \code{new()}}{
 Create a new object of class \code{distribution.continuous.gamma.class}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.gamma.class$new(shape, rate, scale)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.gamma.class$new(shape, rate, scale, offset = 0)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -55,6 +58,9 @@ Create a new object of class \code{distribution.continuous.gamma.class}
 \item{\code{rate}}{The rate of the gamma distribution}
 
 \item{\code{scale}}{an alternative way to specify the rate}
+
+\item{\code{offset}}{offset The amount by which the gamma distribution is shifted.
+Creates a random variable \code{X~offset}+Gamma(\code{params$shape}, \code{params$rate})}
 }
 \if{html}{\out{</div>}}
 }

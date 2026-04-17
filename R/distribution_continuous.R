@@ -258,6 +258,8 @@ distribution.uniform <- function( min = 0, max = 1 ){
 #' @description Derived class for an exponentially-distributed random variable.
 #'
 #' @param rate The rate of the exponential distribution
+#' @param offset The amount by which the exponential distribution is shifted.
+#'   Creates a random variable `X~offset`+Exp(`params$rate`)
 #' @param x          vector of quantiles.
 #' @param q          vector of quantiles.
 #' @param p          vector of probabilities.
@@ -274,6 +276,8 @@ distribution.uniform <- function( min = 0, max = 1 ){
 #'   `$params$rate`.
 #' @field var The variance of an exponential distribution with rate
 #'   `$params$rate`.
+#' @field offset The amount by which the exponential distribution is shifted.
+#'   Creates a random variable `X~offset`+Exp(`params$rate`)
 
 distribution.continuous.exponential.class <- R6.class(
   classname = "distribution.continuous.exponential.class",
@@ -402,6 +406,8 @@ distribution.exponential <- function( rate = 1, offset = 0 ){
 #' @param shape The shape of the gamma distribution
 #' @param rate  The rate of the gamma distribution
 #' @param scale an alternative way to specify the rate
+#' @param offset offset The amount by which the gamma distribution is shifted.
+#'   Creates a random variable `X~offset`+Gamma(`params$shape`, `params$rate`)
 #' @param x          vector of quantiles.
 #' @param q          vector of quantiles.
 #' @param p          vector of probabilities.
@@ -420,6 +426,8 @@ distribution.exponential <- function( rate = 1, offset = 0 ){
 #'   `$params$shape` and rate `$params$rate`.
 #' @field var The variance of a gamma distribution with shape `$params$shape`
 #'   and rate `$params$rate`.
+#' @field offset The amount by which the gamma distribution is shifted.
+#'   Creates a random variable `X~offset`+Gamma(`params$shape`, `params$rate`)
 
 distribution.continuous.gamma.class <- R6.class(
   classname = "distribution.continuous.gamma.class",
