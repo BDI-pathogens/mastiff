@@ -280,6 +280,7 @@ distribution.continuous.exponential.class <- R6.class(
   private   = list(
     .name    = "Exponential",
     .param_names = c( "rate" ),
+    .offset       = 0,
     .check_params = function( params ){
       # Check that params contains all elements of private$.param_names
       super$.check_params( params )
@@ -289,6 +290,7 @@ distribution.continuous.exponential.class <- R6.class(
         stop( "`params$rate` must be a numeric value.")
       if ( params$rate < 0 )
         stop( "`params$rate` must be >0.")
+      
       return( NULL )
     }
   ),
@@ -297,9 +299,10 @@ distribution.continuous.exponential.class <- R6.class(
     # initialize
     ############################################################################/
     #' @description Create a new object of class `distribution.continuous.exponential.class`
-    initialize = function( rate = 1 ){
+    initialize = function( rate = 1, offset = 0 ){
       super$initialize( support = c( 0, Inf ) )
-      self$params <- list( rate = rate )
+      self$params <- list( rate   = rate )
+      self$offset <- offset
     },
     ############################################################################/
     # density
@@ -307,7 +310,8 @@ distribution.continuous.exponential.class <- R6.class(
     #' @description Density function for an exponential random variable with
     #'   rate `params$rate`.
     d = function( x, log = FALSE ){
-      stats::dexp( x, rate = private$.params$rate, log = log )
+      stats::dexp( x - self$offset,
+                   rate = private$.params$rate, log = log )
     },
     ############################################################################/
     # distribution function
@@ -315,7 +319,7 @@ distribution.continuous.exponential.class <- R6.class(
     #' @description Cumulative density function for an exponential random
     #'   variable with rate `params$rate`.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
-      stats::pexp( q, rate = private$.params$rate,
+      stats::pexp( q - self$offset, rate = private$.params$rate,
                    lower.tail = lower.tail, log.p = log.p )
     },
     ############################################################################/
@@ -324,7 +328,7 @@ distribution.continuous.exponential.class <- R6.class(
     #' @description Quantile function for an exponential random variable with
     #'   rate `params$rate`.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
-      stats::qexp( p, rate = private$.params$rate,
+      self$offset + stats::qexp( p, rate = private$.params$rate,
                    lower.tail = lower.tail, log.p = log.p )
     },
     ############################################################################/
@@ -333,7 +337,7 @@ distribution.continuous.exponential.class <- R6.class(
     #' @description Generates random deviates for an exponential random variable
     #'   with rate `params$rate`.
     r = function( n ){
-      stats::rexp( n, rate = private$.params$rate )
+      self$offset + stats::rexp( n, rate = private$.params$rate )
     }
   ),
   active = list(
@@ -343,7 +347,7 @@ distribution.continuous.exponential.class <- R6.class(
     mean = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$mean`" )
-      return( 1 / private$.params$rate )
+      return( self$offset + 1 / private$.params$rate )
     },
     ############################################################################/
     # standard deviation
@@ -360,6 +364,15 @@ distribution.continuous.exponential.class <- R6.class(
       if( !missing( val ) )
         stop( "cannot set `$var`" )
       return( 1 / private$.params$rate^2 )
+    },
+    ############################################################################/
+    # offset
+    ############################################################################/
+    offset = function( new_val ){
+      if ( missing( new_val ) ) return( private$.offset )
+      if ( !is.numeric( new_val ) )
+        stop( "`$offset` must be a numeric value" )
+      private$.offset <- new_val
     }
   )
 )
@@ -374,8 +387,8 @@ distribution.continuous.exponential.class <- R6.class(
 #'
 #' @seealso [Mastiff-Distributions]
 #' @export
-distribution.exponential <- function( rate = 1 ){
-  distribution.continuous.exponential.class$new( rate = rate )
+distribution.exponential <- function( rate = 1, offset = 0 ){
+  distribution.continuous.exponential.class$new( rate = rate, offset = offset )
 }
 
 ################################################################################/
