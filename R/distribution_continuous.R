@@ -423,8 +423,9 @@ distribution.continuous.gamma.class <- R6.class(
   classname = "distribution.continuous.gamma.class",
   inherit   = distribution.continuous.class,
   private   = list(
-    .name    = "gamma",
-    .param_names = c( "shape", "rate", "scale" ),
+    .name         = "gamma",
+    .param_names  = c( "shape", "rate", "scale" ),
+    .offset       = 0,
     .check_params = function( params ){
       # Check that params contains all elements of private$.param_names
       super$.check_params( params )
@@ -459,11 +460,12 @@ distribution.continuous.gamma.class <- R6.class(
     # initialize
     ############################################################################/
     #' @description Create a new object of class `distribution.continuous.gamma.class`
-    initialize = function( shape, rate, scale ){
+    initialize = function( shape, rate, scale, offset = 0 ){
       super$initialize( support = c( 0, Inf ) )
       self$params <- list( shape = shape,
                            rate  = rate,
                            scale = scale )
+      self$offset <- offset
     },
     ############################################################################/
     # density
@@ -471,7 +473,7 @@ distribution.continuous.gamma.class <- R6.class(
     #' @description Density function for a gamma random variable with
     #'   rate `params$rate`.
     d = function( x, log = FALSE ){
-      stats::dgamma( x, shape = private$.params$shape, rate = private$.params$rate,
+      stats::dgamma( x - self$offset, shape = private$.params$shape, rate = private$.params$rate,
                      log = log )
     },
     ############################################################################/
@@ -480,7 +482,7 @@ distribution.continuous.gamma.class <- R6.class(
     #' @description Cumulative density function for a gamma random
     #'   variable with rate `params$rate`.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
-      stats::pgamma( q, shape = private$.params$shape, rate = private$.params$rate,
+      stats::pgamma( q - self$offset, shape = private$.params$shape, rate = private$.params$rate,
                      lower.tail = lower.tail, log.p = log.p )
     },
     ############################################################################/
@@ -489,8 +491,8 @@ distribution.continuous.gamma.class <- R6.class(
     #' @description Quantile function for a gamma random variable with
     #'   rate `params$rate`.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
-      stats::qgamma( p, shape = private$.params$shape, rate = private$.params$rate,
-                     lower.tail = lower.tail, log.p = log.p )
+      self$offset + stats::qgamma( p, shape = private$.params$shape, rate = private$.params$rate,
+                                   lower.tail = lower.tail, log.p = log.p )
     },
     ############################################################################/
     # random deviates
@@ -498,7 +500,7 @@ distribution.continuous.gamma.class <- R6.class(
     #' @description Generates random deviates for a gamma random variable
     #'   with rate `params$rate`.
     r = function( n ){
-      stats::rgamma( n, shape = private$.params$shape, rate = private$.params$rate )
+      self$offset + stats::rgamma( n, shape = private$.params$shape, rate = private$.params$rate )
     }
   ),
   active = list(
@@ -530,7 +532,7 @@ distribution.continuous.gamma.class <- R6.class(
     mean = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$mean`" )
-      return( private$.params$shape / private$.params$rate )
+      return( self$offset + private$.params$shape / private$.params$rate )
     },
     ############################################################################/
     # standard deviation
@@ -547,6 +549,15 @@ distribution.continuous.gamma.class <- R6.class(
       if( !missing( val ) )
         stop( "cannot set `$var`" )
       return( self$mean / private$.params$rate )
+    },
+    ############################################################################/
+    # offset
+    ############################################################################/
+    offset = function( new_val ){
+      if ( missing( new_val ) ) return( private$.offset )
+      if ( !is.numeric( new_val ) )
+        stop( "`$offset` must be a numeric value" )
+      private$.offset <- new_val
     }
   )
 )
