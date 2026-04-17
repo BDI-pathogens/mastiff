@@ -274,6 +274,7 @@ distribution.uniform <- function( min = 0, max = 1 ){
 #'   `$params$rate`.
 #' @field var The variance of an exponential distribution with rate
 #'   `$params$rate`.
+
 distribution.continuous.exponential.class <- R6.class(
   classname = "distribution.continuous.exponential.class",
   inherit   = distribution.continuous.class,
@@ -373,6 +374,7 @@ distribution.continuous.exponential.class <- R6.class(
       if ( !is.numeric( new_val ) )
         stop( "`$offset` must be a numeric value" )
       private$.offset <- new_val
+      private$.support <- c( new_val, Inf )
     }
   )
 )
@@ -558,6 +560,7 @@ distribution.continuous.gamma.class <- R6.class(
       if ( !is.numeric( new_val ) )
         stop( "`$offset` must be a numeric value" )
       private$.offset <- new_val
+      private$.support <- c( new_val, Inf )
     }
   )
 )

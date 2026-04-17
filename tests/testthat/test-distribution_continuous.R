@@ -171,6 +171,11 @@ test_that( "distribution.exponential returns the correct distribution with offse
   
   for ( os in c( 1, 10 ) ){
     X$offset <- os
+    
+    # Support is updated correctly by changing offset
+    expect_equal( X$support,
+                  c( os, Inf ) )
+    
     # Random deviates with shift should have mean 1 / rate + offset (up to
     # stochastic noise)
     expect_equal( withr::with_seed( 100, mean( X$r( 1e5 ) ) ),
@@ -256,6 +261,11 @@ test_that( "distribution.gamma returns the correct distribution with offset != 0
   
   for ( os in c( 1, 10 ) ){
     X$offset <- os
+    
+    # Support is updated correctly by changing offset
+    expect_equal( X$support,
+                  c( os, Inf ) )
+    
     # Random deviates with shift should have mean 1 / rate + offset (up to
     # stochastic noise)
     expect_equal( withr::with_seed( 100, mean( X$r( 1e5 ) ) ),
