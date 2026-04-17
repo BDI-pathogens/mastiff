@@ -105,6 +105,11 @@ distribution.interface <- R6.interface(
     r = function( n ){
       stop( "`r` not implemented on derived class" )
     }
+  ),
+  active = list(
+    mean = function( val ) stop( "`mean` not implemented on derived class"),
+    sd   = function( val ) stop( "`sd` not implemented on derived class"),
+    var  = function( val ) stop( "`var` not implemented on derived class")
   )
 )
 
