@@ -4,7 +4,7 @@
 \alias{distribution.gamma}
 \title{distribution.gamma}
 \usage{
-distribution.gamma(shape, rate, scale)
+distribution.gamma(shape, rate, scale, offset = 0)
 }
 \arguments{
 \item{shape}{The shape of the gamma distribution}
@@ -12,6 +12,9 @@ distribution.gamma(shape, rate, scale)
 \item{rate}{The rate of the gamma distribution}
 
 \item{scale}{an alternative way to specify the rate}
+
+\item{offset}{offset The amount by which the gamma distribution is shifted.
+Creates a random variable \code{X~offset}+Gamma(\code{params$shape}, \code{params$rate})}
 }
 \value{
 An object of class [\link{distribution.continuous.gamma.class}]

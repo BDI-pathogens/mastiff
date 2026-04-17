@@ -388,6 +388,8 @@ distribution.continuous.exponential.class <- R6.class(
 #' Constructor function for an object of class `distribution.continuous.exponential.class`
 #' 
 #' @param rate vector of rates
+#' @param offset The amount by which the exponential distribution is shifted.
+#'   Creates a random variable `X~offset`+Exp(`params$rate`)
 #' 
 #' @returns An object of class [[distribution.continuous.exponential.class]]
 #'
@@ -580,12 +582,14 @@ distribution.continuous.gamma.class <- R6.class(
 #' @param shape The shape of the gamma distribution
 #' @param rate  The rate of the gamma distribution
 #' @param scale an alternative way to specify the rate
+#' @param offset offset The amount by which the gamma distribution is shifted.
+#'   Creates a random variable `X~offset`+Gamma(`params$shape`, `params$rate`)
 #' 
 #' @returns An object of class [[distribution.continuous.gamma.class]]
 #'
 #' @seealso [Mastiff-Distributions]
 #' @export
-distribution.gamma <- function( shape, rate, scale ){
+distribution.gamma <- function( shape, rate, scale, offset = 0 ){
   if ( missing( rate ) ){
     if ( missing( scale ) ){
       stop( "At least one of `rate` and `shape` must be set." )
@@ -599,9 +603,10 @@ distribution.gamma <- function( shape, rate, scale ){
     scale <- 1 / rate
   }
   
-  distribution.continuous.gamma.class$new( shape = shape,
-                                           rate  = rate,
-                                           scale = scale )
+  distribution.continuous.gamma.class$new( shape  = shape,
+                                           rate   = rate,
+                                           scale  = scale,
+                                           offset = offset )
 }
 
 ################################################################################/
