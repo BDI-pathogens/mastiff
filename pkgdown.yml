@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   mixture-of-two-normals: mixture-of-two-normals.html
   plotting-stan-output: plotting-stan-output.html
-last_built: 2026-04-15T14:35Z
+last_built: 2026-04-20T08:29Z
 urls:
   reference: https://bdi-pathogens.github.io/mastiff/reference
   article: https://bdi-pathogens.github.io/mastiff/articles

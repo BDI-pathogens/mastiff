@@ -35,6 +35,11 @@ Derived class for a gamma-distributed random variable.
   The variance of a gamma distribution with shape `$params$shape` and
   rate `$params$rate`.
 
+- `offset`:
+
+  The amount by which the gamma distribution is shifted. Creates a
+  random variable `X~offset`+Gamma(`params$shape`, `params$rate`)
+
 ## Methods
 
 ### Public methods
@@ -59,7 +64,7 @@ Create a new object of class `distribution.continuous.gamma.class`
 
 #### Usage
 
-    distribution.continuous.gamma.class$new(shape, rate, scale)
+    distribution.continuous.gamma.class$new(shape, rate, scale, offset = 0)
 
 #### Arguments
 
@@ -74,6 +79,11 @@ Create a new object of class `distribution.continuous.gamma.class`
 - `scale`:
 
   an alternative way to specify the rate
+
+- `offset`:
+
+  offset The amount by which the gamma distribution is shifted. Creates
+  a random variable `X~offset`+Gamma(`params$shape`, `params$rate`)
 
 ------------------------------------------------------------------------
 

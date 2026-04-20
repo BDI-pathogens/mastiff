@@ -6,7 +6,7 @@ Constructor function for an object of class
 ## Usage
 
 ``` r
-distribution.gamma(shape, rate, scale)
+distribution.gamma(shape, rate, scale, offset = 0)
 ```
 
 ## Arguments
@@ -22,6 +22,11 @@ distribution.gamma(shape, rate, scale)
 - scale:
 
   an alternative way to specify the rate
+
+- offset:
+
+  offset The amount by which the gamma distribution is shifted. Creates
+  a random variable `X~offset`+Gamma(`params$shape`, `params$rate`)
 
 ## Value
 

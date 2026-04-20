@@ -29,6 +29,11 @@ Derived class for an exponentially-distributed random variable.
 
   The variance of an exponential distribution with rate `$params$rate`.
 
+- `offset`:
+
+  The amount by which the exponential distribution is shifted. Creates a
+  random variable `X~offset`+Exp(`params$rate`)
+
 ## Methods
 
 ### Public methods
@@ -53,13 +58,18 @@ Create a new object of class `distribution.continuous.exponential.class`
 
 #### Usage
 
-    distribution.continuous.exponential.class$new(rate = 1)
+    distribution.continuous.exponential.class$new(rate = 1, offset = 0)
 
 #### Arguments
 
 - `rate`:
 
   The rate of the exponential distribution
+
+- `offset`:
+
+  The amount by which the exponential distribution is shifted. Creates a
+  random variable `X~offset`+Exp(`params$rate`)
 
 ------------------------------------------------------------------------
 

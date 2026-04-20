@@ -6,7 +6,7 @@ Constructor function for an object of class
 ## Usage
 
 ``` r
-distribution.exponential(rate = 1)
+distribution.exponential(rate = 1, offset = 0)
 ```
 
 ## Arguments
@@ -14,6 +14,11 @@ distribution.exponential(rate = 1)
 - rate:
 
   vector of rates
+
+- offset:
+
+  The amount by which the exponential distribution is shifted. Creates a
+  random variable `X~offset`+Exp(`params$rate`)
 
 ## Value
 

@@ -42,7 +42,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">distribution.exponential</span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">distribution.exponential</span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">1</span>, offset <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -51,6 +51,11 @@
 
 <dl><dt id="arg-rate">rate<a class="anchor" aria-label="anchor" href="#arg-rate"></a></dt>
 <dd><p>vector of rates</p></dd>
+
+
+<dt id="arg-offset">offset<a class="anchor" aria-label="anchor" href="#arg-offset"></a></dt>
+<dd><p>The amount by which the exponential distribution is shifted.
+Creates a random variable <code>X~offset</code>+Exp(<code>params$rate</code>)</p></dd>
 
 </dl></div>
     <div class="section level2">
