@@ -258,6 +258,8 @@ distribution.uniform <- function( min = 0, max = 1 ){
 #' @description Derived class for an exponentially-distributed random variable.
 #'
 #' @param rate The rate of the exponential distribution
+#' @param offset The amount by which the exponential distribution is shifted.
+#'   Creates a random variable `X~offset`+Exp(`params$rate`)
 #' @param x          vector of quantiles.
 #' @param q          vector of quantiles.
 #' @param p          vector of probabilities.
@@ -274,12 +276,16 @@ distribution.uniform <- function( min = 0, max = 1 ){
 #'   `$params$rate`.
 #' @field var The variance of an exponential distribution with rate
 #'   `$params$rate`.
+#' @field offset The amount by which the exponential distribution is shifted.
+#'   Creates a random variable `X~offset`+Exp(`params$rate`)
+
 distribution.continuous.exponential.class <- R6.class(
   classname = "distribution.continuous.exponential.class",
   inherit   = distribution.continuous.class,
   private   = list(
     .name    = "Exponential",
     .param_names = c( "rate" ),
+    .offset       = 0,
     .check_params = function( params ){
       # Check that params contains all elements of private$.param_names
       super$.check_params( params )
@@ -289,6 +295,7 @@ distribution.continuous.exponential.class <- R6.class(
         stop( "`params$rate` must be a numeric value.")
       if ( params$rate < 0 )
         stop( "`params$rate` must be >0.")
+      
       return( NULL )
     }
   ),
@@ -297,9 +304,10 @@ distribution.continuous.exponential.class <- R6.class(
     # initialize
     ############################################################################/
     #' @description Create a new object of class `distribution.continuous.exponential.class`
-    initialize = function( rate = 1 ){
+    initialize = function( rate = 1, offset = 0 ){
       super$initialize( support = c( 0, Inf ) )
-      self$params <- list( rate = rate )
+      self$params <- list( rate   = rate )
+      self$offset <- offset
     },
     ############################################################################/
     # density
@@ -307,7 +315,8 @@ distribution.continuous.exponential.class <- R6.class(
     #' @description Density function for an exponential random variable with
     #'   rate `params$rate`.
     d = function( x, log = FALSE ){
-      stats::dexp( x, rate = private$.params$rate, log = log )
+      stats::dexp( x - self$offset,
+                   rate = private$.params$rate, log = log )
     },
     ############################################################################/
     # distribution function
@@ -315,7 +324,7 @@ distribution.continuous.exponential.class <- R6.class(
     #' @description Cumulative density function for an exponential random
     #'   variable with rate `params$rate`.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
-      stats::pexp( q, rate = private$.params$rate,
+      stats::pexp( q - self$offset, rate = private$.params$rate,
                    lower.tail = lower.tail, log.p = log.p )
     },
     ############################################################################/
@@ -324,7 +333,7 @@ distribution.continuous.exponential.class <- R6.class(
     #' @description Quantile function for an exponential random variable with
     #'   rate `params$rate`.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
-      stats::qexp( p, rate = private$.params$rate,
+      self$offset + stats::qexp( p, rate = private$.params$rate,
                    lower.tail = lower.tail, log.p = log.p )
     },
     ############################################################################/
@@ -333,7 +342,7 @@ distribution.continuous.exponential.class <- R6.class(
     #' @description Generates random deviates for an exponential random variable
     #'   with rate `params$rate`.
     r = function( n ){
-      stats::rexp( n, rate = private$.params$rate )
+      self$offset + stats::rexp( n, rate = private$.params$rate )
     }
   ),
   active = list(
@@ -343,7 +352,7 @@ distribution.continuous.exponential.class <- R6.class(
     mean = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$mean`" )
-      return( 1 / private$.params$rate )
+      return( self$offset + 1 / private$.params$rate )
     },
     ############################################################################/
     # standard deviation
@@ -360,6 +369,16 @@ distribution.continuous.exponential.class <- R6.class(
       if( !missing( val ) )
         stop( "cannot set `$var`" )
       return( 1 / private$.params$rate^2 )
+    },
+    ############################################################################/
+    # offset
+    ############################################################################/
+    offset = function( new_val ){
+      if ( missing( new_val ) ) return( private$.offset )
+      if ( !is.numeric( new_val ) )
+        stop( "`$offset` must be a numeric value" )
+      private$.offset <- new_val
+      private$.support <- c( new_val, Inf )
     }
   )
 )
@@ -369,13 +388,15 @@ distribution.continuous.exponential.class <- R6.class(
 #' Constructor function for an object of class `distribution.continuous.exponential.class`
 #' 
 #' @param rate vector of rates
+#' @param offset The amount by which the exponential distribution is shifted.
+#'   Creates a random variable `X~offset`+Exp(`params$rate`)
 #' 
 #' @returns An object of class [[distribution.continuous.exponential.class]]
 #'
 #' @seealso [Mastiff-Distributions]
 #' @export
-distribution.exponential <- function( rate = 1 ){
-  distribution.continuous.exponential.class$new( rate = rate )
+distribution.exponential <- function( rate = 1, offset = 0 ){
+  distribution.continuous.exponential.class$new( rate = rate, offset = offset )
 }
 
 ################################################################################/
@@ -387,6 +408,8 @@ distribution.exponential <- function( rate = 1 ){
 #' @param shape The shape of the gamma distribution
 #' @param rate  The rate of the gamma distribution
 #' @param scale an alternative way to specify the rate
+#' @param offset offset The amount by which the gamma distribution is shifted.
+#'   Creates a random variable `X~offset`+Gamma(`params$shape`, `params$rate`)
 #' @param x          vector of quantiles.
 #' @param q          vector of quantiles.
 #' @param p          vector of probabilities.
@@ -405,13 +428,16 @@ distribution.exponential <- function( rate = 1 ){
 #'   `$params$shape` and rate `$params$rate`.
 #' @field var The variance of a gamma distribution with shape `$params$shape`
 #'   and rate `$params$rate`.
+#' @field offset The amount by which the gamma distribution is shifted.
+#'   Creates a random variable `X~offset`+Gamma(`params$shape`, `params$rate`)
 
 distribution.continuous.gamma.class <- R6.class(
   classname = "distribution.continuous.gamma.class",
   inherit   = distribution.continuous.class,
   private   = list(
-    .name    = "gamma",
-    .param_names = c( "shape", "rate", "scale" ),
+    .name         = "gamma",
+    .param_names  = c( "shape", "rate", "scale" ),
+    .offset       = 0,
     .check_params = function( params ){
       # Check that params contains all elements of private$.param_names
       super$.check_params( params )
@@ -446,11 +472,12 @@ distribution.continuous.gamma.class <- R6.class(
     # initialize
     ############################################################################/
     #' @description Create a new object of class `distribution.continuous.gamma.class`
-    initialize = function( shape, rate, scale ){
+    initialize = function( shape, rate, scale, offset = 0 ){
       super$initialize( support = c( 0, Inf ) )
       self$params <- list( shape = shape,
                            rate  = rate,
                            scale = scale )
+      self$offset <- offset
     },
     ############################################################################/
     # density
@@ -458,7 +485,7 @@ distribution.continuous.gamma.class <- R6.class(
     #' @description Density function for a gamma random variable with
     #'   rate `params$rate`.
     d = function( x, log = FALSE ){
-      stats::dgamma( x, shape = private$.params$shape, rate = private$.params$rate,
+      stats::dgamma( x - self$offset, shape = private$.params$shape, rate = private$.params$rate,
                      log = log )
     },
     ############################################################################/
@@ -467,7 +494,7 @@ distribution.continuous.gamma.class <- R6.class(
     #' @description Cumulative density function for a gamma random
     #'   variable with rate `params$rate`.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
-      stats::pgamma( q, shape = private$.params$shape, rate = private$.params$rate,
+      stats::pgamma( q - self$offset, shape = private$.params$shape, rate = private$.params$rate,
                      lower.tail = lower.tail, log.p = log.p )
     },
     ############################################################################/
@@ -476,8 +503,8 @@ distribution.continuous.gamma.class <- R6.class(
     #' @description Quantile function for a gamma random variable with
     #'   rate `params$rate`.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
-      stats::qgamma( p, shape = private$.params$shape, rate = private$.params$rate,
-                     lower.tail = lower.tail, log.p = log.p )
+      self$offset + stats::qgamma( p, shape = private$.params$shape, rate = private$.params$rate,
+                                   lower.tail = lower.tail, log.p = log.p )
     },
     ############################################################################/
     # random deviates
@@ -485,7 +512,7 @@ distribution.continuous.gamma.class <- R6.class(
     #' @description Generates random deviates for a gamma random variable
     #'   with rate `params$rate`.
     r = function( n ){
-      stats::rgamma( n, shape = private$.params$shape, rate = private$.params$rate )
+      self$offset + stats::rgamma( n, shape = private$.params$shape, rate = private$.params$rate )
     }
   ),
   active = list(
@@ -517,7 +544,7 @@ distribution.continuous.gamma.class <- R6.class(
     mean = function( val ){
       if( !missing( val ) )
         stop( "cannot set `$mean`" )
-      return( private$.params$shape / private$.params$rate )
+      return( self$offset + private$.params$shape / private$.params$rate )
     },
     ############################################################################/
     # standard deviation
@@ -534,6 +561,16 @@ distribution.continuous.gamma.class <- R6.class(
       if( !missing( val ) )
         stop( "cannot set `$var`" )
       return( self$mean / private$.params$rate )
+    },
+    ############################################################################/
+    # offset
+    ############################################################################/
+    offset = function( new_val ){
+      if ( missing( new_val ) ) return( private$.offset )
+      if ( !is.numeric( new_val ) )
+        stop( "`$offset` must be a numeric value" )
+      private$.offset <- new_val
+      private$.support <- c( new_val, Inf )
     }
   )
 )
@@ -545,12 +582,14 @@ distribution.continuous.gamma.class <- R6.class(
 #' @param shape The shape of the gamma distribution
 #' @param rate  The rate of the gamma distribution
 #' @param scale an alternative way to specify the rate
+#' @param offset offset The amount by which the gamma distribution is shifted.
+#'   Creates a random variable `X~offset`+Gamma(`params$shape`, `params$rate`)
 #' 
 #' @returns An object of class [[distribution.continuous.gamma.class]]
 #'
 #' @seealso [Mastiff-Distributions]
 #' @export
-distribution.gamma <- function( shape, rate, scale ){
+distribution.gamma <- function( shape, rate, scale, offset = 0 ){
   if ( missing( rate ) ){
     if ( missing( scale ) ){
       stop( "At least one of `rate` and `shape` must be set." )
@@ -564,9 +603,10 @@ distribution.gamma <- function( shape, rate, scale ){
     scale <- 1 / rate
   }
   
-  distribution.continuous.gamma.class$new( shape = shape,
-                                           rate  = rate,
-                                           scale = scale )
+  distribution.continuous.gamma.class$new( shape  = shape,
+                                           rate   = rate,
+                                           scale  = scale,
+                                           offset = offset )
 }
 
 ################################################################################/

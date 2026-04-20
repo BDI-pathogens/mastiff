@@ -4,10 +4,13 @@
 \alias{distribution.exponential}
 \title{distribution.exponential}
 \usage{
-distribution.exponential(rate = 1)
+distribution.exponential(rate = 1, offset = 0)
 }
 \arguments{
 \item{rate}{vector of rates}
+
+\item{offset}{The amount by which the exponential distribution is shifted.
+Creates a random variable \code{X~offset}+Exp(\code{params$rate})}
 }
 \value{
 An object of class [\link{distribution.continuous.exponential.class}]

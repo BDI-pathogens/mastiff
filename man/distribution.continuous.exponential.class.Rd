@@ -21,6 +21,9 @@ Derived class for an exponentially-distributed random variable.
 
 \item{\code{var}}{The variance of an exponential distribution with rate
 \verb{$params$rate}.}
+
+\item{\code{offset}}{The amount by which the exponential distribution is shifted.
+Creates a random variable \code{X~offset}+Exp(\code{params$rate})}
 }
 \if{html}{\out{</div>}}
 }
@@ -41,13 +44,16 @@ Derived class for an exponentially-distributed random variable.
 \subsection{Method \code{new()}}{
 Create a new object of class \code{distribution.continuous.exponential.class}
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.exponential.class$new(rate = 1)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.exponential.class$new(rate = 1, offset = 0)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{rate}}{The rate of the exponential distribution}
+
+\item{\code{offset}}{The amount by which the exponential distribution is shifted.
+Creates a random variable \code{X~offset}+Exp(\code{params$rate})}
 }
 \if{html}{\out{</div>}}
 }

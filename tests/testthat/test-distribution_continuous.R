@@ -158,7 +158,48 @@ test_that( "distribution.exponential constructs a valid class", {
     expect_error( X$params <- list( 1 ) )
     expect_error( X$params <- list( rate = 1,
                                     foo = 1 ) )
+    
+    # Test that $offset can be updated
+    expect_no_error( X$offset <- 1 )
+    expect_error( X$offset <- 'foo' )
+    expect_error( X$offset <- TRUE )
   })
+})
+
+test_that( "distribution.exponential returns the correct distribution with offset != 0", {
+  X <- distribution.exponential( rate = 1 )
+  
+  for ( os in c( 1, 10 ) ){
+    X$offset <- os
+    
+    # Support is updated correctly by changing offset
+    expect_equal( X$support,
+                  c( os, Inf ) )
+    
+    # Random deviates with shift should have mean 1 / rate + offset (up to
+    # stochastic noise)
+    expect_equal( withr::with_seed( 100, mean( X$r( 1e5 ) ) ),
+                  X$offset + 1 / X$params$rate,
+                  tolerance = 0.01 )
+    expect_equal( withr::with_seed( 100, mean( X$r( 1e5 ) ) ),
+                  X$mean,
+                  tolerance = 0.01 )
+    
+    # Shifted distribution should have density 0 for x < offset
+    expect_equal( X$d( 0 ), 0 )
+    expect_equal( X$d( 0.5 ), 0 )
+    
+    # ...and density 1 / rate for x == offset
+    expect_equal( X$d( X$offset ), 1 / X$params$rate )
+    
+    # Shifted distribution function has mass for x > offset and 0 for x < offset
+    expect_equal( X$p( X$offset - 0.5 ), 0 )
+    expect_gt( X$p( X$offset + 0.5 ), 0 )
+    
+    # Shifted quantile function should only return values greater than or equal
+    # to offset
+    expect_gte( min( X$q( 0 : 10 / 10 ) ), X$offset )
+  }
 })
 
 test_that( "distribution.gamma constructs a valid class", {
@@ -207,7 +248,49 @@ test_that( "distribution.gamma constructs a valid class", {
     expect_error( X$params <- list( 1 ) )
     expect_error( X$params <- list( rate = 1,
                                     foo = 1 ) )
+    
+    # Test that $offset can be updated
+    expect_no_error( X$offset <- 1 )
+    expect_error( X$offset <- 'foo' )
+    expect_error( X$offset <- TRUE )
   })
+})
+
+test_that( "distribution.gamma returns the correct distribution with offset != 0", {
+  X <- distribution.gamma( shape = 2, rate = 10 )
+  
+  for ( os in c( 1, 10 ) ){
+    X$offset <- os
+    
+    # Support is updated correctly by changing offset
+    expect_equal( X$support,
+                  c( os, Inf ) )
+    
+    # Random deviates with shift should have mean 1 / rate + offset (up to
+    # stochastic noise)
+    expect_equal( withr::with_seed( 100, mean( X$r( 1e5 ) ) ),
+                  X$offset + X$params$shape / X$params$rate,
+                  tolerance = 0.01 )
+    expect_equal( withr::with_seed( 100, mean( X$r( 1e5 ) ) ),
+                  X$mean,
+                  tolerance = 0.01 )
+    
+    # Shifted distribution should have density 0 for x < offset
+    expect_equal( X$d( 0 ), 0 )
+    expect_equal( X$d( 0.5 ), 0 )
+    
+    # ...and density is correct for x == offset + 1
+    expect_equal( X$d( X$offset + 1 ),
+                  X$params$rate^X$params$shape / gamma( X$params$shape ) * exp( - X$params$rate ) )
+    
+    # Shifted distribution function has mass for x > offset and 0 for x < offset
+    expect_equal( X$p( X$offset - 0.5 ), 0 )
+    expect_gt( X$p( X$offset + 0.5 ), 0 )
+    
+    # Shifted quantile function should only return values greater than or equal
+    # to offset
+    expect_gte( min( X$q( 0 : 10 / 10 ) ), X$offset )
+  }
 })
 
 test_that( "distribution.normal constructs a valid class", {
