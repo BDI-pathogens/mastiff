@@ -438,8 +438,7 @@ distribution.discrete.negative_binomial.class <- R6.class(
       
       # Check that size is a non-negative integerl; allow numeric input but
       # verify it is close to an integer
-      if ( params$size < 0 || !is.numeric( params$size ) ||
-           ( params$size - round( params$size ) > 1e-10 ) )
+      if ( params$size < 0 || !is.numeric( params$size ) )
         stop( "`params$size` must be an integer >= 0.")
       
       
