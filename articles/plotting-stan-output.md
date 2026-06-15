@@ -1,13 +1,15 @@
 # Plotting Stan output
 
 ``` r
+
 library(mastiff)
 ```
 
 Load the example Stan output included with `mastiff`, from a simple
-linear normal regression model: $y \sim N(mx + c,\sigma)$.
+linear normal regression model: $`y \sim N(mx + c, \sigma)`$.
 
 ``` r
+
 stan_eg <- mastiff::stan_example_regression
 names(stan_eg)
 #> [1] "posterior_samples" "prior_samples"     "true_values"
@@ -32,14 +34,16 @@ For each parameter plot the marginal posterior (i.e. the posterior for
 the value of that parameter regardless of any other parameter):
 
 ``` r
+
 plot_posterior(stan_eg$posterior_samples)
 ```
 
 ![](plotting-stan-output_files/figure-html/plot_basic-1.png)
 
-Overlay plots of the posterior and prior distributions[¹](#fn1):
+Overlay plots of the posterior and prior distributions[^1]:
 
 ``` r
+
 plot_posterior(stan_eg$posterior_samples,
                prior_samples = stan_eg$prior_samples)
 ```
@@ -48,9 +52,10 @@ plot_posterior(stan_eg$posterior_samples,
 
 For data that is simulated using the same likelihood that our inference
 is based on, we know the true values of the parameters we are
-estimating. Include those in our plots[²](#fn2):
+estimating. Include those in our plots[^2]:
 
 ``` r
+
 plot_posterior(stan_eg$posterior_samples,
                prior_samples = stan_eg$prior_samples,
                true_param_values = stan_eg$true_values)
@@ -63,6 +68,7 @@ are not automatically updated in the plot: handle this with `labels`
 argument.
 
 ``` r
+
 plot_posterior(stan_eg$posterior_samples,
                prior_samples = stan_eg$prior_samples,
                true_param_values = stan_eg$true_values,
@@ -73,21 +79,19 @@ plot_posterior(stan_eg$posterior_samples,
 
 ![](plotting-stan-output_files/figure-html/plot_transforms-1.png)
 
-------------------------------------------------------------------------
+[^1]: You should always do this for the key parameters of a model
+    (perhaps excluding less relevant parameters, especially if there are
+    so many of them this would be distracting), so that you and your
+    audience can see how much of your conclusion is coming from the data
+    and how much is coming from prior assumptions. Also so that you and
+    they can check for prior-posterior conflict, e.g. if the posterior
+    is squashed right towards one end of the prior (and if that end is
+    not a hard limit of the model itself, such as 0 or 1 for a
+    probability parameter).
 
-1.  You should always do this for the key parameters of a model (perhaps
-    excluding less relevant parameters, especially if there are so many
-    of them this would be distracting), so that you and your audience
-    can see how much of your conclusion is coming from the data and how
-    much is coming from prior assumptions. Also so that you and they can
-    check for prior-posterior conflict, e.g. if the posterior is
-    squashed right towards one end of the prior (and if that end is not
-    a hard limit of the model itself, such as 0 or 1 for a probability
-    parameter).
-
-2.  Checking that our posteriors are closer to the true values than the
-    priors are provides a check that we have correctly implemented our
-    statistical model. You should always do such a check. For simple
+[^2]: Checking that our posteriors are closer to the true values than
+    the priors are provides a check that we have correctly implemented
+    our statistical model. You should always do such a check. For simple
     models it is very quick; for more complex models it is very
     important, because with greater model complexity comes greater risk
     of at least one error in coding the inference. Posteriors should

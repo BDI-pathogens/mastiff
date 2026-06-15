@@ -15,6 +15,7 @@ One or all of the following three methods should work.
 1.  In R:
 
 ``` r
+
 install.packages("remotes") # if not already installed
 remotes::install_github("BDI-pathogens/mastiff", build_vignettes = TRUE)
 ```
@@ -29,6 +30,7 @@ Then in R, change your directory to the repository you’ve just cloned,
 and run
 
 ``` r
+
 install.packages("devtools") # if not already installed
 devtools::install(".", build_vignettes = TRUE)
 ```
@@ -36,6 +38,7 @@ devtools::install(".", build_vignettes = TRUE)
 3.  In R:
 
 ``` r
+
 install.packages("pak") # if not already installed
 pak::pak("BDI-pathogens/mastiff")
 ```

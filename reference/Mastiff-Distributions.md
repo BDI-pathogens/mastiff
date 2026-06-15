@@ -30,24 +30,24 @@ Each distribution includes methods
 Discrete distributions with class
 [distribution.discrete.class](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
 
-|                                                                                                                       |                                                                                |
-|-----------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| [distribution.binomial](https://bdi-pathogens.github.io/mastiff/reference/distribution.binomial.md)                   | Binomial distribution with size `size` and success probability `prob`          |
+|  |  |
+|----|----|
+| [distribution.binomial](https://bdi-pathogens.github.io/mastiff/reference/distribution.binomial.md) | Binomial distribution with size `size` and success probability `prob` |
 | [distribution.negative_binomial](https://bdi-pathogens.github.io/mastiff/reference/distribution.negative_binomial.md) | Negative Binomial distribution with size `size` and success probability `prob` |
-| [distribution.point_mass](https://bdi-pathogens.github.io/mastiff/reference/distribution.point_mass.md)               | Point mass at `value`                                                          |
-| [distribution.poisson](https://bdi-pathogens.github.io/mastiff/reference/distribution.poisson.md)                     | Poisson distribution with mean `lambda`                                        |
+| [distribution.point_mass](https://bdi-pathogens.github.io/mastiff/reference/distribution.point_mass.md) | Point mass at `value` |
+| [distribution.poisson](https://bdi-pathogens.github.io/mastiff/reference/distribution.poisson.md) | Poisson distribution with mean `lambda` |
 
 ## Continuous Distributions
 
 Discrete distributions with class
 [distribution.continuous.class](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
 
-|                                                                                                           |                                                                  |
-|-----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------|
-| [distribution.exponential](https://bdi-pathogens.github.io/mastiff/reference/distribution.exponential.md) | Exponential distribution with rate `rate`                        |
-| [distribution.gamma](https://bdi-pathogens.github.io/mastiff/reference/distribution.gamma.md)             | Gamma distribution with shape `shape` and rate `rate`            |
-| [distribution.normal](https://bdi-pathogens.github.io/mastiff/reference/distribution.normal.md)           | Normal distribution with mean `mean` and standard deviation `sd` |
-| [distribution.uniform](https://bdi-pathogens.github.io/mastiff/reference/distribution.uniform.md)         | Uniform distribution on `[min, max]`                             |
+|  |  |
+|----|----|
+| [distribution.exponential](https://bdi-pathogens.github.io/mastiff/reference/distribution.exponential.md) | Exponential distribution with rate `rate` |
+| [distribution.gamma](https://bdi-pathogens.github.io/mastiff/reference/distribution.gamma.md) | Gamma distribution with shape `shape` and rate `rate` |
+| [distribution.normal](https://bdi-pathogens.github.io/mastiff/reference/distribution.normal.md) | Normal distribution with mean `mean` and standard deviation `sd` |
+| [distribution.uniform](https://bdi-pathogens.github.io/mastiff/reference/distribution.uniform.md) | Uniform distribution on `[min, max]` |
 
 ## Examples
 
