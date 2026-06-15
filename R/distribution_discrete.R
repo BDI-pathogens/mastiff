@@ -16,8 +16,8 @@
 #'   otherwise, \eqn{P[X>x]}.
 #' 
 #' @field interfaces The list of available class interfaces.
-#' @field support    The support of the continuous distribution, i.e. the subset
-#'   of values for which the density is positive,
+#' @field support    The support of the distribution, i.e. the subset of values
+#'   for which the density is positive,
 #' 
 #' @include R6_class.R
 #' @include distribution_R6_class.R
@@ -726,4 +726,201 @@ distribution.discrete.point_mass.class <- R6.class(
 
 distribution.point_mass <- function( value ){
   distribution.discrete.point_mass.class$new( value )
+}
+
+################################################################################/
+#  distribution.discrete.finite_set
+################################################################################/
+#' Class: `distribution.discrete.finite_set.class`
+#' @description Derived class for a generic discrete distribution on a finite
+#'   set of points in (-Inf, Inf).
+#'
+#' @param prob       vector of probability weights for obtaining each element of
+#'   support.
+#' @param support    vector of values giving the points in the finite set on
+#'   which the distribution has support.
+#' @param x          vector of quantiles.
+#' @param q          vector of quantiles.
+#' @param p          vector of probabilities.
+#' @param n          number of observations. If `length( n ) > 1`, the length is
+#'   taken to be the number required.
+#' @param log        logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+#'   otherwise, \eqn{P[X>x]}.
+#' 
+#' @field interfaces The list of available class interfaces
+#' @field params     Named list of distribution parameters
+#' @field support    The support of the distribution, i.e. the subset of values
+#'   for which the density is positive,
+#' @field mean The mean of a point mass at `$params$value`.
+#' @field sd The standard deviation of a point mass at `$params$value`.
+#' @field var The variance of a point mass at `$params$value`.
+distribution.discrete.finite_set.class <- R6.class(
+  classname = "distribution.discrete.finite_set.class",
+  inherit   = distribution.discrete.class,
+  interfaces = list( distribution.interface ),
+  private   = list(
+    .name    = "finite_set",
+    .param_names = c( "prob" ),
+    .check_params = function( params ){
+      # Check that params contains all elements of private$.param_names
+      super$.check_params( params )
+      
+      # Check that the correct number of probabilities are input
+      if ( length( params$prob ) != length( private$.support ) )
+        stop( "`params$prob` must provide a single probability for each element of `$support`.")
+      
+      # Check that all probabilities are non-negative numeric values
+      if ( !all( is.numeric( params$prob ) ) || !all( params$prob >= 0 ) )
+        stop( "All values in `params$prob` must be non-negative probability weights.")
+      if ( !is.finite( sum( params$prob ) ) )
+        stop( "`params$prob` must have finite sum to allow distribution to be normalised." )
+      
+      return( NULL )
+    },
+    .dt_params = NA
+  ),
+  public = list(
+    ############################################################################/
+    # initialize
+    ############################################################################/
+    #' @description Create a new object of class `distribution.discrete.class`
+    initialize = function( support, prob ){
+      if ( any( !is.numeric( support ) ) )
+        stop( "All elements of `support` must be numeric values in (-Inf, Inf)." )
+      if ( any( duplicated( support ) ) )
+        stop( "All elements of `support must be unique." )
+      
+      super$initialize( support = sort( support ) )
+      self$params <- list( prob = prob )
+    },
+    ############################################################################/
+    # density
+    ############################################################################/
+    #' @description Density function for the probability distribution with mass
+    #'   `$params$prob` at points `$support`.
+    d = function( x, log = FALSE ){
+      x_dt <- data.table::as.data.table( x )
+      pdf <- private$.dt_params[ x_dt, on = 'x' ]
+      pdf[ is.na( pdf ) & !is.na( x ) ] <- 0
+      pdf[ is.na( x ) ] <- NA_real_
+      
+      if ( log ){
+        return( pdf[, ifelse( prob == 0, -Inf, log( prob ) ) ] )
+      } else {
+        return( pdf[, ifelse( prob == 0, 0, prob ) ] )
+      }
+    },
+    ############################################################################/
+    # distribution function
+    ############################################################################/
+    #' @description Cumulative density function for the probability distribution
+    #'   with mass `$params$prob` at points `$support`.
+    p = function( q, lower.tail = TRUE, log.p = FALSE ){
+      out <- private$.dt_params[ .(q), on = "x", roll = Inf,
+                                 CDF ]
+      out[ is.na( out ) & !is.na( q ) ] <- 0
+      out[ is.na( q ) ] <- NA_real_
+      
+      if ( !lower.tail ) out <- 1 - out
+      if ( log.p ) out <- log( out )
+      
+      return( out )
+    },
+    ############################################################################/
+    # quantile function
+    ############################################################################/
+    #' @description Quantile function for the probability distribution with mass
+    #'   `$params$prob` at points `$support`.
+    q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      if ( log.p ) p <- exp( p )
+      if ( !lower.tail ) p <- 1 - p
+      
+      out <- private$.dt_params[ .(p), on = .(CDF), roll = -Inf, mult = "first",
+                                 .( p, x )
+      ][ is.na( p ) | p < 0 | p > 1, x := NaN ]
+      return( out$x )
+    },
+    ############################################################################/
+    # random deviates
+    ############################################################################/
+    #' @description Generates random deviates for probability distribution with
+    #'   mass `$params$prob` at points `$support`.
+    r = function( n ){
+      sample( private$.support,
+              size = n,
+              replace = TRUE,
+              prob = private$.params$prob )
+    }
+  ),
+  active = list(
+    ############################################################################/
+    # support
+    ############################################################################/
+    support = function( new_val ){
+      if ( !missing( new_val ) )
+        stop( "`$support` is set at class initialisation and cannot be updated." )
+      return( private$.support )
+    },
+    ############################################################################/
+    # params
+    ############################################################################/
+    params = function( new_val ){
+      if ( missing( new_val ) ) return( private$.params )
+      super$params <- new_val
+      
+      # Ensure private$.dt_params is kept up to date with current params
+      private$.dt_params <- data.table::data.table(
+        x = private$.support,
+        prob = self$params$prob
+      )[, prob := prob / sum( prob ) ]
+      data.table::setkey( private$.dt_params, x )
+      private$.dt_params[, CDF := cumsum( prob ) ]
+    },
+    ############################################################################/
+    # mean
+    ############################################################################/
+    mean = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$mean`" )
+      return( private$.dt_params[, sum( x * prob ) ] )
+    },
+    ############################################################################/
+    # standard deviation
+    ############################################################################/
+    sd = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$sd`" )
+      return( sqrt( self$var ) )
+    },
+    ############################################################################/
+    # variance
+    ############################################################################/
+    var = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$var`" )
+      
+      mu <- self$mean
+      return( private$.dt_params[, sum( (x - mu)^2 * prob ) ] )
+    }
+  )
+)
+
+#' distribution.finite_set
+#' 
+#' Constructor function for an object of class [[distribution.discrete.finite_set.class]]
+#' 
+#' @param prob       vector of probability weights for obtaining each element of
+#'   support.
+#' @param support    vector of values giving the points in the finite set on
+#'   which the distribution has support.
+#' 
+#' @returns An object of class [[distribution.discrete.finite_set.class]]
+#' 
+#' @seealso [Mastiff-Distributions]
+#' @export
+
+distribution.finite_set <- function( prob, support ){
+  distribution.discrete.finite_set.class$new( prob = prob, support = support )
 }
