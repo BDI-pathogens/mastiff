@@ -82,6 +82,8 @@ Constructor functions for R6 distribution classes
 
 - [`distribution.binomial()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.binomial.md)
   : distribution.binomial
+- [`distribution.finite_set()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.finite_set.md)
+  : distribution.finite_set
 - [`distribution.negative_binomial()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.negative_binomial.md)
   : distribution.negative_binomial
 - [`distribution.point_mass()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.point_mass.md)
@@ -148,6 +150,11 @@ Constructor functions for R6 distribution classes
   :
 
   Class: `distribution.discrete.class`
+
+- [`distribution.discrete.finite_set.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.finite_set.class.md)
+  :
+
+  Class: `distribution.discrete.finite_set.class`
 
 - [`distribution.discrete.negative_binomial.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.negative_binomial.class.md)
   :

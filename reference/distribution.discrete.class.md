@@ -16,8 +16,8 @@ Base class for univariate discrete distributions
 
 - `support`:
 
-  The support of the continuous distribution, i.e. the subset of values
-  for which the density is positive,
+  The support of the distribution, i.e. the subset of values for which
+  the density is positive,
 
 ## Methods
 

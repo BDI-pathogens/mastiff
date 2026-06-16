@@ -22,10 +22,12 @@
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.uniform.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.binomial.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.html</loc></url>
+<url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.finite_set.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.negative_binomial.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.point_mass.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.poisson.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.exponential.html</loc></url>
+<url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.finite_set.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.gamma.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.lognormal.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.mixture.class.html</loc></url>
