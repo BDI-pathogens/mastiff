@@ -14,8 +14,8 @@ Base class for univariate discrete distributions
 \describe{
 \item{\code{interfaces}}{The list of available class interfaces.}
 
-\item{\code{support}}{The support of the continuous distribution, i.e. the subset
-of values for which the density is positive,}
+\item{\code{support}}{The support of the distribution, i.e. the subset of values
+for which the density is positive,}
 }
 \if{html}{\out{</div>}}
 }

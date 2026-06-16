@@ -197,3 +197,70 @@ test_that( "distribution.point_mass constructs a valid class", {
   expect_error( X$params <- list( foo = 1 ) )
   expect_error( X$params <- list( 1 ) )
 })
+
+test_that( "distribution.finite_set constructs a valid class", {
+  expect_no_error({
+    X <- distribution.finite_set( support = c( 0, 1 ),
+                                  prob    = c( 1, 1 ) )
+  })
+  
+  # Test that density is correct for points in support
+  expect_equal( X$d( x = 0 ), 0.5 )
+  expect_equal( X$d( x = 1 ), 0.5 )
+  expect_equal( X$d( x = 0.5 ), 0 )
+  # ...and NA for density of NA and NaN
+  expect_equal( X$d( x = NA ), NA )
+  expect_equal( X$d( x = NaN ), NA )
+  
+  # Test that $support cannot be updated
+  expect_error(
+    X$support <- c(-1, 1),
+    regexp = "set at class initialisation and cannot be updated"
+  )
+  
+  # Test that $params can be updated via named list
+  expect_no_error( X$params <- list( prob = c( 5, 1 ) ) )
+  expect_equal( {
+    X$params <- list( prob = c( 5, 1 ) )
+    X$d( x = 0 )
+  }, 5 / 6 )
+  
+  # Test that invalid values of $params fail (via private$.check_params())
+  expect_error( X$params$value <- 'a' )
+  expect_error( X$params$value <- FALSE )
+  
+  # Test that incorrectly named list $params is rejected
+  expect_error( X$params <- list( foo = 1 ) )
+  expect_error( X$params <- list( 1 ) )
+})
+
+test_that( "distribution.finite_set evaluates the correct $p(), $q(), $r(), mean, sd and var", {
+  n <- 1e5
+  test_tol <- 3 / sqrt( n )
+  
+  dist <- distribution.finite_set(
+    support = c( 1, 5, 10 ),
+    prob    = c( 5, 5, 1 )
+  )
+  # Check that $p() and $q() are inverse functions
+  CDF <- dist$p( 0 : 10 )
+  
+  expect_true( all( dist$q( CDF ) %in% dist$support ) )
+  expect_equal( dist$q( dist$p( dist$support ) ),
+                dist$support )
+  
+  # Check Monte Carlo estimate of mean, sd and var using $r()
+  samples <- dist$r( n )
+  
+  expect_equal( mean( samples ),
+                dist$mean,
+                tolerance = test_tol )
+  
+  expect_equal( sd( samples ),
+                dist$sd,
+                tolerance = test_tol )
+  
+  expect_equal( var( samples ),
+                dist$var,
+                tolerance = test_tol )
+})
