@@ -34,6 +34,7 @@ reference:
 - subtitle: Discrete Distributions
   contents:
   - distribution.binomial
+  - distribution.finite_set
   - distribution.negative_binomial
   - distribution.point_mass
   - distribution.poisson
@@ -55,6 +56,7 @@ reference:
   - distribution.continuous.uniform.class
   - distribution.discrete.binomial.class
   - distribution.discrete.class
+  - distribution.discrete.finite_set.class
   - distribution.discrete.negative_binomial.class
   - distribution.discrete.point_mass.class
   - distribution.discrete.poisson.class
