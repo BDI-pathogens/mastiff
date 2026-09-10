@@ -38,7 +38,7 @@ Derived class for a lognormally-distributed random variable.
 \if{latex}{\out{\hypertarget{method-distribution.continuous.lognormal.class-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new object of class
-\code{distribution.continuous.normal.class}
+\code{distribution.continuous.lognormal.class}
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.lognormal.class$new(meanlog, sdlog)}\if{html}{\out{</div>}}
 }

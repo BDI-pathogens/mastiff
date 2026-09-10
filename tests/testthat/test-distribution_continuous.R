@@ -368,3 +368,44 @@ test_that( "distribution.lognormal constructs a valid class", {
   })
 })
 
+
+test_that( "distribution.beta constructs a valid class", {
+  withr::with_seed( 123, {
+    n <- 1e5
+    alpha  <- 0.5
+    beta  <- 1.3
+    tol <- 3 / sqrt( n )
+    
+    X <- distribution.beta( alpha, beta )
+    
+    # Test that density is correct for initial rate parameter
+    x <- 0.2
+    expect_equal( X$d( x = x ), x^{alpha-1} * (1-x)^{beta-1} / beta( alpha, beta )) 
+    expect_equal( mean( X$r( n ) ), X$mean, tolerance = tol )
+    expect_equal( sd( X$r( n ) ), X$sd, tolerance = tol )
+    
+    # Test that $params can be updated via named list
+    expect_no_error( X$params <- list( alpha = 0.8, beta = 0.3 ) )
+    expect_equal( X$params$alpha, 0.8 )
+    expect_equal( X$params$beta, 0.3 )
+    
+    # Test that elements of $params can be updated by name
+    expect_no_error( X$params$alpha <- 2 )
+    expect_no_error( X$params$beta <- 3 )
+    expect_equal( X$params$alpha, 2 )
+    expect_equal( X$params$beta, 3 )
+    
+    # Test that invalid values of $params fail (via private$.check_params())
+    expect_error( X$params$alpha <- 'a' )
+    expect_error( X$params$alpha <- -1 )
+    expect_error( X$params$beta <- 'a' )
+    expect_error( X$params$beta <- -1 )
+    
+    # Test that incorrectly named list $params is rejected
+    expect_error( X$params <- list( foo = 1 ) )
+    expect_error( X$params <- list( 1 ) )
+    expect_error( X$params <- list( alpha = 1, foo = 1 ) )
+  })
+})
+
+

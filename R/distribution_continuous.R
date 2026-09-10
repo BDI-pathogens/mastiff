@@ -788,7 +788,7 @@ distribution.continuous.lognormal.class <- R6.class(
     # initialize
     ############################################################################/
     #' @description Create a new object of class
-    #'   `distribution.continuous.normal.class`
+    #'   `distribution.continuous.lognormal.class`
     initialize = function( meanlog, sdlog ){
       super$initialize( support = c( 0, Inf ) )
       self$params <- list( meanlog = meanlog,
@@ -874,4 +874,138 @@ distribution.continuous.lognormal.class <- R6.class(
 distribution.lognormal <- function( meanlog, sdlog ){
   distribution.continuous.lognormal.class$new( meanlog = meanlog,
                                                sdlog   = sdlog )
+}
+
+################################################################################/
+#  distribution.continuous.beta
+################################################################################/
+#' Class: `distribution.continuous.beta.class`
+#' @description Derived class for a beta random variable.
+#'
+#' @param alpha      the alpha shape parameter of a beta distribution
+#' @param beta       the beta shape parameter of a beta distribution
+#' @param x          vector of quantiles.
+#' @param q          vector of quantiles.
+#' @param p          vector of probabilities.
+#' @param n          number of observations. If `length( n ) > 1`, the length is
+#'   taken to be the number required.
+#' @param log        logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param lower.tail logical; if TRUE (default), probabilities are 
+#'   \eqn{P[ X \leq x ]}, otherwise, \eqn{P[X>x]}.
+#' 
+#' @field interfaces The list of available class interfaces
+#' @field mean      the mean of the distribution
+#' @field sd        the standard deviation of the distribution
+#' @field var       the variance of the distribution
+distribution.continuous.beta.class <- R6.class(
+  classname = "distribution.continuous.beta.class",
+  inherit   = distribution.continuous.class,
+  private   = list(
+    .name    = "beta",
+    .param_names = c( "alpha",  "beta" ),
+    .check_params = function( params ){
+      # Check that params contains all elements of private$.param_names
+      super$.check_params( params )
+      
+      if ( !is.numeric( params$alpha ) || !is.numeric( params$beta ) )
+        stop( "alpha and beta must be a numeric value.")
+      if ( params$alpha <= 0 || params$beta <= 0 )
+        stop( "`alpha and beta must be non-negative")
+      
+      return( NULL )
+    }
+  ),
+  public = list(
+    ############################################################################/
+    # initialize
+    ############################################################################/
+    #' @description Create a new object of class
+    #'   `distribution.continuous.normal.class`
+    initialize = function( alpha, beta ){
+      super$initialize( support = c( 0, 1 ) )
+      self$params <- list( alpha = alpha, beta = beta )
+    },
+    ############################################################################/
+    # density
+    ############################################################################/
+    #' @description density function for a beta random variable with shape
+    #'  parameters `$params$alpha` and `$params$beta` 
+    d = function( x, log = FALSE ){
+      stats::dbeta( x, shape1 = private$.params$alpha, shape2 = private$.params$beta,
+                     log = log )
+    },
+    ############################################################################/
+    # distribution function
+    ############################################################################/
+    #' @description Cumulative density function for a  beta random variable with
+    #' shape parameters `$params$alpha` and `$params$beta` 
+    p = function( q, lower.tail = TRUE, log.p = FALSE ){
+      stats::pbeta( q, shape1 = private$.params$alpha, shape2 = private$.params$beta,
+                     lower.tail = lower.tail, log.p = log.p )
+    },
+    ############################################################################/
+    # quantile function
+    ############################################################################/
+    #' @description Quantile function for a beta random variable with
+    #' shape parameters `$params$alpha` and `$params$beta` 
+    q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      stats::qbeta( p, shape1 = private$.params$alpha, shape2 = private$.params$beta,
+                     lower.tail = lower.tail, log.p = log.p )
+    },
+    ############################################################################/
+    # random deviates
+    ############################################################################/
+    #' @description Generates random deviates for a beta random variable with
+    #' shape parameters `$params$alpha` and `$params$beta` 
+    r = function( n ){
+      stats::rbeta( n, shape1 = private$.params$alpha, shape2 = private$.params$beta )
+    }
+  ),
+  active = list(
+    ############################################################################/
+    # mean
+    ############################################################################/
+    mean = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$mean`" )
+      alpha <- private$.params$alpha
+      beta  <- private$.params$beta
+      return( alpha / ( alpha + beta ) )
+    },
+    ############################################################################/
+    # standard deviation
+    ############################################################################/
+    sd = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$sd`" )
+      return( sqrt( self$var ) )
+    },
+    ############################################################################/
+    # variance
+    ############################################################################/
+    var = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$var`" )
+      alpha <- private$.params$alpha
+      beta  <- private$.params$beta
+      return( alpha * beta / ( alpha + beta )^2 / ( alpha + beta + 1 ) )
+    }
+  )
+)
+
+################################################################################/
+#' distribution.beta
+#' 
+#' Constructor function for an object of class `distribution.continuous.beta.class`
+#' 
+#' @param alpha the alpha shape parameter of a beta distribution
+#' @param beta  the beta shape parameter of a beta distribution
+#' 
+#' @returns An object of class [[distribution.continuous.beta.class]]
+#'
+#' @seealso [Mastiff-Distributions]
+#' @export
+distribution.beta <- function( alpha, beta ){
+  distribution.continuous.beta.class$new( alpha = alpha, beta = beta )
 }
