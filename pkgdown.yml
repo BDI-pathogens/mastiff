@@ -1,10 +1,10 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   mixture-of-two-normals: mixture-of-two-normals.html
   plotting-stan-output: plotting-stan-output.html
-last_built: 2026-06-16T08:48Z
+last_built: 2026-09-10T17:31Z
 urls:
   reference: https://bdi-pathogens.github.io/mastiff/reference
   article: https://bdi-pathogens.github.io/mastiff/articles

@@ -80,6 +80,8 @@ Constructor functions for R6 distribution classes
 
 ### Discrete Distributions
 
+- [`distribution.beta()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.beta.md)
+  : distribution.beta
 - [`distribution.binomial()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.binomial.md)
   : distribution.binomial
 - [`distribution.finite_set()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.finite_set.md)
@@ -115,6 +117,11 @@ Constructor functions for R6 distribution classes
   :
 
   Class: `distribution.continuous.class`
+
+- [`distribution.continuous.beta.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.beta.class.md)
+  :
+
+  Class: `distribution.continuous.beta.class`
 
 - [`distribution.continuous.exponential.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.exponential.class.md)
   :

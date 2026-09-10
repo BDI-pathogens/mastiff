@@ -1,6 +1,6 @@
-# Class: `distribution.continuous.lognormal.class`
+# Class: `distribution.continuous.beta.class`
 
-Derived class for a lognormally-distributed random variable.
+Derived class for a beta random variable.
 
 ## Super classes
 
@@ -8,7 +8,7 @@ Derived class for a lognormally-distributed random variable.
 [`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
 [`mastiff::distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
--\> `distribution.continuous.lognormal.class`
+-\> `distribution.continuous.beta.class`
 
 ## Active bindings
 
@@ -32,48 +32,48 @@ Derived class for a lognormally-distributed random variable.
 
 ### Public methods
 
-- [`distribution.continuous.lognormal.class$new()`](#method-distribution.continuous.lognormal.class-new)
+- [`distribution.continuous.beta.class$new()`](#method-distribution.continuous.beta.class-new)
 
-- [`distribution.continuous.lognormal.class$d()`](#method-distribution.continuous.lognormal.class-d)
+- [`distribution.continuous.beta.class$d()`](#method-distribution.continuous.beta.class-d)
 
-- [`distribution.continuous.lognormal.class$p()`](#method-distribution.continuous.lognormal.class-p)
+- [`distribution.continuous.beta.class$p()`](#method-distribution.continuous.beta.class-p)
 
-- [`distribution.continuous.lognormal.class$q()`](#method-distribution.continuous.lognormal.class-q)
+- [`distribution.continuous.beta.class$q()`](#method-distribution.continuous.beta.class-q)
 
-- [`distribution.continuous.lognormal.class$r()`](#method-distribution.continuous.lognormal.class-r)
+- [`distribution.continuous.beta.class$r()`](#method-distribution.continuous.beta.class-r)
 
-- [`distribution.continuous.lognormal.class$clone()`](#method-distribution.continuous.lognormal.class-clone)
+- [`distribution.continuous.beta.class$clone()`](#method-distribution.continuous.beta.class-clone)
 
 ------------------------------------------------------------------------
 
 ### Method `new()`
 
-Create a new object of class `distribution.continuous.lognormal.class`
+Create a new object of class `distribution.continuous.normal.class`
 
 #### Usage
 
-    distribution.continuous.lognormal.class$new(meanlog, sdlog)
+    distribution.continuous.beta.class$new(alpha, beta)
 
 #### Arguments
 
-- `meanlog`:
+- `alpha`:
 
-  the mean of log(X)
+  the alpha shape parameter of a beta distribution
 
-- `sdlog`:
+- `beta`:
 
-  the standard deviation of log(X)
+  the beta shape parameter of a beta distribution
 
 ------------------------------------------------------------------------
 
 ### Method `d()`
 
-Density function for a lognormal random variable with mean log(X)
-`$params$meanlog` and standard deviation log(X) `$params$sdlog`.
+density function for a beta random variable with shape parameters
+`$params$alpha` and `$params$beta`
 
 #### Usage
 
-    distribution.continuous.lognormal.class$d(x, log = FALSE)
+    distribution.continuous.beta.class$d(x, log = FALSE)
 
 #### Arguments
 
@@ -89,12 +89,12 @@ Density function for a lognormal random variable with mean log(X)
 
 ### Method `p()`
 
-Cumulative density function for a lognormal random variable with mean
-log(X) `$params$meanlog` and standard deviation log(X) `$params$sdlog`.
+Cumulative density function for a beta random variable with shape
+parameters `$params$alpha` and `$params$beta`
 
 #### Usage
 
-    distribution.continuous.lognormal.class$p(q, lower.tail = TRUE, log.p = FALSE)
+    distribution.continuous.beta.class$p(q, lower.tail = TRUE, log.p = FALSE)
 
 #### Arguments
 
@@ -115,12 +115,12 @@ log(X) `$params$meanlog` and standard deviation log(X) `$params$sdlog`.
 
 ### Method [`q()`](https://rdrr.io/r/base/quit.html)
 
-Quantile function for a lognormal random variable with mean log(X)
-`$params$meanlog` and standard deviation log(X) `$params$sdlog`.
+Quantile function for a beta random variable with shape parameters
+`$params$alpha` and `$params$beta`
 
 #### Usage
 
-    distribution.continuous.lognormal.class$q(p, lower.tail = TRUE, log.p = FALSE)
+    distribution.continuous.beta.class$q(p, lower.tail = TRUE, log.p = FALSE)
 
 #### Arguments
 
@@ -141,13 +141,12 @@ Quantile function for a lognormal random variable with mean log(X)
 
 ### Method `r()`
 
-Generates random deviates for a lognormal random variable with mean
-log(X) `$params$meanlog` and standard deviation logx(X) `$params$sdlog`
-.
+Generates random deviates for a beta random variable with shape
+parameters `$params$alpha` and `$params$beta`
 
 #### Usage
 
-    distribution.continuous.lognormal.class$r(n)
+    distribution.continuous.beta.class$r(n)
 
 #### Arguments
 
@@ -164,7 +163,7 @@ The objects of this class are cloneable with this method.
 
 #### Usage
 
-    distribution.continuous.lognormal.class$clone(deep = FALSE)
+    distribution.continuous.beta.class$clone(deep = FALSE)
 
 #### Arguments
 
