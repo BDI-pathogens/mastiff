@@ -33,6 +33,7 @@ reference:
   - distribution.mixture
 - subtitle: Discrete Distributions
   contents:
+  - distribution.beta
   - distribution.binomial
   - distribution.finite_set
   - distribution.negative_binomial
@@ -49,6 +50,7 @@ reference:
   contents:
   - distribution.abstract.class
   - distribution.continuous.class
+  - distribution.continuous.beta.class
   - distribution.continuous.exponential.class
   - distribution.continuous.gamma.class
   - distribution.continuous.lognormal.class
