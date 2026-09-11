@@ -14,6 +14,7 @@
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/check_numeric.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.beta.html</loc></url>
+<url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.beta_binomial.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.binomial.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.beta.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.html</loc></url>
@@ -22,6 +23,7 @@
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.lognormal.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.normal.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.uniform.class.html</loc></url>
+<url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.beta_binomial.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.binomial.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.finite_set.class.html</loc></url>

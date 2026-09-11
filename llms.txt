@@ -131,6 +131,8 @@ Constructor functions for R6 distribution classes
 
 - [`distribution.beta()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.beta.md)
   : distribution.beta
+- [`distribution.beta_binomial()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.beta_binomial.md)
+  : distribution.beta_binomial
 - [`distribution.binomial()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.binomial.md)
   : distribution.binomial
 - [`distribution.finite_set()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.finite_set.md)
@@ -196,6 +198,11 @@ Constructor functions for R6 distribution classes
   :
 
   Class: `distribution.continuous.uniform.class`
+
+- [`distribution.discrete.beta_binomial.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.beta_binomial.class.md)
+  :
+
+  Class: `distribution.discrete.beta_binomial.class`
 
 - [`distribution.discrete.binomial.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.binomial.class.md)
   :
