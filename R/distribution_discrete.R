@@ -171,6 +171,9 @@ distribution.discrete.binomial.class <- R6.class(
       if ( params$prob < 0 || params$prob > 1 || !is.numeric( params$prob ) )
         stop( "`params$prob` must be a numeric value between 0 and 1 (inclusive).")
       
+      # update support
+      private$.support <- c( 0, params$size )
+      
       return( NULL )
     }
   ),
@@ -440,7 +443,6 @@ distribution.discrete.negative_binomial.class <- R6.class(
       # verify it is close to an integer
       if ( params$size < 0 || !is.numeric( params$size ) )
         stop( "`params$size` must be an integer >= 0.")
-      
       
       # Check that prob is a numeric value in [0, 1]
       if ( params$prob < 0 || params$prob > 1 || !is.numeric( params$prob ) )
@@ -924,3 +926,170 @@ distribution.discrete.finite_set.class <- R6.class(
 distribution.finite_set <- function( prob, support ){
   distribution.discrete.finite_set.class$new( prob = prob, support = support )
 }
+
+################################################################################/
+#  distribution.discrete.beta_binomial
+################################################################################/
+#' Class: `distribution.discrete.beta_binomial.class`
+#' @description Derived class for an beta-binomially distributed random variable.
+#'
+#' @param size number of trials (zero or more).
+#' @param alpha the first shape parameter
+#' @param beta the second shape parameter
+#' @param x          vector of quantiles.
+#' @param q          vector of quantiles.
+#' @param p          vector of probabilities.
+#' @param n          number of observations. If `length( n ) > 1`, the length is
+#'   taken to be the number required.
+#' @param log        logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+#'   otherwise, \eqn{P[X>x]}.
+#' 
+#' @field interfaces The list of available class interfaces
+#' @field mean The mean of a binomial distribution with size `$params$size` and
+#'   success probability `$params$prob`.
+#' @field sd The standard deviation of a binomial distribution with size
+#'   `$params$size` and success probability `$params$prob`.
+#' @field var The variance of a binomial distribution with size
+#'   `$params$size` and success probability `$params$prob`.
+#'
+#' @importFrom extraDistr dbbinom
+#' @importFrom extraDistr pbbinom
+#' @importFrom extraDistr rbbinom
+#' @importFrom VGAM qextbetabinom
+
+distribution.discrete.beta_binomial.class <- R6.class(
+  classname = "distribution.discrete.beta_binomial.class",
+  inherit   = distribution.discrete.class,
+  interfaces = list( distribution.interface ),
+  private   = list(
+    .name    = "Beta-Binomial",
+    .param_names = c( "size", "alpha", "beta" ),
+    .check_params = function( params ){
+      # Check that params contains all elements of private$.param_names
+      super$.check_params( params )
+      
+      # Check that size is an integer >= 0
+      #   - Allow numeric size, but verify it is with numeric tolerance
+      #     1e-10 of an integer
+      if ( params$size < 0 || !is.numeric( params$size ) ||
+           ( params$size - round( params$size ) > 1e-10 ) )
+        stop( "`params$size` must be an integer >= 0.")
+      
+      # Check that shape parameters are non-negative numeric parameters
+      if ( params$alpha <= 0 || !is.numeric( params$alpha ) )
+        stop( "`params$alpha` must be a non-negative numeric value")
+      if ( params$beta <= 0 || !is.numeric( params$beta ) )
+        stop( "`params$beta' must be a non-negative numeric value")
+      
+      # update support
+      private$.support <- c( 0, params$size )
+      
+      return( NULL )
+    }
+  ),
+  public = list(
+    ############################################################################/
+    # initialize
+    ############################################################################/
+    #' @description Create a new object of class `distribution.discrete.class`
+    initialize = function( size, alpha, beta ){
+      private$.check_params( list( size = size, alpha = alpha, beta = beta ) )
+                                
+      super$initialize( support = c( 0, size ) )
+      self$params <- list( size = size, alpha = alpha, beta = beta )
+    },
+    ############################################################################/
+    # density
+    ############################################################################/
+    #' @description Density function for a beta-binomial random variable with size
+    #'   `params$size` and shape parameters `params$alpha` and `params$beta`.
+    d = function( x, log = FALSE ){
+        extraDistr::dbbinom( x, size = private$.params$size, alpha = private$.params$alpha,
+                           beta = private$.params$beta, log = log )
+    },
+    ############################################################################/
+    # distribution function
+    ############################################################################/
+    #' @description Cumulative density function for a beta-binomial random variable
+    #'   with size `params$size` and shape parameters `params$alpha` and `params$beta`.
+    p = function( q, lower.tail = TRUE, log.p = FALSE ){
+      extraDistr::pbbinom( q, size = private$.params$size, alpha = private$.params$alpha,
+        beta = private$.params$beta, lower.tail = lower.tail, log.p = log.p )
+    },
+    ############################################################################/
+    # quantile function
+    ############################################################################/
+    #' @description Quantile function for a beta-binomial random variable with size
+    #'   `params$size` and shape parameters `params$alpha` and `params$beta`.
+    q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      prob <- private$.params$alpha / (  private$.params$alpha + private$.params$beta )
+      rho <- 1 / (  private$.params$alpha + private$.params$beta + 1 )
+      
+      # quantile function does not handle log case and lower case
+      if( log.p ) p = log( p )
+      if( !lower.tail ) p = 1 - p
+      
+      VGAM::qextbetabinom( p, size = private$.params$size, prob = prob, rho = rho )
+    },
+    ############################################################################/
+    # random deviates
+    ############################################################################/
+    #' @description Generates random deviates for a beta-binomial random variable
+    #'   with size `params$size` and shape parameters `params$alpha` and `params$beta`.
+    r = function( n ){
+      extraDistr::rbbinom( n, size = private$.params$size, alpha = private$.params$alpha,
+                           beta = private$.params$beta )
+    }
+  ),
+  active = list(
+    ############################################################################/
+    # mean
+    ############################################################################/
+    mean = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$mean`" )
+      n     <- private$.params$size
+      alpha <- private$.params$alpha
+      beta  <- private$.params$beta
+      return( n * alpha / ( alpha + beta ) )
+    },
+    ############################################################################/
+    # standard deviation
+    ############################################################################/
+    sd = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$sd`" )
+      return( sqrt( self$var ) )
+    },
+    ############################################################################/
+    # variance
+    ############################################################################/
+    var = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$var`" )
+      n     <- private$.params$size
+      alpha <- private$.params$alpha
+      beta  <- private$.params$beta
+      return( n * alpha * beta * ( n + alpha + beta ) / ( alpha + beta )^2 /  ( 1 + alpha + beta ))
+    }
+  )
+)
+
+#' distribution.beta_binomial
+#' 
+#' Constructor function for an object of class [[distribution.discrete.beta_binomial.class]]
+#' 
+#' @param size number of trials (zero or more).
+#' @param alpha the first shape parameter
+#' @param beta the second shape parameter
+#' 
+#' @returns An object of class [[distribution.discrete.beta_binomial.class]]
+#' 
+#' @seealso [Mastiff-Distributions]
+#' @export
+distribution.beta_binomial <- function( size, alpha, beta ){
+  distribution.discrete.beta_binomial.class$new( size = size, alpha = alpha, beta = beta )
+}
+
