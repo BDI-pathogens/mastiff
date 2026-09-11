@@ -52,12 +52,12 @@ reference:
   - distribution.abstract.class
   - distribution.continuous.class
   - distribution.continuous.beta.class
-  - distribution.continuous.beta_binomial.class
   - distribution.continuous.exponential.class
   - distribution.continuous.gamma.class
   - distribution.continuous.lognormal.class
   - distribution.continuous.normal.class
   - distribution.continuous.uniform.class
+  - distribution.discrete.beta_binomial.class
   - distribution.discrete.binomial.class
   - distribution.discrete.class
   - distribution.discrete.finite_set.class
