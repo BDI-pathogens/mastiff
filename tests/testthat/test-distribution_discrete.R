@@ -1,7 +1,9 @@
 
-.generic_finite_discrete_checks <- function( dist, n, tol ) {
+.generic_finite_discrete_checks <- function( dist, n, tol, infinite_max = -1 ) {
 
-  if( inherits( dist, "distribution.discrete.finite_set.class") )
+  if( infinite_max > 0  )
+    support <- seq( dist$support[ 1], infinite_max )
+  else if( inherits( dist, "distribution.discrete.finite_set.class") )
     support <- dist$support
   else 
     support <- seq( dist$support[ 1], dist$support[2 ] ) 
@@ -126,19 +128,16 @@ test_that( "distribution.poisson constructs a valid class", {
     
     # Test that density is correct for initial rate parameter
     expect_equal( X$d( x = 0 ), exp( -1 ) )
-    expect_equal( mean( X$r( n ) ), X$mean, tolerance = tol )
-    
+    .generic_finite_discrete_checks( X, n, tol, infinite_max = 14 )
+
     # Test that $params can be updated via named list
     expect_no_error( X$params <- list( lambda = 5 ) )
     expect_equal({
       X$params <- list( lambda = 5 )
       X$d( x = 0 )
     }, exp( -5 ) )
-    expect_equal({
-      X$params <- list( lambda = 5 )
-      mean( X$r( n ) )
-    }, X$mean, tolerance = tol )
-    
+    .generic_finite_discrete_checks( X, n, tol, infinite_max = 27 )
+
     # Test that elements of $params can be updated by name
     expect_no_error( X$params$lambda <- 1 )
     
@@ -161,7 +160,7 @@ test_that( "distribution.negative_binomial constructs a valid class", {
     
     # # Test that density is correct for initial rate parameter
     expect_equal( X$d( x = 0 ), 0.5^10 )
-    expect_equal( mean( X$r( n ) ), X$mean, tolerance = tol )
+    .generic_finite_discrete_checks( X, n, tol, infinite_max = 65 )
     
     # Test that $params can be updated via named list
     expect_no_error( X$params <- list( size = 10,
