@@ -34,6 +34,7 @@ reference:
 - subtitle: Discrete Distributions
   contents:
   - distribution.beta
+  - distribution.beta_binomial
   - distribution.binomial
   - distribution.finite_set
   - distribution.negative_binomial
@@ -56,6 +57,7 @@ reference:
   - distribution.continuous.lognormal.class
   - distribution.continuous.normal.class
   - distribution.continuous.uniform.class
+  - distribution.discrete.beta_binomial.class
   - distribution.discrete.binomial.class
   - distribution.discrete.class
   - distribution.discrete.finite_set.class

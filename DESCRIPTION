@@ -36,7 +36,9 @@ Imports:
     matrixStats,
     purrr,
     stringr,
-    R6 (>= 2.4.1)
+    R6 (>= 2.4.1),
+    extraDistr,
+    VGAM
 VignetteBuilder: knitr
 Biarch: true
 LinkingTo: 
