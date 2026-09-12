@@ -47,6 +47,9 @@ reference:
   - distribution.lognormal
   - distribution.normal
   - distribution.uniform
+- subtitle: Multivariate Distributions
+  contents:
+  - distribution.multivariate_normal
 - title: Class Definitions
   contents:
   - distribution.abstract.class
@@ -65,4 +68,6 @@ reference:
   - distribution.discrete.point_mass.class
   - distribution.discrete.poisson.class
   - distribution.mixture.class
+  - distribution.multivariate.class
+  - distribution.multivariate.normal.class
 

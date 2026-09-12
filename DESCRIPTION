@@ -38,7 +38,8 @@ Imports:
     stringr,
     R6 (>= 2.4.1),
     extraDistr,
-    VGAM
+    VGAM,
+    mvtnorm
 VignetteBuilder: knitr
 Biarch: true
 LinkingTo: 
@@ -58,6 +59,7 @@ Collate:
     'distribution_continuous.R'
     'distribution_discrete.R'
     'distribution_mixture.R'
+    'distribution_multivariate.R'
     'mastiff-package.R'
     'mixture_of_two_normals.R'
     'plot_posterior.R'
