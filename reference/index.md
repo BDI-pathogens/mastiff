@@ -108,6 +108,11 @@ Constructor functions for R6 distribution classes
 - [`distribution.uniform()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.uniform.md)
   : distribution.uniform
 
+### Multivariate Distributions
+
+- [`distribution.multivariate_normal()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate_normal.md)
+  : distribution.multivariate_normal
+
 ## Class Definitions
 
 - [`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
@@ -189,3 +194,13 @@ Constructor functions for R6 distribution classes
   :
 
   Class: `distribution.mixture.class`
+
+- [`distribution.multivariate.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.class.md)
+  :
+
+  Class: `distribution.multivariate.class`
+
+- [`distribution.multivariate.normal.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.normal.class.md)
+  :
+
+  Class: `distribution.multivariate.normal.class`
