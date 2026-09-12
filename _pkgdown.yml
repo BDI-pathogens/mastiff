@@ -47,6 +47,9 @@ reference:
   - distribution.lognormal
   - distribution.normal
   - distribution.uniform
+- subtitle: Multivariate Distributions
+  contents:
+  - distribution.multivariate_normal
 - title: Class Definitions
   contents:
   - distribution.abstract.class

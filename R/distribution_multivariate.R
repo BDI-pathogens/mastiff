@@ -15,6 +15,7 @@
 #' @field interfaces The list of available class interfaces.
 #' @field support    The support of the continuous distribution, i.e. the subset
 #'   of values for which the density is positive,
+#' @field n_dimensions the number of dimensions of random variable
 #' 
 #' @include R6_class.R
 #' @include distribution_R6_class.R
@@ -30,6 +31,7 @@ distribution.multivariate.class <- R6.class(
     # initialize
     ############################################################################/
     #' @description Create a new object of class `distribution.multivariate.class`
+    #' @param n_dimensions the number of dimensions of random variable
     initialize = function( n_dimensions ){
       private$.n_dimensions <- n_dimensions
     }
@@ -52,15 +54,21 @@ distribution.multivariate.class <- R6.class(
 #'
 #' @param support The support of the distribution, i.e. the subset of values for
 #'   which the density is positive.
+#' @param x          matrix of varlues
+#' @param d          vector of univariate densities
 #' @param q          matrix of univariate quantiles.
 #' @param p          matrix of univariate probabilities.
+#' @param n          number of observations. If `length( n ) > 1`, the length is
+#'   taken to be the number required.
+#' @param log        logical; if TRUE, probabilities p are given as `log(p)`.
 #' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
 #' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
 #'   otherwise, \eqn{P[X>x]}.
 #' 
 #' @field interfaces The list of available class interfaces.
-#' @field support    The support of the continuous distribution, i.e. the subset
-#'   of values for which the density is positive,
+#' @field mean the means of each variable
+#' @field sd the standard deviation of each variable
+#' @field var the variance of variable
 #' 
 #' @include R6_class.R
 #' @include distribution_R6_class.R
@@ -106,6 +114,8 @@ distribution.multivariate.normal.class <- R6.class(
     # initialize
     ############################################################################/
     #' @description Create a new object of class `distribution.multivariate.normal.class`
+    #' @param means vector of means
+    #' @param covariance the covariance matrix
     initialize = function( means, covariance ){
       self$params <- list( means = means, covariance = covariance ) 
     },
@@ -114,7 +124,8 @@ distribution.multivariate.normal.class <- R6.class(
     ############################################################################/
     #' @description Updates to the covariance matrix so that all off-diagonal
     #' correlations are the same
-    set_uniform_correlation = function( rho, log = FALSE ){
+    #' @param rho the single correlation between all variables
+    set_uniform_correlation = function( rho ){
       stopifnot( rho >= -1 )
       stopifnot( rho <= 1 )
       
@@ -206,7 +217,7 @@ distribution.multivariate.normal.class <- R6.class(
 )
 
 ################################################################################/
-#' distribution.multivariate.normal
+#' distribution.multivariate_normal
 #' 
 #' Constructor function for an object of class `distribution.multivariate.normal.class`
 #' 
@@ -217,6 +228,6 @@ distribution.multivariate.normal.class <- R6.class(
 #'
 #' @seealso [Mastiff-Distributions]
 #' @export
-distribution.multivariate.normal <- function( means, covariance ){
+distribution.multivariate_normal <- function( means, covariance ){
   distribution.multivariate.normal.class$new( means, covariance )
 }

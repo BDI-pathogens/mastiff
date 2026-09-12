@@ -1,11 +1,11 @@
-test_that( "distribution.multivariate class and distribution", {
+test_that( "distribution.multivariate_normal class and distribution", {
   withr::with_seed( 123, {
     n <- 1e5
     tol <- 3 / sqrt( n )
     
     means <- c( 1, -1 )
     covariance   <- matrix( c( 1, 1, 1, 2 ), nrow = 2 )
-    expect_no_error( { X <- distribution.multivariate.normal( means * 3, covariance * 2 ) } )
+    expect_no_error( { X <- distribution.multivariate_normal( means * 3, covariance * 2 ) } )
     expect_equal( X$params$means, means * 3 )
     expect_equal( X$params$covariance, covariance * 2 ) 
     
