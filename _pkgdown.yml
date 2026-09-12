@@ -68,4 +68,6 @@ reference:
   - distribution.discrete.point_mass.class
   - distribution.discrete.poisson.class
   - distribution.mixture.class
+  - distribution.multivariate.class
+  - distribution.multivariate.normal.class
 
