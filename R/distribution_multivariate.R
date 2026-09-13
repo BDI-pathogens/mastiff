@@ -231,3 +231,112 @@ distribution.multivariate.normal.class <- R6.class(
 distribution.multivariate_normal <- function( means, covariance ){
   distribution.multivariate.normal.class$new( means, covariance )
 }
+
+
+################################################################################/
+#  distribution.multivariate.copulal.class
+################################################################################/
+#' Class: `distribution.multivariate.copual.class`
+#' @description Class for copula distributions
+#'
+#' @param support The support of the distribution, i.e. the subset of values for
+#'   which the density is positive.
+#' @param x          matrix of varlues
+#' @param d          vector of univariate densities
+#' @param q          matrix of univariate quantiles.
+#' @param p          matrix of univariate probabilities.
+#' @param n          number of observations. If `length( n ) > 1`, the length is
+#'   taken to be the number required.
+#' @param log        logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
+#' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+#'   otherwise, \eqn{P[X>x]}.
+#' 
+#' @field interfaces The list of available class interfaces.
+#' @field mean the means of each variable
+#' @field sd the standard deviation of each variable
+#' @field var the variance of variable
+#' 
+#' @include R6_class.R
+#' @include distribution_R6_class.R
+#' 
+distribution.multivariate.copula.class <- R6.class(
+  classname = "distribution.multivariate.copula.class",
+  inherit   = distribution.multivariate.class,
+  private   = list(
+    .distributions = NULL,
+    .copula = NULL
+  ),
+  public = list(
+    ############################################################################/
+    # initialize
+    ############################################################################/
+    #' @description Create a new object of class `distribution.multivaraite.copula.class`
+    initialize = function( distributions, copula ){
+      stopifnot( is.list( distributions ) )
+      lapply( distributions, function( d ) stopifnot( inherits( d, "distribution.abstract.class") ) )
+      stopifnot( inherits( copula, "distribution.multivariate.class") )
+      stopifnot( length( distributions ) == copula$n_dimensions )
+      
+      super$initialize( copula$n_dimensions )
+      private$.distributions <- distributions 
+      private$.copula <- copula
+    },
+    ############################################################################/
+    # random deviates
+    ############################################################################/
+    #' @description Generates random deviates of a multivariate normal
+    #'   with rate `params$rate`.
+    r = function( n ){
+      r_copula <- self$copula$r( n )
+      p_copula <- self$copula$p( r_copula )
+      dists    <- self$distributions
+      for( cdx in 1:self$n_dimensions )
+        p_copula[ , cdx ] <- dists[[ cdx ]]$q( p_copula[ , cdx ] )
+      p_copula
+    }
+  ),
+  active = list(
+    distributions = function( val ){
+      private$.staticReturn( val, "distributions" )
+    },
+    copula = function( val ){
+      private$.staticReturn( val, "copula" )
+    }
+  )
+)
+
+################################################################################/
+#' distribution.copula
+#' 
+#' Constructor function for an object of class `distribution.multivariate.copula.class`
+#' 
+#' @param distributions a list of univarite distributions
+#' @param copula a multivariate distribution to generate the jointly distributed variales
+#' 
+#' @returns An object of class [[distribution.multivariate.copula.class]]
+#'
+#' @seealso [Mastiff-Distributions]
+#' @export
+distribution.copula <- function( distributions, copula ){
+  distribution.multivariate.copula.class$new( distributions, copula )
+}
+
+################################################################################/
+#' distribution.copula_gaussian
+#' 
+#' Constructor function for a Gaussian copula
+#' 
+#' @param distributions a list of univarite distributions
+#' @param rho single correlation in the copula
+#' 
+#' @returns An object of class [[distribution.multivariate.copula.class]]
+#'
+#' @seealso [Mastiff-Distributions]
+#' @export
+distribution.copula_gaussian <- function( distributions, rho ){
+  n_dim   <- length( distributions )
+  cov_mat <- matrix( rho, nrow = n_dim, ncol = n_dim ) + diag( 1 - rho, nrow = n_dim, ncol = n_dim )
+  copula  <- distribution.multivariate_normal( rep( 0, n_dim ), cov_mat )
+  distribution.copula( distributions, copula )
+}
