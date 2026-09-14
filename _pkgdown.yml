@@ -50,6 +50,8 @@ reference:
 - subtitle: Multivariate Distributions
   contents:
   - distribution.multivariate_normal
+  - distribution.copula
+  - distribution.copula_gaussian
 - title: Class Definitions
   contents:
   - distribution.abstract.class
@@ -69,5 +71,6 @@ reference:
   - distribution.discrete.poisson.class
   - distribution.mixture.class
   - distribution.multivariate.class
+  - distribution.multivariate.copula.class
   - distribution.multivariate.normal.class
 

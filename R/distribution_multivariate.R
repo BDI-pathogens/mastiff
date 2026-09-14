@@ -250,12 +250,15 @@ distribution.multivariate_normal <- function( means, covariance ){
 #' @param log        logical; if TRUE, probabilities p are given as `log(p)`.
 #' @param log.p      logical; if TRUE, probabilities p are given as `log(p)`.
 #' @param lower.tail logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
-#'   otherwise, \eqn{P[X>x]}.
+#'   otherwise, \eqn{P[X>x]}
 #' 
 #' @field interfaces The list of available class interfaces.
 #' @field mean the means of each variable
 #' @field sd the standard deviation of each variable
 #' @field var the variance of variable
+#' @field distributions the univariate distributions in the copula
+#' @field copula the multivariate copula distribution generating the correlation
+#' between random variables
 #' 
 #' @include R6_class.R
 #' @include distribution_R6_class.R
@@ -272,6 +275,9 @@ distribution.multivariate.copula.class <- R6.class(
     # initialize
     ############################################################################/
     #' @description Create a new object of class `distribution.multivaraite.copula.class`
+    #' @param distributions the univariate distributions in the copula
+    #' @param copula the multivariate copula distribution generating the correlation
+    #' between random variables
     initialize = function( distributions, copula ){
       stopifnot( is.list( distributions ) )
       lapply( distributions, function( d ) stopifnot( inherits( d, "distribution.abstract.class") ) )
@@ -297,11 +303,41 @@ distribution.multivariate.copula.class <- R6.class(
     }
   ),
   active = list(
+    ############################################################################/
+    # distributions 
+    ############################################################################/
     distributions = function( val ){
       private$.staticReturn( val, "distributions" )
     },
+    ############################################################################/
+    # distributions 
+    ############################################################################/
     copula = function( val ){
       private$.staticReturn( val, "copula" )
+    },
+    ############################################################################/
+    # mean
+    ############################################################################/
+    mean = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$mean`" )
+      return( unlist( lapply( self$distributions, function( x ) x$mean ) ) )
+    },
+    ############################################################################/
+    # standard deviation
+    ############################################################################/
+    sd = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$sd`" )
+      return( unlist( lapply( self$distributions, function( x ) x$sd ) ) )
+    },
+    ############################################################################/
+    # variance
+    ############################################################################/
+    var = function( val ){
+      if( !missing( val ) )
+        stop( "cannot set `$var`" )
+      return( unlist( lapply( self$distributions, function( x ) x$var ) ) )
     }
   )
 )

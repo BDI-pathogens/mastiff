@@ -62,7 +62,7 @@ test_that( "distribution.copula check univariate distributions", {
     # suppress tie warning message 
     for( idx in 1:length( dist ) ) {
       sample_uv <- dist[[ idx ]]$r( n )
-      suppressWarnings( { kst <- ks.test( sample_gc[,idx], sample_uv ) } )
+      suppressWarnings( { kst <- stats::ks.test( sample_gc[,idx], sample_uv ) } )
       expect_gt( kst$"p.value", 0.01  )
     }
   } )
