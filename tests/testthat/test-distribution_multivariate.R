@@ -65,6 +65,16 @@ test_that( "distribution.copula check univariate distributions", {
       suppressWarnings( { kst <- stats::ks.test( sample_gc[,idx], sample_uv ) } )
       expect_gt( kst$"p.value", 0.01  )
     }
+    
+    # check moments
+    means <- dist_gc$mean
+    vars  <- dist_gc$var
+    sds   <- dist_gc$sd
+    for( idx in 1:length( dist ) ) {
+      expect_equal( means[ idx ], dist[[idx]]$mean )  
+      expect_equal( vars[ idx ],  dist[[idx]]$var )  
+      expect_equal( sds[ idx ],   dist[[idx]]$sd )  
+    } 
   } )
 } )
 
@@ -91,4 +101,3 @@ test_that( "distribution.copula check correlation", {
       }
   } )
 } )
-
