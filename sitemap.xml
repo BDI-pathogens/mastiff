@@ -23,6 +23,8 @@
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.lognormal.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.normal.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.uniform.class.html</loc></url>
+<url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.copula.html</loc></url>
+<url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.copula_gaussian.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.beta_binomial.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.binomial.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.html</loc></url>
@@ -37,6 +39,7 @@
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.mixture.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.mixture.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.class.html</loc></url>
+<url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.copula.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.normal.class.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate_normal.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/distribution.negative_binomial.html</loc></url>

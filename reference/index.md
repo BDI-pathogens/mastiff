@@ -112,6 +112,10 @@ Constructor functions for R6 distribution classes
 
 - [`distribution.multivariate_normal()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate_normal.md)
   : distribution.multivariate_normal
+- [`distribution.copula()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.copula.md)
+  : distribution.copula
+- [`distribution.copula_gaussian()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.copula_gaussian.md)
+  : distribution.copula_gaussian
 
 ## Class Definitions
 
@@ -199,6 +203,11 @@ Constructor functions for R6 distribution classes
   :
 
   Class: `distribution.multivariate.class`
+
+- [`distribution.multivariate.copula.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.copula.class.md)
+  :
+
+  Class: `distribution.multivariate.copual.class`
 
 - [`distribution.multivariate.normal.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.normal.class.md)
   :
