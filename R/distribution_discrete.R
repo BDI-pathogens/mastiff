@@ -1104,12 +1104,29 @@ distribution.discrete.beta_binomial.class <- R6.class(
 #' @param size number of trials (zero or more).
 #' @param alpha the first shape parameter
 #' @param beta the second shape parameter
+#' @param mu the mean of the distribution (ALTERNATIVE PARAMETERISATION)
+#' @param var the variance of the distribution (ALTERNATIVE PARAMETERISATION)
 #' 
 #' @returns An object of class [[distribution.discrete.beta_binomial.class]]
 #' 
 #' @seealso [Mastiff-Distributions]
 #' @export
-distribution.beta_binomial <- function( size, alpha, beta ){
+distribution.beta_binomial <- function( size, alpha, beta, mu, var ){
+  
+  n_missing = missing( alpha ) + missing( beta ) + missing( mu ) + missing( var )
+  if( n_missing != 2 )
+    stop( "must size specify alpha and beta OR mu and var")
+    
+  if( !missing( mu ) || !missing( var ) ) {
+    if( missing( mu ) || missing( var ) ) stop( "must specify both of mu and var")
+    
+    nu <- var / mu / ( size - mu )
+    ab <- size * ( 1 - nu ) / ( size * nu - 1 )
+    if( ab < 0 ) stop( "mu and var inconsistent for a beta-binomial")
+    alpha <- mu * ab / size
+    beta  <- ab - alpha 
+  }
+  
   distribution.discrete.beta_binomial.class$new( size = size, alpha = alpha, beta = beta )
 }
 
