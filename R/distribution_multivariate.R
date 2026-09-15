@@ -139,7 +139,13 @@ distribution.multivariate.normal.class <- R6.class(
     ############################################################################/
     #' @description Density function for a multivariate normal
     d = function( x, log = FALSE ){
-      stopifnot( length( x ) == private$.n_dimensions )
+      if( !is.matrix( x ) ) {
+        stopifnot( is.vector( x ) )
+        stopifnot( length( x ) == private$.n_dimensions )
+        x <- matrix( x, nrow = 1 )
+      }
+      stopifnot( ncol( x ) == private$.n_dimensions )
+      
       mvtnorm::dmvnorm( x, mean = private$.params$means, sigma = private$.params$covariance ) 
     },
     ############################################################################/
@@ -300,6 +306,23 @@ distribution.multivariate.copula.class <- R6.class(
       for( cdx in 1:self$n_dimensions )
         p_copula[ , cdx ] <- dists[[ cdx ]]$q( p_copula[ , cdx ] )
       p_copula
+    },
+    ############################################################################/
+    # density
+    ############################################################################/
+    #' @description Density function for a copula distribution
+    d = function( x, log = FALSE ){
+      if( !is.matrix( x ) ) {
+        stopifnot( is.vector( x ) )
+        stopifnot( length( x ) == private$.n_dimensions )
+        x <- matrix( x, nrow = 1 )
+      }
+      d_u  <- sapply(seq_len(ncol(x)), function(idx) self$distributions[[idx]]$d( x[, idx ] ) )
+      p_u  <- sapply(seq_len(ncol(x)), function(idx) self$distributions[[idx]]$p( x[, idx ] ) )
+      qp_u <- self$copula$q( p_u ) 
+      d_c  <- self$copula$d( qp_u )
+      browser()
+      d_c * exp( rowSums( log( matrix( d_u, nrow = nrow( x ) ) ) ) )
     }
   ),
   active = list(
