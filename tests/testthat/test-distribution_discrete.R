@@ -189,6 +189,14 @@ test_that( "distribution.negative_binomial constructs a valid class", {
     expect_error( X$params$size <- 0.5 )
     expect_error( X$params$size <- 'a' )
   })
+  
+  # check neg-binomial can be constructed with mean and variance
+  expect_no_error( { X <- distribution.negative_binomial( ,,10,200 ) })
+  expect_equal( X$mean, 10 )
+  expect_equal( X$var, 200 )
+  expect_error( distribution.negative_binomial( ,,10,9 ) )
+  expect_error( distribution.negative_binomial( 10,,,9 ) )
+  expect_error( distribution.negative_binomial( 10,,15,9 ) )
 })
 
 test_that( "distribution.point_mass constructs a valid class", {

@@ -571,15 +571,34 @@ distribution.discrete.negative_binomial.class <- R6.class(
 #' @seealso [Mastiff-Distributions]
 #' @export
 
-distribution.negative_binomial <- function( size, prob, mu ){
+distribution.negative_binomial <- function( size, prob, mu, var ){
+  n_missing <- missing( size ) + missing( prob ) + missing( mu ) + missing( var )
+
+  if( n_missing != 2 )
+    stop( "Can only specify 2 out of size, prob, mu and var" )
+  
   if ( missing( prob ) && missing( mu ) )
     stop( "At least one of `prob` and `mu` must be set." )
   
-  if ( missing( prob ) && !missing( size ) )
-    prob <- size / ( mu + size )
+  if ( missing( size ) && missing( var ) )
+    stop( "At least one of `size` and `var` must be set." )
   
-  if ( missing( mu ) && !missing( size ) )
-    mu <- size * ( 1 - prob ) / prob
+  if ( !missing( var ) ) {
+    if( missing( mu ) )
+      stop( "If var is specificed then mu must be specified" )
+    if( var < mu )
+      stop( "Variance is always greater than mean for negative-binomial")
+    
+    size <- mu^2 / ( var - mu )
+    prob <- mu / var
+    
+  } else {
+    if ( missing( prob ) && !missing( size ) )
+      prob <- size / ( mu + size )
+    
+    if ( missing( mu ) && !missing( size ) )
+      mu <- size * ( 1 - prob ) / prob  
+  }
   
   distribution.discrete.negative_binomial.class$new( size, prob, mu )
 }
