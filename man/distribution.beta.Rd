@@ -4,12 +4,16 @@
 \alias{distribution.beta}
 \title{distribution.beta}
 \usage{
-distribution.beta(alpha, beta)
+distribution.beta(alpha, beta, mu, var)
 }
 \arguments{
 \item{alpha}{the alpha shape parameter of a beta distribution}
 
 \item{beta}{the beta shape parameter of a beta distribution}
+
+\item{mu}{the mean of the distribution (ALTERNATIVE PARAMETERISATION)}
+
+\item{var}{the variance of the distribution (ALTERNATIVE PARAMETERISATION)}
 }
 \value{
 An object of class [\link{distribution.continuous.beta.class}]

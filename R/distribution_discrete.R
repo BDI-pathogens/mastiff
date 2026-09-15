@@ -565,7 +565,8 @@ distribution.discrete.negative_binomial.class <- R6.class(
 #'   positive, need not be integer.
 #' @param prob probability of success in each trial. 0 < prob <= 1.
 #' @param mu alternative parametrization via mean: see [stats::dnbinom]
-#' 
+#' @param var alternative parametrization via mean and variance
+
 #' @returns An object of class [[distribution.discrete.negative_binomial.class]]
 #' 
 #' @seealso [Mastiff-Distributions]

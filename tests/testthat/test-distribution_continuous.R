@@ -405,6 +405,14 @@ test_that( "distribution.beta constructs a valid class", {
     expect_error( X$params <- list( foo = 1 ) )
     expect_error( X$params <- list( 1 ) )
     expect_error( X$params <- list( alpha = 1, foo = 1 ) )
+    
+    # checkbeta can be constructed with mean and variance
+    expect_no_error( { X <- distribution.beta( ,,0.2,0.1 ) })
+    expect_equal( X$mean, 0.2 )
+    expect_equal( X$var, 0.1 )
+    expect_error( distribution.beta( ,,0.3,0.4 ) )
+    expect_error( distribution.beta( 10,,,0.4 ) )
+    expect_error( distribution.beta( 10,,0.3,0.4 ) )
   })
 })
 

@@ -1001,11 +1001,31 @@ distribution.continuous.beta.class <- R6.class(
 #' 
 #' @param alpha the alpha shape parameter of a beta distribution
 #' @param beta  the beta shape parameter of a beta distribution
+#' @param mu the mean of the distribution (ALTERNATIVE PARAMETERISATION)
+#' @param var the variance of the distribution (ALTERNATIVE PARAMETERISATION)
 #' 
 #' @returns An object of class [[distribution.continuous.beta.class]]
 #'
 #' @seealso [Mastiff-Distributions]
 #' @export
-distribution.beta <- function( alpha, beta ){
+distribution.beta <- function( alpha, beta, mu, var ){
+  not_missing <- missing( alpha ) + missing( beta ) + missing( mu ) + missing( var )
+  if( not_missing != 2 )
+    stop( "Must specify alpha and beta OR mu and var")
+  
+  if( !missing( mu ) ) {
+    if( missing( var ) ) 
+      stop( "Must specify alpha and beta OR mu and var")
+    
+    if( mu <= 0 | mu >= 1 )
+      stop( "mu must be between 0 and 1")
+    
+    nu <- mu * ( 1 - mu ) / var - 1
+    if( nu < 0 )
+        stop( "var < mu ( 1 - mu ) for a beta distribution")
+    alpha <- mu * nu 
+    beta <- ( 1 - mu ) * nu 
+  }
+  
   distribution.continuous.beta.class$new( alpha = alpha, beta = beta )
 }
