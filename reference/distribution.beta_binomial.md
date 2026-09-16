@@ -6,7 +6,7 @@ Constructor function for an object of class
 ## Usage
 
 ``` r
-distribution.beta_binomial(size, alpha, beta)
+distribution.beta_binomial(size, alpha, beta, mu, var)
 ```
 
 ## Arguments
@@ -22,6 +22,14 @@ distribution.beta_binomial(size, alpha, beta)
 - beta:
 
   the second shape parameter
+
+- mu:
+
+  the mean of the distribution (ALTERNATIVE PARAMETERISATION)
+
+- var:
+
+  the variance of the distribution (ALTERNATIVE PARAMETERISATION)
 
 ## Value
 

@@ -6,7 +6,7 @@ Constructor function for an object of class
 ## Usage
 
 ``` r
-distribution.negative_binomial(size, prob, mu)
+distribution.negative_binomial(size, prob, mu, var)
 ```
 
 ## Arguments
@@ -25,6 +25,10 @@ distribution.negative_binomial(size, prob, mu)
 
   alternative parametrization via mean: see
   [stats::dnbinom](https://rdrr.io/r/stats/NegBinomial.html)
+
+- var:
+
+  alternative parametrization via mean and variance
 
 ## Value
 

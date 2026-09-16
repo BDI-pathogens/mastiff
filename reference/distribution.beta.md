@@ -6,7 +6,7 @@ Constructor function for an object of class
 ## Usage
 
 ``` r
-distribution.beta(alpha, beta)
+distribution.beta(alpha, beta, mu, var)
 ```
 
 ## Arguments
@@ -18,6 +18,14 @@ distribution.beta(alpha, beta)
 - beta:
 
   the beta shape parameter of a beta distribution
+
+- mu:
+
+  the mean of the distribution (ALTERNATIVE PARAMETERISATION)
+
+- var:
+
+  the variance of the distribution (ALTERNATIVE PARAMETERISATION)
 
 ## Value
 
