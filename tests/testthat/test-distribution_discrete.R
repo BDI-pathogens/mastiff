@@ -189,6 +189,14 @@ test_that( "distribution.negative_binomial constructs a valid class", {
     expect_error( X$params$size <- 0.5 )
     expect_error( X$params$size <- 'a' )
   })
+  
+  # check neg-binomial can be constructed with mean and variance
+  expect_no_error( { X <- distribution.negative_binomial( ,,10,200 ) })
+  expect_equal( X$mean, 10 )
+  expect_equal( X$var, 200 )
+  expect_error( distribution.negative_binomial( ,,10,9 ) )
+  expect_error( distribution.negative_binomial( 10,,,9 ) )
+  expect_error( distribution.negative_binomial( 10,,15,9 ) )
 })
 
 test_that( "distribution.point_mass constructs a valid class", {
@@ -311,5 +319,15 @@ test_that( "distribution.beta_binomial constructs a valid class", {
     # Test that incorrectly named list $params is rejected
     expect_error( X$params <- list( foo = 1 ) )
     expect_error( X$params <- list( 1 ) )
+    
+    
+    # checkbeta can be constructed with mean and variance
+    expect_no_error( { X <- distribution.beta_binomial( 10,,, 1, 3 ) })
+    expect_equal( X$mean, 1 )
+    expect_equal( X$var, 3 )
+    expect_error( distribution.beta_binomial( 10,,,1, 0.1) )
+    expect_error( distribution.beta_binomial( 10,,,1, 20) )
+    expect_error( distribution.beta_binomial( 10,1,,0.4 ) )
+    expect_error( distribution.beta_binomial( 10,1,,0.3,0.4 ) )
   })
 })

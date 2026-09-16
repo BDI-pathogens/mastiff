@@ -4,7 +4,7 @@
 \alias{distribution.beta_binomial}
 \title{distribution.beta_binomial}
 \usage{
-distribution.beta_binomial(size, alpha, beta)
+distribution.beta_binomial(size, alpha, beta, mu, var)
 }
 \arguments{
 \item{size}{number of trials (zero or more).}
@@ -12,6 +12,10 @@ distribution.beta_binomial(size, alpha, beta)
 \item{alpha}{the first shape parameter}
 
 \item{beta}{the second shape parameter}
+
+\item{mu}{the mean of the distribution (ALTERNATIVE PARAMETERISATION)}
+
+\item{var}{the variance of the distribution (ALTERNATIVE PARAMETERISATION)}
 }
 \value{
 An object of class [\link{distribution.discrete.beta_binomial.class}]

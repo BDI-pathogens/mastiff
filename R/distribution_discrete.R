@@ -565,21 +565,41 @@ distribution.discrete.negative_binomial.class <- R6.class(
 #'   positive, need not be integer.
 #' @param prob probability of success in each trial. 0 < prob <= 1.
 #' @param mu alternative parametrization via mean: see [stats::dnbinom]
-#' 
+#' @param var alternative parametrization via mean and variance
+
 #' @returns An object of class [[distribution.discrete.negative_binomial.class]]
 #' 
 #' @seealso [Mastiff-Distributions]
 #' @export
 
-distribution.negative_binomial <- function( size, prob, mu ){
+distribution.negative_binomial <- function( size, prob, mu, var ){
+  n_missing <- missing( size ) + missing( prob ) + missing( mu ) + missing( var )
+
+  if( n_missing != 2 )
+    stop( "Can only specify 2 out of size, prob, mu and var" )
+  
   if ( missing( prob ) && missing( mu ) )
     stop( "At least one of `prob` and `mu` must be set." )
   
-  if ( missing( prob ) && !missing( size ) )
-    prob <- size / ( mu + size )
+  if ( missing( size ) && missing( var ) )
+    stop( "At least one of `size` and `var` must be set." )
   
-  if ( missing( mu ) && !missing( size ) )
-    mu <- size * ( 1 - prob ) / prob
+  if ( !missing( var ) ) {
+    if( missing( mu ) )
+      stop( "If var is specificed then mu must be specified" )
+    if( var < mu )
+      stop( "Variance is always greater than mean for negative-binomial")
+    
+    size <- mu^2 / ( var - mu )
+    prob <- mu / var
+    
+  } else {
+    if ( missing( prob ) && !missing( size ) )
+      prob <- size / ( mu + size )
+    
+    if ( missing( mu ) && !missing( size ) )
+      mu <- size * ( 1 - prob ) / prob  
+  }
   
   distribution.discrete.negative_binomial.class$new( size, prob, mu )
 }
@@ -1084,12 +1104,29 @@ distribution.discrete.beta_binomial.class <- R6.class(
 #' @param size number of trials (zero or more).
 #' @param alpha the first shape parameter
 #' @param beta the second shape parameter
+#' @param mu the mean of the distribution (ALTERNATIVE PARAMETERISATION)
+#' @param var the variance of the distribution (ALTERNATIVE PARAMETERISATION)
 #' 
 #' @returns An object of class [[distribution.discrete.beta_binomial.class]]
 #' 
 #' @seealso [Mastiff-Distributions]
 #' @export
-distribution.beta_binomial <- function( size, alpha, beta ){
+distribution.beta_binomial <- function( size, alpha, beta, mu, var ){
+  
+  n_missing = missing( alpha ) + missing( beta ) + missing( mu ) + missing( var )
+  if( n_missing != 2 )
+    stop( "must size specify alpha and beta OR mu and var")
+    
+  if( !missing( mu ) || !missing( var ) ) {
+    if( missing( mu ) || missing( var ) ) stop( "must specify both of mu and var")
+    
+    nu <- var / mu / ( size - mu )
+    ab <- size * ( 1 - nu ) / ( size * nu - 1 )
+    if( ab < 0 ) stop( "mu and var inconsistent for a beta-binomial")
+    alpha <- mu * ab / size
+    beta  <- ab - alpha 
+  }
+  
   distribution.discrete.beta_binomial.class$new( size = size, alpha = alpha, beta = beta )
 }
 

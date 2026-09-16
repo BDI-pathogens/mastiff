@@ -4,7 +4,7 @@
 \alias{distribution.negative_binomial}
 \title{distribution.negative_binomial}
 \usage{
-distribution.negative_binomial(size, prob, mu)
+distribution.negative_binomial(size, prob, mu, var)
 }
 \arguments{
 \item{size}{target for number of successful trials, or dispersion parameter
@@ -14,6 +14,8 @@ positive, need not be integer.}
 \item{prob}{probability of success in each trial. 0 < prob <= 1.}
 
 \item{mu}{alternative parametrization via mean: see \link[stats:NegBinomial]{stats::dnbinom}}
+
+\item{var}{alternative parametrization via mean and variance}
 }
 \value{
 An object of class [\link{distribution.discrete.negative_binomial.class}]
