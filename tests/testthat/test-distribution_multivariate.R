@@ -150,3 +150,66 @@ test_that( "distribution.multivariate_t class and distribution", {
     expect_equal( cor( samples[ , 1], samples[ , 2 ] ), 0.5, tolerance = tol )
   } )
 } )
+
+test_that( "t copula check univariate distributions", {
+  withr::with_seed( 123, {
+    n <- 1e5
+    
+    # univariate distributions for the t- copula
+    dist <- list( 
+      distribution.binomial( 1e3, 0.4), 
+      distribution.binomial( 1e3, 0.5),
+      distribution.binomial( 1e3, 0.6)
+    )
+    
+    expect_no_error( { dist_tc <- distribution.copula_t( dist, 0.5, 6 ) } )
+    sample_tc <- dist_tc$r( n )
+    
+    # check the copula univariate distributions are the same as the underlying
+    # using the Kolmogorov-Smirnov test for samples
+    # suppress tie warning message 
+    for( idx in 1:length( dist ) ) {
+      sample_uv <- dist[[ idx ]]$r( n )
+      suppressWarnings( { kst <- stats::ks.test( sample_tc[,idx], sample_uv ) } )
+      expect_gt( kst$"p.value", 0.01  )
+    }
+    
+    # check moments
+    means <- dist_tc$mean
+    vars  <- dist_tc$var
+    sds   <- dist_tc$sd
+    for( idx in 1:length( dist ) ) {
+      expect_equal( means[ idx ], dist[[idx]]$mean )  
+      expect_equal( vars[ idx ],  dist[[idx]]$var )  
+      expect_equal( sds[ idx ],   dist[[idx]]$sd )  
+    } 
+  } )
+} )
+
+test_that( "t check correlation", {
+  withr::with_seed( 123, {
+    n <- 1e5
+    rho <- 0.5
+    
+    # univariate distributions for thet-copula
+    # large size so approximately Gaussian
+    dist <- list( 
+      distribution.binomial( 1e3, 0.4), 
+      distribution.binomial( 1e3, 0.5),
+      distribution.binomial( 1e3, 0.6)
+    )
+    
+    # large degrees of freedom, so approximately Gaussian
+    expect_no_error( { dist_tc <- distribution.copula_t( dist, rho, 50 ) } )
+    sample_tc <- dist_tc$r( n )
+    
+    # check the correlation is approximately the copula correlation when the
+    # univariate distributions are approximately Gaussian
+    for( idx in 1:(length( dist ) - 1 ) ) 
+      for( jdx in (idx+1):length( dist ) ) {
+        expect_lt( abs( rho - cor( sample_tc[ , idx ], sample_tc[ , jdx ] ) ), 0.01 )
+      }
+  } )
+} )
+
+
