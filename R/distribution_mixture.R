@@ -26,6 +26,8 @@
 #' 
 #' @include R6_class.R
 #' @include distribution_R6_class.R
+#' 
+#' @importFrom matrixStats colMaxs
 distribution.mixture.class <- R6.class(
   classname = "distribution.mixture.class",
   inherit   = distribution.continuous.class,
