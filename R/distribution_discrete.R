@@ -21,6 +21,8 @@
 #' 
 #' @include R6_class.R
 #' @include distribution_R6_class.R
+#' 
+#' @importFrom matrixStats logSumExp
 distribution.discrete.class <- 
 R6.class(
   classname = "distribution.discrete.class",
