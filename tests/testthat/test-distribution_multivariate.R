@@ -101,3 +101,52 @@ test_that( "distribution.copula check correlation", {
       }
   } )
 } )
+
+test_that( "distribution.multivariate_t class and distribution", {
+  withr::with_seed( 123, {
+    n <- 1e5
+    tol <- 3 / sqrt( n )
+    
+    means <- c( 1, -1 )
+    scale_matrix <- matrix( c( 1, 1, 1, 2 ), nrow = 2 )
+    df <- 6
+    expect_no_error( { X <- distribution.multivariate_t( means * 3, scale_matrix * 2, df * 4  ) } )
+    expect_equal( X$params$means, means * 3 )
+    expect_equal( X$params$scale_matrix, scale_matrix * 2 ) 
+    expect_equal( X$params$df,df * 4 ) 
+    
+    # check update
+    expect_no_error( { X$params$means <- means } ) 
+    expect_equal( X$params$means, means )
+    expect_no_error( { X$params$scale_matrix <- scale_matrix } ) 
+    expect_equal( X$params$scale_matrix, scale_matrix ) 
+    expect_no_error( { X$params$df <- df } ) 
+    expect_equal( X$params$df, df ) 
+    
+    # check univariate moments
+    expect_no_error( { samples <- X$r( n ) } )
+    for( idx in 1:length( means ) ) {
+      expect_equal( mean( samples[ , idx ] ), X$mean[ idx ], tolerance = tol  )
+      expect_equal( sd( samples[ , idx ] ), X$sd[ idx ], tolerance = tol  )
+    }
+    
+    # check univariate cumulative distribution functions
+    expect_no_error( { q <- X$p( samples ) } )
+    for( idx in 1:length( means ) ) {
+      expect_lt( max( abs( sort( q[ , idx]) -( 1:nrow( q ) ) / nrow(q)) ), tol )
+    }
+    
+    # check quantile function    
+    expect_no_error( { p_inv <- X$q( q ) } )  
+    expect_lt( max( abs( p_inv - samples ) ), 1e-9 )
+    
+    # check correlation
+    rho <- scale_matrix[1,2] / sqrt( scale_matrix[1,1] * scale_matrix[2,2])
+    expect_equal( cor( samples[ , 1], samples[ , 2 ] ), rho, tolerance = tol )
+    
+    # check update of correlation  
+    X$set_uniform_correlation( 0.5 )
+    expect_no_error( { samples <- X$r( n ) } )
+    expect_equal( cor( samples[ , 1], samples[ , 2 ] ), 0.5, tolerance = tol )
+  } )
+} )
