@@ -162,7 +162,7 @@ distribution.abstract.class <- R6.class(
                        paste( private$.param_names, collapse = '`, ' ),
                        paste( input_names, collapse = '`, ' ) ) )
       
-      return( NULL )
+      return( params )
     },
     .staticReturn = function( val, name ){
       # Creates static active binding `name` with value `val` which cannot be
@@ -195,7 +195,7 @@ distribution.abstract.class <- R6.class(
     param_names  = function( val ) private$.staticReturn( val, "param_names" ),
     params = function( new_val ){
       if ( missing( new_val ) ) return( private$.params )
-      private$.check_params( new_val )
+      new_val <- private$.check_params( new_val )
       private$.params <- new_val
     },
     mean = function( val ) stop( "`mean` not implemented on derived class" ),

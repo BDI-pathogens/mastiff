@@ -36,7 +36,7 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
       .name    = "Binomial",
       .param_names = c( "size", "prob" ),
       .check_params = function( params ){
-        return( NULL )
+        return( params )
       }
     ),
     public = list(

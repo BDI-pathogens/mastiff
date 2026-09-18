@@ -106,7 +106,7 @@ distribution.multivariate.normal.class <- R6.class(
       private$.n_dimensions <- n_dimensions
       private$.support <- matrix( c( rep( -Inf, n_dimensions ), 
                           rep( Inf, n_dimensions ) ), ncol = 2 )
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
@@ -294,7 +294,7 @@ distribution.multivariate.t.class <- R6.class(
       private$.n_dimensions <- n_dimensions
       private$.support <- matrix( c( rep( -Inf, n_dimensions ), 
                                      rep( Inf, n_dimensions ) ), ncol = 2 )
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
