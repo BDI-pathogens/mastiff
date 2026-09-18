@@ -29,7 +29,7 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
     private   = list(
       .name    = "Uniform",
       .param_names = c( "min", "max" ),
-      .check_params = function( params ) return( NULL )
+      .check_params = function( params ) return( params )
     ),
     public = list(
       initialize = function( min = 0, max = 1 ){
@@ -52,7 +52,7 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
     private   = list(
       .name    = "Exponential",
       .param_names = c( "rate" ),
-      .check_params = function( params ) return( NULL )
+      .check_params = function( params ) return( params )
     ),
     public = list(
       initialize = function( rate = 1 ){
@@ -76,7 +76,7 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
       .name    = "normal",
       .param_names = c( "mean",
                         "sd" ),
-      .check_params = function( params ) return( NULL )
+      .check_params = function( params ) return( params )
     ),
     public = list(
       initialize = function( mean, sd ){
@@ -106,7 +106,7 @@ test_that( "Default $p() and $q() return the correct CDF and quantile function o
       .name    = "normal",
       .param_names = c( "mean",
                         "sd" ),
-      .check_params = function( params ) return( NULL )
+      .check_params = function( params ) return( params )
     ),
     public = list(
       initialize = function( mean, sd ){
@@ -232,7 +232,17 @@ test_that( "distribution.gamma constructs a valid class", {
     
     # Test that elements of $params can be updated by name
     expect_no_error( X$params$rate <- 10 )
+    expect_no_error( X$params$rate <- 10 )
+    expect_equal( X$params$rate, 10 )
+    expect_equal( X$params$scale, 1/10 )
     expect_no_error( X$params$scale <- 10 )
+    expect_no_error( X$params$scale <- 10 )
+    expect_equal( X$params$scale, 10 )
+    expect_equal( X$params$rate, 1/10 )
+    expect_no_error( X$params <- list( shape = 1, rate = 2, scale = 1/2 ))
+    expect_equal( X$params$rate, 2 )
+    expect_equal( X$params$scale, 1/2 )
+    expect_error( X$params <- list( shape = 1, rate = 3, scale = 1 ) )
     
     # Test that invalid values of $params fail (via private$.check_params())
     expect_error( X$params$shape <- -1 )

@@ -176,7 +176,7 @@ distribution.discrete.binomial.class <- R6.class(
       # update support
       private$.support <- c( 0, params$size )
       
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
@@ -310,7 +310,7 @@ distribution.discrete.poisson.class <- R6.class(
         stop( "`params$lambda` must be a numeric value.")
       if ( params$lambda < 0 )
         stop( "`params$lambda` must be >0.")
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
@@ -460,7 +460,7 @@ distribution.discrete.negative_binomial.class <- R6.class(
       if ( abs( mean - params$mu ) > 1e-10 )
         stop( "`params$prob` and `params$mu` are inconsistent." )
       
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
@@ -643,7 +643,7 @@ distribution.discrete.point_mass.class <- R6.class(
         stop( "`$params$value` must by a numeric value.")
       }
       
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
@@ -801,7 +801,7 @@ distribution.discrete.finite_set.class <- R6.class(
       if ( !is.finite( sum( params$prob ) ) )
         stop( "`params$prob` must have finite sum to allow distribution to be normalised." )
       
-      return( NULL )
+      return( params )
     },
     .dt_params = NA
   ),
@@ -1008,7 +1008,7 @@ distribution.discrete.beta_binomial.class <- R6.class(
       # update support
       private$.support <- c( 0, params$size )
       
-      return( NULL )
+      return( params )
     }
   ),
   public = list(

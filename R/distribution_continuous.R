@@ -157,7 +157,7 @@ distribution.continuous.uniform.class <- R6.class(
         stop( "`min` and `max` must be numeric values.")
       if ( params$min > params$max )
         stop( "`min` must be strictly less than `max`.")
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
@@ -296,7 +296,7 @@ distribution.continuous.exponential.class <- R6.class(
       if ( params$rate < 0 )
         stop( "`params$rate` must be >0.")
       
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
@@ -442,6 +442,13 @@ distribution.continuous.gamma.class <- R6.class(
       # Check that params contains all elements of private$.param_names
       super$.check_params( params )
       
+      # deal with initial update of empty params
+      old_params <- self$params
+      if( !length( old_params ) ) {
+        if( is.null( params$rate ) )  params$rate <- 1 / params$scale
+        if( is.null( params$scale ) )  params$scale <- 1 / params$rate
+      }
+      
       if ( params$shape < 0 || !is.numeric( params$shape ) )
         stop( "`params$shape` must be a non-negative numeric value.")
       if ( params$rate < 0 || !is.numeric( params$rate ) )
@@ -449,22 +456,22 @@ distribution.continuous.gamma.class <- R6.class(
       if ( params$scale < 0 || !is.numeric( params$scale ) )
         stop( "`params$scale` must be a non-negative numeric value.")
       
-      # When updating params by name, need to maintain rate = 1 / scale if only
-      # one of rate or scale is updated
-      if ( !is.null( self$params$rate ) ){
-        if ( ( params$rate != self$params$rate ) &&
-             ( params$scale == self$params$scale ) )
+      # if not initial update then check for consistency or maintain
+      if( length( old_params ) ) {
+        # if only rate or scale is updated, then change the other to be consistent
+        if ( abs( params$rate - old_params$rate ) > 1e-10 &&
+             abs( params$scale - old_params$scale ) < 1e-10 ) {
           params$scale <- 1 / params$rate
-        
-        if ( ( params$rate == self$params$rate ) &&
-             ( params$scale != self$params$scale ) )
+        } else if ( abs( params$rate - old_params$rate ) < 1e-10 &&
+                    abs( params$scale - old_params$scale ) > 1e-10 ) {
           params$rate <- 1 / params$scale
-      }
+        }
+      }       
       
       if ( abs( params$scale * params$rate - 1 ) > 1e-10 )
         stop( "`params$rate` and `params$scale` are inconsistent. Must have `params$rate = 1 / params$scale`." )
-      
-      return( NULL )
+    
+      return( params )
     }
   ),
   public = list(
@@ -649,7 +656,7 @@ distribution.continuous.normal.class <- R6.class(
       if ( params$sd < 0 || !is.numeric( params$sd ) )
         stop( "`params$sd` must be a non-negative numeric value.")
 
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
@@ -780,7 +787,7 @@ distribution.continuous.lognormal.class <- R6.class(
       if ( params$sdlog < 0 || !is.numeric( params$sdlog ) )
         stop( "`params$sdlog` must be a non-negative numeric value.")
       
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
@@ -913,7 +920,7 @@ distribution.continuous.beta.class <- R6.class(
       if ( params$alpha <= 0 || params$beta <= 0 )
         stop( "`alpha and beta must be non-negative")
       
-      return( NULL )
+      return( params )
     }
   ),
   public = list(
