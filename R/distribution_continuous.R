@@ -745,7 +745,7 @@ distribution.continuous.normal.class <- R6.class(
 #'
 #' @seealso [Mastiff-Distributions]
 #' @export
-distribution.normal <- function( mean, sd ){
+distribution.normal <- function( mean = 0, sd = 1 ){
   distribution.continuous.normal.class$new( mean = mean,
                                             sd   = sd )
 }

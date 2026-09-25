@@ -60,6 +60,7 @@ Collate:
     'distribution_mixture.R'
     'distribution_multivariate.R'
     'distribution_truncated.R'
+    'distribution_truncated_factory.R'
     'mastiff-package.R'
     'mixture_of_two_normals.R'
     'plot_posterior.R'
