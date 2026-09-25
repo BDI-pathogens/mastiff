@@ -22,12 +22,15 @@ distribution.truncated.class <- R6.class(
     # initialize
     ############################################################################ /
     #' @description Create a new object of class `distribution.multivariate.class`
-    #' @param distribution
+    #' @param distribution the untruncated distribution
     #' @param t0 Lower bound for truncation [default -Inf]
     #' @param t1 Upper bound for truncation [default Inf]
     initialize = function(distribution,
                           t0 = distribution$support[1],
                           t1 = distribution$support[2]) {
+      if (!is.distribution(distribution))
+        stop("`distribution` must be a mastiff R6 distribution class")
+      
       # Set up the untruncated distribution
       private$.distribution <- distribution
       private$.params       <- distribution$params
@@ -206,3 +209,24 @@ distribution.truncated.class <- R6.class(
     }
   )
 )
+
+#' distribution.truncated
+#' 
+#' Constructor function for an object of class [[distribution.truncated.class]]
+#' 
+#' @param distribution the untruncated distribution
+#' @param t0,t1 Upper and lower bound for truncation
+#' 
+#' @returns An object of class [[distribution.truncated.class]]
+#'
+#' @export
+
+distribution.truncated <- function(distribution,
+                                   t0 = distribution$support[1],
+                                   t1 = distribution$support[2]){
+  return(
+    distribution.truncated.class$new(
+      distribution, t0, t1
+    )
+  )
+}
