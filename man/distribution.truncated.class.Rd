@@ -47,15 +47,19 @@ subset of values for which the density is positives}
   Create a new object of class \code{distribution.multivariate.class}
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{distribution.truncated.class$new(distribution, t0 = -Inf, t1 = Inf)}
+    \preformatted{distribution.truncated.class$new(
+  distribution,
+  t0 = distribution$support[1],
+  t1 = distribution$support[2]
+)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
     \if{html}{\out{<div class="arguments">}}
     \describe{
       \item{\code{distribution}}{the untruncated distribution}
-      \item{\code{t0}}{Lower bound for truncation \link{default -Inf}}
-      \item{\code{t1}}{Upper bound for truncation \link{default Inf}}
+      \item{\code{t0}}{Lower bound for truncation}
+      \item{\code{t1}}{Upper bound for truncation}
     }
     \if{html}{\out{</div>}}
   }
