@@ -9,7 +9,7 @@ distribution.truncated.class <- R6.class(
   classname = "distribution.truncated.class",
   inherit   = distribution.abstract.class,
   private   = list(
-    .distribution = distribution.exponential(), # Placeholder distribution
+    .distribution = NULL,
     .t0 = -Inf,
     .t1 = Inf,
     .support = c(-Inf, Inf),
@@ -28,6 +28,15 @@ distribution.truncated.class <- R6.class(
     initialize = function(distribution,
                           t0 = distribution$support[1],
                           t1 = distribution$support[2]) {
+      if (missing(distribution)){
+        if (!is.null(private$.distribution)){
+          distribution <- private$.distribution
+        } else {
+          stop('argument "distribution" is missing, with no default')
+        }
+      }
+      
+      
       if (!is.distribution(distribution))
         stop("`distribution` must be a mastiff R6 distribution class")
       
