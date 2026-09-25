@@ -31,8 +31,19 @@ distribution.truncated.class <- R6.class(
       private$.params       <- distribution$params
       private$.param_names  <- distribution$param_names
       
-      self$t0 <- t0
-      self$t1 <- t1
+      private$.t0 <- t0
+      private$.t1 <- t1
+      
+      # Update normalisation constant
+      private$.normalisation_lower    <- private$.distribution$p(t0)
+      private$.normalisation_upper    <- private$.distribution$p(t1)
+      private$.normalisation_constant <- private$.normalisation_upper - private$.normalisation_lower
+      
+      if (private$.normalisation_constant == 0)
+        stop("Untruncated distribution has no mass between `t0` and new `t1` value.")
+      if (private$.normalisation_constant < 1e-10)
+        warning("Untruncated distribution has almost no mass between `t0` and `t1` - proceed with caution.")
+      
       private$.support <- c(private$.t0, private$.t1)
     },
     ############################################################################/
@@ -47,16 +58,26 @@ distribution.truncated.class <- R6.class(
     ############################################################################/
     #' @description Cumulative density function for a truncated random variable.
     p = function( q, lower.tail = TRUE, log.p = FALSE ){
-      private$.distribution$p(q, lower.tail, log.p) / private$.normalisation_constant
+      p <- (private$.distribution$p(q, lower.tail = TRUE, log.p = FALSE) - private$.normalisation_lower) /
+        private$.normalisation_constant
+      
+      p[q <= private$.t0] <- 0 # P[X <= t0] = 0
+      p[q >= private$.t1] <- 1 # P[X <= t1] = 1
+      
+      if (!lower.tail) p <- 1 - p
+      if (log.p) p <- log(p)
+      return(p)
     },
     ############################################################################/
     # quantile function
     ############################################################################/
     #' @description Quantile function for a truncated random variable.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
+      if (!lower.tail) p <- 1 - p
+      if (log.p) p <- exp(p)
       private$.distribution$q(p * private$.normalisation_constant +
                                 private$.normalisation_lower,
-                              lower.tail, log.p)
+                              lower.tail = TRUE, log.p = FALSE)
     },
     ############################################################################/
     # random deviates
@@ -100,6 +121,15 @@ distribution.truncated.class <- R6.class(
       
       if (!is.numeric(new_val) | new_val > self$t1)
         stop("`t0` must be a numeric value less than `t1`.")
+      
+      new_normalisation_lower    <- private$.distribution$p(new_val)
+      new_normalisation_constant <- private$.normalisation_upper - new_normalisation_lower
+      
+      if (new_normalisation_constant == 0)
+        stop("Untruncated distribution has no mass between `t0` and new `t1` value.")
+      if (new_normalisation_constant < 1e-10)
+        warning("Untruncated distribution has almost no mass between `t0` and `t1` - proceed with caution.")
+      
       private$.t0 <- new_val
       private$.support <- c(private$.t0, private$.t1)
       # Update the normalisation constant 
@@ -117,11 +147,20 @@ distribution.truncated.class <- R6.class(
       
       if (!is.numeric(new_val) | new_val < self$t0)
         stop("`t1` must be a numeric value greater than `t0`.")
+      
+      new_normalisation_upper    <- private$.distribution$p(new_val)
+      new_normalisation_constant <- new_normalisation_upper - private$.normalisation_lower
+      
+      if (new_normalisation_constant == 0)
+        stop("Untruncated distribution has no mass between `t0` and new `t1` value.")
+      if (new_normalisation_constant < 1e-10)
+        warning("Untruncated distribution has almost no mass between `t0` and `t1` - proceed with caution.")
+      
       private$.t1 <- new_val
       private$.support <- c(private$.t0, private$.t1)
       # Update the normalisation constant 
-      private$.normalisation_upper <- private$.distribution$p(private$.t1)
-      private$.normalisation_constant <- private$.normalisation_upper - private$.normalisation_lower
+      private$.normalisation_upper    <- new_normalisation_upper
+      private$.normalisation_constant <- new_normalisation_constant
     },
     ############################################################################/
     # support
