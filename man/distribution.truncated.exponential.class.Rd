@@ -2,49 +2,74 @@
 % Please edit documentation in R/distribution_truncated_factory.R
 \name{distribution.truncated.exponential.class}
 \alias{distribution.truncated.exponential.class}
-\title{distribution.truncated.exponential.class}
+\title{Class: \code{distribution.truncated.exponential.class}}
 \description{
-distribution.truncated.exponential.class
+Derived class for an exponentially-distributed random variable
+with interval truncation.
 }
 \section{Super classes}{
-\code{R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{distribution.abstract.class}} -> \code{\link[mastiff:distribution.truncated.class]{distribution.truncated.class}} -> \code{distribution.truncated.exponential}
+\code{R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{distribution.abstract.class}} -> \code{\link[mastiff:distribution.truncated.class]{distribution.truncated.class}} -> \code{distribution.truncated.exponential.class}
 }
 \section{Active bindings}{
   \if{html}{\out{<div class="r6-active-bindings">}}
   \describe{
+    \item{\code{mean}}{The mean of an exponential distribution with rate
+\verb{$params$rate} truncated to \verb{[$t0, $t1]}.}
+
+    \item{\code{sd}}{The standard deviation of an exponential distribution with
+rate \verb{$params$rate} truncated to \verb{[$t0, $t1]}.}
+
+    \item{\code{var}}{The variance of an exponential distribution with rate
+\verb{$params$rate} truncated to \verb{[$t0, $t1]}.}
+
     \item{\code{interfaces}}{The list of available class interfaces}
-
-    \item{\code{mean}}{Mean of the distribution}
-
-    \item{\code{sd}}{Standard deviation of the distribution}
-
-    \item{\code{var}}{Variance of the distribution}
   }
   \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
   \itemize{
-    \item \href{#method-distribution.truncated.exponential-clone}{\code{distribution.truncated.exponential$clone()}}
+    \item \href{#method-distribution.truncated.exponential.class-initialize}{\code{distribution.truncated.exponential.class$new()}}
+    \item \href{#method-distribution.truncated.exponential.class-clone}{\code{distribution.truncated.exponential.class$clone()}}
   }
 }
 \if{html}{\out{<details open><summary>Inherited methods</summary>
 <ul>
   <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.truncated.class" data-id="d"><a href='../../mastiff/html/distribution.truncated.class.html#method-distribution.truncated.class-d'><code>distribution.truncated.class$d()</code></a></span></li>
-  <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.truncated.class" data-id="initialize"><a href='../../mastiff/html/distribution.truncated.class.html#method-distribution.truncated.class-initialize'><code>distribution.truncated.class$initialize()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.truncated.class" data-id="p"><a href='../../mastiff/html/distribution.truncated.class.html#method-distribution.truncated.class-p'><code>distribution.truncated.class$p()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.truncated.class" data-id="q"><a href='../../mastiff/html/distribution.truncated.class.html#method-distribution.truncated.class-q'><code>distribution.truncated.class$q()</code></a></span></li>
   <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.truncated.class" data-id="r"><a href='../../mastiff/html/distribution.truncated.class.html#method-distribution.truncated.class-r'><code>distribution.truncated.class$r()</code></a></span></li>
 </ul>
 </details>}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-distribution.truncated.exponential-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-distribution.truncated.exponential-clone}{}}}
-\subsection{\code{distribution.truncated.exponential$clone()}}{
+\if{html}{\out{<a id="method-distribution.truncated.exponential.class-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-distribution.truncated.exponential.class-initialize}{}}}
+\subsection{\code{distribution.truncated.exponential.class$new()}}{
+  Create a new object of class \code{distribution.truncated.exponential.class}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.truncated.exponential.class$new(rate = 1, t0 = 0, t1 = Inf)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{rate}}{The rate of the exponential distribution}
+      \item{\code{t0}}{Lower bound for truncation}
+      \item{\code{t1}}{Upper bound for truncation}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
+
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-distribution.truncated.exponential.class-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-distribution.truncated.exponential.class-clone}{}}}
+\subsection{\code{distribution.truncated.exponential.class$clone()}}{
   The objects of this class are cloneable with this method.
   \subsection{Usage}{
     \if{html}{\out{<div class="r">}}
-    \preformatted{distribution.truncated.exponential$clone(deep = FALSE)}
+    \preformatted{distribution.truncated.exponential.class$clone(deep = FALSE)}
     \if{html}{\out{</div>}}
   }
   \subsection{Arguments}{
