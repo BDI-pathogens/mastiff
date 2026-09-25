@@ -25,33 +25,34 @@ distribution.truncated.class <- R6.class(
     #' @param distribution
     #' @param t0 Lower bound for truncation [default -Inf]
     #' @param t1 Upper bound for truncation [default Inf]
-    initialize = function(distribution, t0 = -Inf, t1 = Inf) {
+    initialize = function(distribution,
+                          t0 = distribution$support[1],
+                          t1 = distribution$support[2]) {
       # Set up the untruncated distribution
       private$.distribution <- distribution
       private$.params       <- distribution$params
       private$.param_names  <- distribution$param_names
+      private$.support      <- distribution$support
       
-      private$.t0 <- t0
-      private$.t1 <- t1
-      
-      # Update normalisation constant
-      private$.normalisation_lower    <- private$.distribution$p(t0)
-      private$.normalisation_upper    <- private$.distribution$p(t1)
+      # Initialise as an untruncated distribution
+      private$.t0 <- distribution$support[1]
+      private$.t1 <- distribution$support[2]
+      private$.normalisation_lower    <- private$.distribution$p(distribution$support[1])
+      private$.normalisation_upper    <- private$.distribution$p(distribution$support[2])
       private$.normalisation_constant <- private$.normalisation_upper - private$.normalisation_lower
       
-      if (private$.normalisation_constant == 0)
-        stop("Untruncated distribution has no mass between `t0` and new `t1` value.")
-      if (private$.normalisation_constant < 1e-10)
-        warning("Untruncated distribution has almost no mass between `t0` and `t1` - proceed with caution.")
-      
-      private$.support <- c(private$.t0, private$.t1)
+      # Update truncation - active bindings handle input checks
+      self$t0 <- t0
+      self$t1 <- t1
     },
     ############################################################################/
     # density
     ############################################################################/
     #' @description Density function for a truncated random variable.
     d = function( x, log = FALSE ){
-      private$.distribution$d(x, log = FALSE) / private$.normalisation_constant
+      d <- private$.distribution$d(x, log = FALSE) / private$.normalisation_constant
+      d[x <= private$.t0 | x >= private$.t1] <- 0 # Set density to 0 outside of truncated support
+      return(d)
     },
     ############################################################################/
     # distribution function
@@ -73,8 +74,8 @@ distribution.truncated.class <- R6.class(
     ############################################################################/
     #' @description Quantile function for a truncated random variable.
     q = function( p, lower.tail = TRUE, log.p = FALSE ){
-      if (!lower.tail) p <- 1 - p
       if (log.p) p <- exp(p)
+      if (!lower.tail) p <- 1 - p
       private$.distribution$q(p * private$.normalisation_constant +
                                 private$.normalisation_lower,
                               lower.tail = TRUE, log.p = FALSE)
@@ -120,21 +121,37 @@ distribution.truncated.class <- R6.class(
         return(private$.t0)
       
       if (!is.numeric(new_val) | new_val > self$t1)
-        stop("`t0` must be a numeric value less than `t1`.")
+        stop("`$t0` must be a numeric value less than `$t1`.")
       
-      new_normalisation_lower    <- private$.distribution$p(new_val)
+      if (new_val < private$.distribution$support[1]){
+        warning(sprintf(
+          "Lower truncation at %g has no effect when untruncated distribution has lower support %f",
+          new_val, private$.distribution$support[1]
+        ))
+      }
+      
+      # New t0 value is restricted to lie within the support of the untruncated distribution
+      new_t0                     <- max(new_val, private$.distribution$support[1])
+      new_normalisation_lower    <- private$.distribution$p(new_t0)
       new_normalisation_constant <- private$.normalisation_upper - new_normalisation_lower
       
       if (new_normalisation_constant == 0)
-        stop("Untruncated distribution has no mass between `t0` and new `t1` value.")
+        stop(sprintf(
+          "Untruncated distribution has no mass on [%g, %g].",
+          new_t0, private$.t1))
       if (new_normalisation_constant < 1e-10)
-        warning("Untruncated distribution has almost no mass between `t0` and `t1` - proceed with caution.")
+        warning(
+          sprintf(
+            "Untruncated distribution has almost no mass on [%g, %g] - proceed with caution.",
+            new_t0, private$.t1
+          )
+        )
       
-      private$.t0 <- new_val
-      private$.support <- c(private$.t0, private$.t1)
+      private$.t0 <- new_t0
+      private$.support[1] <- new_t0
       # Update the normalisation constant 
-      private$.normalisation_lower <- private$.distribution$p(private$.t0)
-      private$.normalisation_constant <- private$.normalisation_upper - private$.normalisation_lower
+      private$.normalisation_lower    <- new_normalisation_lower
+      private$.normalisation_constant <- new_normalisation_constant
     },
     ############################################################################/
     # t1
@@ -146,18 +163,35 @@ distribution.truncated.class <- R6.class(
         return(private$.t1)
       
       if (!is.numeric(new_val) | new_val < self$t0)
-        stop("`t1` must be a numeric value greater than `t0`.")
+        stop("`$t1` must be a numeric value greater than `$t0`.")
       
-      new_normalisation_upper    <- private$.distribution$p(new_val)
+      if (new_val > private$.distribution$support[2])
+        warning(
+          sprintf(
+            "Upper truncation at %g has no effect when untruncated distribution has upper support %g",
+            new_val, private$.distribution$support[2]
+          )
+        )
+      
+      # New t1 value is restricted to lie within the support of the untruncated distribution
+      new_t1                     <- min(new_val, private$.distribution$support[2])
+      new_normalisation_upper    <- private$.distribution$p(new_t1)
       new_normalisation_constant <- new_normalisation_upper - private$.normalisation_lower
       
       if (new_normalisation_constant == 0)
-        stop("Untruncated distribution has no mass between `t0` and new `t1` value.")
+        stop(sprintf(
+          "Untruncated distribution has no mass on [%g, %g].",
+          private$.t0, new_t1))
       if (new_normalisation_constant < 1e-10)
-        warning("Untruncated distribution has almost no mass between `t0` and `t1` - proceed with caution.")
+        warning(
+          sprintf(
+            "Untruncated distribution has almost no mass on [%g, %g] - proceed with caution.",
+            private$.t0, new_t1
+          )
+        )
       
-      private$.t1 <- new_val
-      private$.support <- c(private$.t0, private$.t1)
+      private$.t1 <- new_t1
+      private$.support[2] <- new_t1
       # Update the normalisation constant 
       private$.normalisation_upper    <- new_normalisation_upper
       private$.normalisation_constant <- new_normalisation_constant
