@@ -121,6 +121,15 @@ Constructor functions for R6 distribution classes
 - [`distribution.copula_t()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.copula_t.md)
   : distribution.copula_t
 
+### Truncated Distributions
+
+- [`distribution.truncated()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.truncated.md)
+  : distribution.truncated
+- [`distribution.truncated.exponential()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.truncated.exponential.md)
+  : distribution.truncated.exponential
+- [`distribution.truncated.normal()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.truncated.normal.md)
+  : distribution.truncated.normal
+
 ## Class Definitions
 
 - [`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
@@ -222,3 +231,18 @@ Constructor functions for R6 distribution classes
   :
 
   Class: `distribution.multivariate.t.class`
+
+- [`distribution.truncated.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.truncated.class.md)
+  :
+
+  Class: `distribution.truncated.class`
+
+- [`distribution.truncated.exponential.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.truncated.exponential.class.md)
+  :
+
+  Class: `distribution.truncated.exponential.class`
+
+- [`distribution.truncated.normal.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.truncated.normal.class.md)
+  :
+
+  Class: `distribution.truncated.normal.class`
