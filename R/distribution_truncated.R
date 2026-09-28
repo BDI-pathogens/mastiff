@@ -15,7 +15,15 @@ distribution.truncated.class <- R6.class(
     .support = c(-Inf, Inf),
     .normalisation_lower = NA_real_,
     .normalisation_upper = NA_real_,
-    .normalisation_constant = NA_real_
+    .normalisation_constant = NA_real_,
+    .update_normalisation = function() {
+      if (is.null(private$.distribution))
+        stop("Distribution not attached - cannot update normalisation constant.")
+      
+      private$.normalisation_lower    <- private$.distribution$p(private$.t0)
+      private$.normalisation_upper    <- private$.distribution$p(private$.t1)
+      private$.normalisation_constant <- private$.normalisation_upper - private$.normalisation_lower
+    }
   ),
   public = list(
     ############################################################################ /
@@ -43,18 +51,13 @@ distribution.truncated.class <- R6.class(
       private$.distribution <- distribution
       private$.params       <- distribution$params
       private$.param_names  <- distribution$param_names
-      private$.support      <- distribution$support
       
       # Initialise as an untruncated distribution
-      private$.t0 <- distribution$support[1]
-      private$.t1 <- distribution$support[2]
-      private$.normalisation_lower    <- private$.distribution$p(distribution$support[1])
-      private$.normalisation_upper    <- private$.distribution$p(distribution$support[2])
-      private$.normalisation_constant <- private$.normalisation_upper - private$.normalisation_lower
+      private$.t0 <- max(t0, distribution$support[1])
+      private$.t1 <- min(t1, distribution$support[2])
       
-      # Update truncation - active bindings handle input checks
-      self$t0 <- t0
-      self$t1 <- t1
+      private$.support <- c(private$.t0, private$.t1)
+      private$.update_normalisation()
     },
     ############################################################################/
     # density
@@ -121,6 +124,7 @@ distribution.truncated.class <- R6.class(
       # Pass responsibility for parameter checks to the untruncated distribution
       private$.distribution$params <- new_val
       private$.params <- private$.distribution$params
+      private$.update_normalisation()
     },
     ############################################################################/
     # t0
@@ -456,7 +460,7 @@ distribution.truncated.normal.class <- R6.class(
 #'
 #' @returns An object of class [distribution.truncated.normal.class]
 #' @export
-distribution.truncated.normal <- function(mean = 0, sd = 1, t0 = 0, t1 = Inf) {
+distribution.truncated.normal <- function(mean = 0, sd = 1, t0 = -Inf, t1 = Inf) {
   distribution.truncated.normal.class$new(
     mean = mean, sd = sd, t0 = t0, t1 = t1
   )

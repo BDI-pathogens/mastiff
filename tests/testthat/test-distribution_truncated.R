@@ -166,3 +166,73 @@ test_that("$r() returns values in truncated support", {
   expect_lte(max(r), truncated_beta$t1)
 })
 
+test_that( "distribution.truncated.exponential constructs a valid class", {
+  withr::with_seed( 123, {
+    n <- 1e5
+    tol <- 3 / sqrt( n )
+    
+    X <- distribution.truncated.exponential(rate = 1, t0 = 2, t1 = 10)
+    
+    # Test that $params can be updated via named list
+    expect_no_error( X$params <- list( rate = 10 ) )
+    expect_equal(X$params$rate, 10 )
+    
+    # Test that $params can be updated by name
+    expect_no_error( X$params$rate <- 1 )
+    expect_equal(X$params$rate, 1)
+    
+    # Test that invalid values of $params fail (via private$.check_params())
+    expect_error( X$params$rate <- -1 )
+    expect_error( X$params <- list( rate = -1 ) )
+    expect_error( X$params$rate <- 'a' )
+    expect_error( X$params <- list( rate = 'a' ) )
+    
+    # Test that incorrectly named list $params is rejected
+    expect_error( X$params <- list( foo = 1 ) )
+    expect_error( X$params <- list( 1 ) )
+    expect_error( X$params <- list( rate = 1,
+                                    foo = 1 ) )
+    
+    
+    # Test that mean, variance and sd are correct up to Monte Carlo error
+    r <- X$r(n)
+    expect_equal(mean(r), X$mean, tolerance = tol)
+    expect_equal(var(r), X$var, tolerance = tol)
+    expect_equal(sd(r), X$sd, tolerance = tol)
+  })
+})
+
+test_that( "distribution.truncated.normal constructs a valid class", {
+  withr::with_seed( 123, {
+    n <- 1e6
+    tol <- 3 / sqrt( n )
+    
+    X <- distribution.truncated.normal( mean = 0, sd = 1, t0 = -2, t1 = 5 )
+    
+    # Test that $params can be updated via named list
+    expect_no_error( X$params <- list( mean = 1,
+                                       sd   = 10 ) )
+    expect_equal(X$params, list(mean = 1, sd = 10) )
+    
+    # Test that elements of $params can be updated by name
+    expect_no_error( X$params$mean <- 2 )
+    expect_no_error( X$params$sd <- 1 )
+    
+    # Test that invalid values of $params fail (via private$.check_params())
+    expect_error( X$params$mean <- 'a' )
+    expect_error( X$params$sd <- -1 )
+    expect_error( X$params$sd <- 'a' )
+    
+    # Test that incorrectly named list $params is rejected
+    expect_error( X$params <- list( foo = 1 ) )
+    expect_error( X$params <- list( 1 ) )
+    expect_error( X$params <- list( rate = 1,
+                                    foo = 1 ) )
+    
+    # Test that mean, variance and sd are correct up to Monte Carlo error
+    r <- X$r(n)
+    expect_equal(mean(r), X$mean, tolerance = tol)
+    expect_equal(var(r), X$var, tolerance = tol)
+    expect_equal(sd(r), X$sd, tolerance = tol)
+  })
+})
