@@ -4,7 +4,7 @@
 \alias{distribution.truncated.normal}
 \title{distribution.truncated.normal}
 \usage{
-distribution.truncated.normal(mean = 0, sd = 1, t0 = 0, t1 = Inf)
+distribution.truncated.normal(mean = 0, sd = 1, t0 = -Inf, t1 = Inf)
 }
 \arguments{
 \item{mean}{The mean of the normal distribution}
