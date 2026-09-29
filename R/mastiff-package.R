@@ -2,7 +2,7 @@
 "_PACKAGE"
 
 # Declare those dataframe column names we use that generate NOTEs
-utils::globalVariables(c("label", "value", "density_type", "..params_desired", "density"))
+utils::globalVariables(c("label", "value", "density_type", "..params_desired", "density", "..keep_col"))
 
 #' The 'mastiff' package.
 #'
@@ -16,5 +16,6 @@ utils::globalVariables(c("label", "value", "density_type", "..params_desired", "
 #' @importFrom rstan sampling
 #' @importFrom rstantools rstan_config
 #' @importFrom RcppParallel RcppParallelLibs
+#' @importFrom data.table .N
 #'
 NULL

@@ -13,9 +13,11 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 
 
 RcppExport SEXP _rcpp_module_boot_stan_fit4mixture_of_two_normals_mod();
+RcppExport SEXP _rcpp_module_boot_stan_fit4test_mod();
 
 static const R_CallMethodDef CallEntries[] = {
     {"_rcpp_module_boot_stan_fit4mixture_of_two_normals_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4mixture_of_two_normals_mod, 0},
+    {"_rcpp_module_boot_stan_fit4test_mod", (DL_FUNC) &_rcpp_module_boot_stan_fit4test_mod, 0},
     {NULL, NULL, 0}
 };
 
