@@ -37,7 +37,7 @@ the progress of the stan calculation; if it equals FALSE we suppress this
 reporting. An unsolved bug means that if \code{cores > 1}, progress will be
 reported even if \code{report_stan_progress = FALSE}.}
 
-\item{...}{Extra parameters are passed to \code{\link[rstan:stanmodel-method-sampling]{rstan::sampling()}}.}
+\item{...}{Extra parameters are passed to \code{\link[rstan:sampling]{rstan::sampling()}}.}
 }
 \value{
 A data.table with one row per param and one column per sample from

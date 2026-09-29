@@ -2,18 +2,18 @@
 % Please edit documentation in R/aliases.R
 \name{logit}
 \alias{logit}
-\title{logit(p) = log(p / (1 - p)), a wrapper for \code{\link[stats:Logistic]{stats::qlogis()}}}
+\title{logit(p) = log(p / (1 - p)), a wrapper for \code{\link[stats:qlogis]{stats::qlogis()}}}
 \usage{
 logit(...)
 }
 \arguments{
-\item{...}{A numeric vector of values between 0 and 1, and other named arguments to \code{\link[stats:Logistic]{stats::qlogis()}} if desired.}
+\item{...}{A numeric vector of values between 0 and 1, and other named arguments to \code{\link[stats:qlogis]{stats::qlogis()}} if desired.}
 }
 \value{
 A numeric vector
 }
 \description{
-logit(p) = log(p / (1 - p)), a wrapper for \code{\link[stats:Logistic]{stats::qlogis()}}
+logit(p) = log(p / (1 - p)), a wrapper for \code{\link[stats:qlogis]{stats::qlogis()}}
 }
 \examples{
 logit(0.5)
