@@ -12,7 +12,9 @@ reference:
   - posterior_intervals
   - posterior_mass_in_range
   - posterior_means
+  - read_cmdstan_out_files
   - rename_params_cmdstanfile_to_rstan
+  - run_stan_interfaces
   - simulate_mixture_of_two_normals
   - stan_example_regression
   - stanfit_to_matrix
