@@ -153,13 +153,11 @@ test_that("run_stan_interfaces with cmdstan returns NULL if cmdstan_read_output_
   expect_true(is.null(result))
 })
 
-}
-
-test_that("run_stan_interfaces works with rstan", {
+test_that("run_stan_interfaces works with cmdstanr", {
   df_posterior <- pkgcond::suppress_warnings(run_stan_interfaces(
     input_to_stan = list(N=1),
     path_to_stan_code = get_stan_test_file_path(),
-    interface = "rstan",
+    interface = "cmdstanr",
     cores = 1,
     iter_warmup = 1,
     iter_sampling = 1),
@@ -168,11 +166,13 @@ test_that("run_stan_interfaces works with rstan", {
   expect_true(all(c("x[1]", "x[2]") %in% colnames(df_posterior)))
 })
 
-test_that("run_stan_interfaces works with cmdstanr", {
+}
+
+test_that("run_stan_interfaces works with rstan", {
   df_posterior <- pkgcond::suppress_warnings(run_stan_interfaces(
     input_to_stan = list(N=1),
     path_to_stan_code = get_stan_test_file_path(),
-    interface = "cmdstanr",
+    interface = "rstan",
     cores = 1,
     iter_warmup = 1,
     iter_sampling = 1),
