@@ -21,7 +21,7 @@
 #' @include distribution_R6_class.R
 distribution.multivariate.class <- R6.class(
   classname = "distribution.multivariate.class",
-  inherit   = mastiff:::distribution.abstract.class,
+  inherit   = distribution.abstract.class,
   private   = list(
     .n_dimensions = 2,
     .support = matrix( c( -Inf, -Inf, Inf, Inf ), ncol = 2 )

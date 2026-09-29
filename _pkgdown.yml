@@ -54,6 +54,11 @@ reference:
   - distribution.copula
   - distribution.copula_gaussian
   - distribution.copula_t
+- subtitle: Truncated Distributions
+  contents:
+  - distribution.truncated
+  - distribution.truncated.exponential
+  - distribution.truncated.normal
 - title: Class Definitions
   contents:
   - distribution.abstract.class
@@ -76,4 +81,7 @@ reference:
   - distribution.multivariate.copula.class
   - distribution.multivariate.normal.class
   - distribution.multivariate.t.class
+  - distribution.truncated.class
+  - distribution.truncated.exponential.class
+  - distribution.truncated.normal.class
 
