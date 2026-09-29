@@ -12,3 +12,4 @@ mastiff_*.tar.gz
 *.DS_Store
 ..Rcheck/
 docs
+inst/stan/test
