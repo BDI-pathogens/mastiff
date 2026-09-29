@@ -1,3 +1,7 @@
+# We only do local testing of run_stan_interfaces(interface = "cmdstan")
+# so that cmdstan does not need to be installed every time we test on github
+testing_locally <- FALSE
+
 # TEST read_cmdstan_out_files ----
 
 test_that("read_cmdstan_out_files works for 1 file", {
@@ -86,6 +90,8 @@ test_that("read_cmdstan_out_files breaks for gzipped file with comment_lines == 
 
 # TEST run_stan_interfaces ----
 
+if (testing_locally) {
+
 test_that("run_stan_interfaces works with cmdstan", {
   withr::with_tempdir({
     path <- getwd()
@@ -146,6 +152,8 @@ test_that("run_stan_interfaces with cmdstan returns NULL if cmdstan_read_output_
   })
   expect_true(is.null(result))
 })
+
+}
 
 test_that("run_stan_interfaces works with rstan", {
   df_posterior <- pkgcond::suppress_warnings(run_stan_interfaces(
