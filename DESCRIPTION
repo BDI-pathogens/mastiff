@@ -42,7 +42,8 @@ Imports:
     R6 (>= 2.4.1),
     extraDistr,
     VGAM,
-    mvtnorm
+    mvtnorm,
+    R.utils
 VignetteBuilder: knitr
 Biarch: true
 LinkingTo: 
