@@ -4,7 +4,7 @@
 \alias{distribution.normal}
 \title{distribution.normal}
 \usage{
-distribution.normal(mean, sd)
+distribution.normal(mean = 0, sd = 1)
 }
 \arguments{
 \item{mean}{The mean of the normal distribution}
