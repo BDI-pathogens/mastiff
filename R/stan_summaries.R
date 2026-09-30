@@ -185,9 +185,9 @@ posterior_mass_in_range <- function(stanfit, param, range) {
 }
 
 
-#' Renames tensor parameters from cmdstandr to rstan format
+#' Renames tensor parameters from cmdstan(r) to rstan format
 #'
-#' In cmdstan output files, tensor parameters are named with their indices at the
+#' In cmdstan(r) output, tensor parameters are named with their indices at the
 #' end separated by dots, e.g. my_matrix.2.1; in rstan they are named with their
 #' indices at the end internally separated by commas and then wrapped in square
 #' brackets, e.g. my_matrix\[2,1\].
@@ -208,11 +208,11 @@ posterior_mass_in_range <- function(stanfit, param, range) {
 rename_params_cmdstanfile_to_rstan <- function(param_names) {
   stopifnot(is.character(param_names))
   map_chr(param_names, function(name) {
-    tensor_suffix <- str_match(name, "\\.([.0-9]+)$")[,2]
+    tensor_suffix <- stringr::str_match(name, "\\.([.0-9]+)$")[,2]
     if (is.na(tensor_suffix)) return(name)
     tensor_suffix_length <- nchar(tensor_suffix)
     piece_before_suffix <- substr(name, 1, nchar(name) - tensor_suffix_length - 1)
-    tensor_suffix <- str_replace_all(tensor_suffix, "\\.", ",")
+    tensor_suffix <- stringr::str_replace_all(tensor_suffix, "\\.", ",")
     paste0(piece_before_suffix, "[", tensor_suffix, "]")
   })
 }
