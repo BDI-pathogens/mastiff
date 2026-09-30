@@ -342,5 +342,6 @@ stan_safe_warnings <- function() paste0(
   "|Tail Effective Samples Size \\(ESS\\) is too low",
   "|indicating chains have not mixed.",
   "|E-BFMI not computed because it is undefined for posterior chains of length less than",
-  "|divergent transitions after warmup"
+  "|divergent transitions after warmup",
+  "|Examine the pairs\\(\\) plot to diagnose sampling problems"
 )
