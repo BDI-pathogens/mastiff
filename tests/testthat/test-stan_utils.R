@@ -168,3 +168,12 @@ test_that("run_stan_interfaces works with rstan", {
   expect_true(is.data.frame(df_posterior))
   expect_true(all(c("x[1]", "x[2]") %in% colnames(df_posterior)))
 })
+
+# TEST rename_params_cmdstanfile_to_rstan ----
+
+test_that("rename_params_cmdstanfile_to_rstan works as expected", {
+  param_names <- c("foo", "", "foo.1", "foo.1.2", "foo_1.1.2.3", ".1.2", "1.2")
+  expected_output <- c("foo", "", "foo[1]", "foo[1,2]", "foo_1[1,2,3]", "[1,2]",
+                       "1[2]")
+  expect_equal(rename_params_cmdstanfile_to_rstan(param_names), expected_output)
+})
