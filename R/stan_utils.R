@@ -18,18 +18,14 @@
 #'   every 2 samples. The default of 1 means we keep all samples. TODO:
 #'   currently only implemented for cmdstan.
 #' @param cmdstan_path_to_installation the path to where cmdstan is installed on
-#'   your system; you need to specify this if `interface="cmdstan"`, but not
-#'   otherwise. Inside this directory there should be an executable file named
-#'   `make` (which we use to compile Stan code).
+#'   your system. Inside this directory there should be an executable file named
+#'   `make` (which we use to compile Stan code). If `interface="cmdstan"`, the
+#'   default value for this argument is [cmdstanr::cmdstan_path()]; if not, this
+#'   argument is not used.
 #' @param cmdstan_path_to_output the path to where we will write output files
 #'   from cmdstan; you need to specify this if `interface="cmdstan"`, but not
 #'   otherwise. Several files will be created with things appended to this path:
 #'   _chain1.csv, _chain2.csv etc.
-#' @param cmdstan_path_to_json the path to where we will write a temporary json
-#'   file to hold the input for cmdstan; you need to specify this if
-#'   `interface="cmdstan"`, but not otherwise.
-#' @param cmdstan_overwrite_json a single logical value: should we overwrite a
-#'   file at `cmdstan_path_to_json` if it exists already?
 #' @param cmdstan_path_to_compiled_model the path where we will create the
 #'   compiled version of the Stan code. Some value (such as the default) is
 #'   needed if `interface="cmdstan"`, but not otherwise.
@@ -45,8 +41,8 @@
 #'   `cmdstan_read_output_into_df` is set to `FALSE`).
 #' @export
 #'
-run_stan_interfaces <- function(input_to_stan,
-                                path_to_stan_code,
+run_stan_interfaces <- function(path_to_stan_code,
+                                input_to_stan,
                                 interface = c("rstan", "cmdstanr", "cmdstan"),
                                 iter_warmup = 250,
                                 iter_sampling = 250,
@@ -55,8 +51,6 @@ run_stan_interfaces <- function(input_to_stan,
                                 params_to_ignore = character(),
                                 downsampling_factor = 1L,
                                 cmdstan_path_to_installation = NA,
-                                cmdstan_path_to_json = NA,
-                                cmdstan_overwrite_json = FALSE,
                                 cmdstan_path_to_output = NA,
                                 cmdstan_path_to_compiled_model =
                                   stringr::str_remove(path_to_stan_code, ".stan$"),
@@ -79,10 +73,6 @@ run_stan_interfaces <- function(input_to_stan,
   stopifnot(is.character(interface))
   interface <- match.arg(interface)
   if (interface == "cmdstan") {
-    if (identical(cmdstan_path_to_json, NA)) stop(paste(
-      "If interface is set to cmdstan, the cmdstan_path_to_json option",
-      "must be used"
-    ))
     if (identical(cmdstan_path_to_output, NA)) stop(paste(
       "If interface is set to cmdstan, the cmdstan_path_to_output option",
       "must be used"
@@ -90,8 +80,6 @@ run_stan_interfaces <- function(input_to_stan,
     if (identical(cmdstan_path_to_installation, NA)) {
       cmdstan_path_to_installation <- cmdstanr::cmdstan_path()
     }
-    stopifnot(is.character(cmdstan_path_to_json))
-    stopifnot(length(cmdstan_path_to_json) == 1)
     stopifnot(is.character(cmdstan_path_to_output))
     stopifnot(length(cmdstan_path_to_output) == 1)
     stopifnot(is.character(cmdstan_path_to_installation))
@@ -102,11 +90,6 @@ run_stan_interfaces <- function(input_to_stan,
     cmdstan_path_to_make <- file.path(cmdstan_path_to_installation, "make")
     if (! file.exists(cmdstan_path_to_make)) stop(paste(
       "Could not find a make file inside", cmdstan_path_to_installation))
-    if (! cmdstan_overwrite_json && file.exists(cmdstan_path_to_json)) stop(paste(
-      cmdstan_path_to_json,
-      "exists already; please move/rename/delete to prevent overwriting,",
-      "or run again with cmdstan_overwrite_json set to TRUE"
-    ))
   }
   check_logical(cmdstan_read_output_into_df)
   check_numeric(downsampling_factor, lower = 1)
@@ -150,21 +133,23 @@ run_stan_interfaces <- function(input_to_stan,
     data.table::setDT(df_samples)
 
   } else {
-    cmdstanr::write_stan_json(input_to_stan, file = cmdstan_path_to_json)
     files_out_stan <- paste0(cmdstan_path_to_output, "_chain", 1:chains, ".csv")
     files_out_stan_profile <- paste0(cmdstan_path_to_output, "_profiles.csv")
-    command <- paste0(cmdstan_path_to_compiled_model,
-                      " method=sample",
-                      " num_chains=", chains,
-                      " num_warmup=", iter_warmup,
-                      " num_samples=", iter_sampling,
-                      " num_threads=", cores,
-                      " data file=", cmdstan_path_to_json,
-                      " output file=", paste(files_out_stan, collapse = ","),
-                      " profile_file=", files_out_stan_profile)
-    print("About to run this command:")
-    print(command)
-    system(command)
+    withr::with_tempfile("cmdstan_path_to_json", fileext = ".json", {
+      cmdstanr::write_stan_json(input_to_stan, file = cmdstan_path_to_json)
+      command <- paste0(cmdstan_path_to_compiled_model,
+                        " method=sample",
+                        " num_chains=", chains,
+                        " num_warmup=", iter_warmup,
+                        " num_samples=", iter_sampling,
+                        " num_threads=", cores,
+                        " data file=", cmdstan_path_to_json,
+                        " output file=", paste(files_out_stan, collapse = ","),
+                        " profile_file=", files_out_stan_profile)
+      print("About to run this command:")
+      print(command)
+      system(command)
+    })
     if (! all(file.exists(files_out_stan))) stop(paste(
       "Internal error: we expected to create all of the following files, but at",
       "least one does not exist:", paste(files_out_stan, collapse = " ")))
