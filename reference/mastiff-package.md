@@ -23,3 +23,7 @@ Useful links:
 Authors:
 
 - Chris Wymant <chris.wymant@bdi.ox.ac.uk>
+
+- Ian Roberts
+
+- Robert Hinch
