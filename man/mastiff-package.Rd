@@ -27,6 +27,8 @@ Useful links:
 Authors:
 \itemize{
   \item Chris Wymant \email{chris.wymant@bdi.ox.ac.uk}
+  \item Ian Roberts
+  \item Robert Hinch
 }
 
 }
