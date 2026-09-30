@@ -43,7 +43,7 @@
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code>mastiff::R6.class.class</code> -&gt; <code><a href="distribution.abstract.class.html">mastiff::distribution.abstract.class</a></code> -&gt; <code>distribution.multivariate.class</code></p>
+    <p><code>R6.class.class</code> -&gt; <code><a href="distribution.abstract.class.html">distribution.abstract.class</a></code> -&gt; <code>distribution.multivariate.class</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -51,12 +51,12 @@
 <dd><p>The list of available class interfaces.</p></dd>
 
 
-<dt><code>support</code></dt>
+    <dt><code>support</code></dt>
 <dd><p>The support of the continuous distribution, i.e. the subset
 of values for which the density is positive,</p></dd>
 
 
-<dt><code>n_dimensions</code></dt>
+    <dt><code>n_dimensions</code></dt>
 <dd><p>the number of dimensions of random variable</p></dd>
 
 
@@ -67,21 +67,18 @@ of values for which the density is positive,</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-distribution.multivariate.class-new"><code>distribution.multivariate.class$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-distribution.multivariate.class-initialize"><code>distribution.multivariate.class$new()</code></a></p></li>
 <li><p><a href="#method-distribution.multivariate.class-clone"><code>distribution.multivariate.class$clone()</code></a></p></li>
-</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="d"><a href="distribution.abstract.class.html#method-d"><code>mastiff::distribution.abstract.class$d()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="p"><a href="distribution.abstract.class.html#method-p"><code>mastiff::distribution.abstract.class$p()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="q"><a href="distribution.abstract.class.html#method-q"><code>mastiff::distribution.abstract.class$q()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="r"><a href="distribution.abstract.class.html#method-r"><code>mastiff::distribution.abstract.class$r()</code></a></span></li>
-</ul></details></p><hr><a id="method-distribution.multivariate.class-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p><details open><summary>Inherited methods</summary><ul><li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="d"><a href="distribution.abstract.class.html#method-d"><code>distribution.abstract.class$d()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="p"><a href="distribution.abstract.class.html#method-p"><code>distribution.abstract.class$p()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="q"><a href="distribution.abstract.class.html#method-q"><code>distribution.abstract.class$q()</code></a></span></li>
+  <li><span class="pkg-link" data-pkg="mastiff" data-topic="distribution.abstract.class" data-id="r"><a href="distribution.abstract.class.html#method-r"><code>distribution.abstract.class$r()</code></a></span></li>
+</ul></details></p><hr><a id="method-distribution.multivariate.class-initialize"></a><div class="section">
+<h3 id="distribution-multivariate-class-new-"><code>distribution.multivariate.class$new()</code><a class="anchor" aria-label="anchor" href="#distribution-multivariate-class-new-"></a></h3>
 <p>Create a new object of class <code>distribution.multivariate.class</code></p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/distribution.multivariate.class.html">distribution.multivariate.class</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">n_dimensions</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>n_dimensions</code></dt>
 <dd><p>the number of dimensions of random variable</p></dd>
@@ -90,14 +87,14 @@ of values for which the density is positive,</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.multivariate.class-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.multivariate.class-clone"></a><div class="section">
+<h3 id="distribution-multivariate-class-clone-"><code>distribution.multivariate.class$clone()</code><a class="anchor" aria-label="anchor" href="#distribution-multivariate-class-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">distribution.multivariate.class</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -107,6 +104,7 @@ of values for which the density is positive,</p></dd>
 </div>
 
 </div>
+
 
     </div>
 

@@ -4,10 +4,10 @@ Derived class for an binomially-distributed random variable.
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
+[`distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
 -\> `distribution.discrete.binomial.class`
 
 ## Active bindings
@@ -35,7 +35,7 @@ Derived class for an binomially-distributed random variable.
 
 ### Public methods
 
-- [`distribution.discrete.binomial.class$new()`](#method-distribution.discrete.binomial.class-new)
+- [`distribution.discrete.binomial.class$new()`](#method-distribution.discrete.binomial.class-initialize)
 
 - [`distribution.discrete.binomial.class$d()`](#method-distribution.discrete.binomial.class-d)
 
@@ -49,7 +49,7 @@ Derived class for an binomially-distributed random variable.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.discrete.binomial.class$new()`
 
 Create a new object of class `distribution.discrete.class`
 
@@ -69,7 +69,7 @@ Create a new object of class `distribution.discrete.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.discrete.binomial.class$d()`
 
 Density function for a binomial random variable with size `params$size`
 and success probability `params$prob`.
@@ -90,7 +90,7 @@ and success probability `params$prob`.
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.discrete.binomial.class$p()`
 
 Cumulative density function for a binomial random variable with size
 `params$size` and success probability `params$prob`.
@@ -116,7 +116,7 @@ Cumulative density function for a binomial random variable with size
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.discrete.binomial.class$q()`
 
 Quantile function for a binomial random variable with size `params$size`
 and success probability `params$prob`.
@@ -142,7 +142,7 @@ and success probability `params$prob`.
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.discrete.binomial.class$r()`
 
 Generates random deviates for a binomial random variable with size
 `params$size` and success probability `params$prob`.
@@ -160,7 +160,7 @@ Generates random deviates for a binomial random variable with size
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.discrete.binomial.class$clone()`
 
 The objects of this class are cloneable with this method.
 

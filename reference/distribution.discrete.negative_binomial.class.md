@@ -4,10 +4,10 @@ Derived class for an negative binomially-distributed random variable.
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
+[`distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
 -\> `distribution.discrete.negative_binomial.class`
 
 ## Active bindings
@@ -39,7 +39,7 @@ Derived class for an negative binomially-distributed random variable.
 
 ### Public methods
 
-- [`distribution.discrete.negative_binomial.class$new()`](#method-distribution.discrete.negative_binomial.class-new)
+- [`distribution.discrete.negative_binomial.class$new()`](#method-distribution.discrete.negative_binomial.class-initialize)
 
 - [`distribution.discrete.negative_binomial.class$d()`](#method-distribution.discrete.negative_binomial.class-d)
 
@@ -53,7 +53,7 @@ Derived class for an negative binomially-distributed random variable.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.discrete.negative_binomial.class$new()`
 
 Create a new object of class
 `distribution.discrete.negative_binomial.class`
@@ -81,7 +81,7 @@ Create a new object of class
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.discrete.negative_binomial.class$d()`
 
 Density function for a negative_binomial random variable with size
 `params$size` and success probability `params$prob`.
@@ -102,7 +102,7 @@ Density function for a negative_binomial random variable with size
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.discrete.negative_binomial.class$p()`
 
 Cumulative density function for a negative_binomial random variable with
 size `params$size` and success probability `params$prob`.
@@ -132,7 +132,7 @@ size `params$size` and success probability `params$prob`.
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.discrete.negative_binomial.class$q()`
 
 Quantile function for a negative_binomial random variable with size
 `params$size` and success probability `params$prob`.
@@ -162,7 +162,7 @@ Quantile function for a negative_binomial random variable with size
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.discrete.negative_binomial.class$r()`
 
 Generates random deviates for a negative_binomial random variable with
 size `params$size` and success probability `params$prob`.
@@ -180,7 +180,7 @@ size `params$size` and success probability `params$prob`.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.discrete.negative_binomial.class$clone()`
 
 The objects of this class are cloneable with this method.
 

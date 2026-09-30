@@ -4,7 +4,7 @@ Base class for derived distributions
 
 ## Super class
 
-`mastiff::R6.class.class` -\> `distribution.abstract.class`
+`R6.class.class` -\> `distribution.abstract.class`
 
 ## Active bindings
 
@@ -40,7 +40,7 @@ Base class for derived distributions
 
 ### Public methods
 
-- [`distribution.abstract.class$new()`](#method-distribution.abstract.class-new)
+- [`distribution.abstract.class$new()`](#method-distribution.abstract.class-initialize)
 
 - [`distribution.abstract.class$d()`](#method-distribution.abstract.class-d)
 
@@ -54,7 +54,7 @@ Base class for derived distributions
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.abstract.class$new()`
 
 Create a new object of class `distribution.abstract.class`
 
@@ -64,7 +64,7 @@ Create a new object of class `distribution.abstract.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.abstract.class$d()`
 
 Template base class function for density function of a distribution
 
@@ -84,7 +84,7 @@ Template base class function for density function of a distribution
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.abstract.class$p()`
 
 Template base class function for cumulative distribution function
 
@@ -109,7 +109,7 @@ Template base class function for cumulative distribution function
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.abstract.class$q()`
 
 Template base class function for quantile function of a distribution
 
@@ -134,7 +134,7 @@ Template base class function for quantile function of a distribution
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.abstract.class$r()`
 
 Template base class function for sampling random variates
 
@@ -151,7 +151,7 @@ Template base class function for sampling random variates
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.abstract.class$clone()`
 
 The objects of this class are cloneable with this method.
 

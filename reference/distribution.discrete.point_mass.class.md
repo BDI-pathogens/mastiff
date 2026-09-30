@@ -4,10 +4,10 @@ Derived class for a point mass at `$params$value`
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
+[`distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
 -\> `distribution.discrete.point_mass.class`
 
 ## Active bindings
@@ -32,7 +32,7 @@ Derived class for a point mass at `$params$value`
 
 ### Public methods
 
-- [`distribution.discrete.point_mass.class$new()`](#method-distribution.discrete.point_mass.class-new)
+- [`distribution.discrete.point_mass.class$new()`](#method-distribution.discrete.point_mass.class-initialize)
 
 - [`distribution.discrete.point_mass.class$d()`](#method-distribution.discrete.point_mass.class-d)
 
@@ -46,7 +46,7 @@ Derived class for a point mass at `$params$value`
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.discrete.point_mass.class$new()`
 
 Create a new object of class `distribution.discrete.class`
 
@@ -62,7 +62,7 @@ Create a new object of class `distribution.discrete.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.discrete.point_mass.class$d()`
 
 Density function for a point mass at `params$value`.
 
@@ -82,7 +82,7 @@ Density function for a point mass at `params$value`.
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.discrete.point_mass.class$p()`
 
 Cumulative density function for a point mass at `params$value`.
 
@@ -107,7 +107,7 @@ Cumulative density function for a point mass at `params$value`.
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.discrete.point_mass.class$q()`
 
 Quantile function for a point mass at `params$value`.
 
@@ -132,7 +132,7 @@ Quantile function for a point mass at `params$value`.
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.discrete.point_mass.class$r()`
 
 Generates random deviates for a point mass at `params$value`.
 
@@ -149,7 +149,7 @@ Generates random deviates for a point mass at `params$value`.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.discrete.point_mass.class$clone()`
 
 The objects of this class are cloneable with this method.
 

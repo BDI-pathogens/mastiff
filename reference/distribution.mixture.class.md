@@ -4,10 +4,10 @@ Class to describe the mixture of distributions
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
+[`distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
 -\> `distribution.mixture.class`
 
 ## Active bindings
@@ -32,7 +32,7 @@ Class to describe the mixture of distributions
 
 ### Public methods
 
-- [`distribution.mixture.class$new()`](#method-distribution.mixture.class-new)
+- [`distribution.mixture.class$new()`](#method-distribution.mixture.class-initialize)
 
 - [`distribution.mixture.class$d()`](#method-distribution.mixture.class-d)
 
@@ -46,7 +46,7 @@ Class to describe the mixture of distributions
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.mixture.class$new()`
 
 Create a new object of class `distribution.mixture.class`
 
@@ -66,7 +66,7 @@ Create a new object of class `distribution.mixture.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.mixture.class$d()`
 
 Density function for a random variable of the mixture
 
@@ -86,7 +86,7 @@ Density function for a random variable of the mixture
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.mixture.class$p()`
 
 Evaluates the distribution function of the mixture
 
@@ -111,7 +111,7 @@ Evaluates the distribution function of the mixture
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.mixture.class$q()`
 
 Evaluates the quantile function of the mixture
 
@@ -136,7 +136,7 @@ Evaluates the quantile function of the mixture
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.mixture.class$r()`
 
 Generates random samples of the mixture
 
@@ -153,7 +153,7 @@ Generates random samples of the mixture
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.mixture.class$clone()`
 
 The objects of this class are cloneable with this method.
 

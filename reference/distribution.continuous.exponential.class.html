@@ -43,7 +43,7 @@
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code>mastiff::R6.class.class</code> -&gt; <code><a href="distribution.abstract.class.html">mastiff::distribution.abstract.class</a></code> -&gt; <code><a href="distribution.continuous.class.html">mastiff::distribution.continuous.class</a></code> -&gt; <code>distribution.continuous.exponential.class</code></p>
+    <p><code>R6.class.class</code> -&gt; <code><a href="distribution.abstract.class.html">distribution.abstract.class</a></code> -&gt; <code><a href="distribution.continuous.class.html">distribution.continuous.class</a></code> -&gt; <code>distribution.continuous.exponential.class</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -51,21 +51,21 @@
 <dd><p>The list of available class interfaces</p></dd>
 
 
-<dt><code>mean</code></dt>
+    <dt><code>mean</code></dt>
 <dd><p>The mean of an exponential distribution with rate <code>$params$rate</code>.</p></dd>
 
 
-<dt><code>sd</code></dt>
+    <dt><code>sd</code></dt>
 <dd><p>The standard deviation of an exponential distribution with rate
 <code>$params$rate</code>.</p></dd>
 
 
-<dt><code>var</code></dt>
+    <dt><code>var</code></dt>
 <dd><p>The variance of an exponential distribution with rate
 <code>$params$rate</code>.</p></dd>
 
 
-<dt><code>offset</code></dt>
+    <dt><code>offset</code></dt>
 <dd><p>The amount by which the exponential distribution is shifted.
 Creates a random variable <code>X~offset</code>+Exp(<code>params$rate</code>)</p></dd>
 
@@ -77,27 +77,23 @@ Creates a random variable <code>X~offset</code>+Exp(<code>params$rate</code>)</p
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-distribution.continuous.exponential.class-new"><code>distribution.continuous.exponential.class$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-distribution.continuous.exponential.class-initialize"><code>distribution.continuous.exponential.class$new()</code></a></p></li>
 <li><p><a href="#method-distribution.continuous.exponential.class-d"><code>distribution.continuous.exponential.class$d()</code></a></p></li>
 <li><p><a href="#method-distribution.continuous.exponential.class-p"><code>distribution.continuous.exponential.class$p()</code></a></p></li>
 <li><p><a href="#method-distribution.continuous.exponential.class-q"><code>distribution.continuous.exponential.class$q()</code></a></p></li>
 <li><p><a href="#method-distribution.continuous.exponential.class-r"><code>distribution.continuous.exponential.class$r()</code></a></p></li>
 <li><p><a href="#method-distribution.continuous.exponential.class-clone"><code>distribution.continuous.exponential.class$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-distribution.continuous.exponential.class-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p></p><hr><a id="method-distribution.continuous.exponential.class-initialize"></a><div class="section">
+<h3 id="distribution-continuous-exponential-class-new-"><code>distribution.continuous.exponential.class$new()</code><a class="anchor" aria-label="anchor" href="#distribution-continuous-exponential-class-new-"></a></h3>
 <p>Create a new object of class <code>distribution.continuous.exponential.class</code></p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/distribution.continuous.exponential.class.html">distribution.continuous.exponential.class</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">1</span>, offset <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>rate</code></dt>
 <dd><p>The rate of the exponential distribution</p></dd>
 
-
-<dt><code>offset</code></dt>
+      <dt><code>offset</code></dt>
 <dd><p>The amount by which the exponential distribution is shifted.
 Creates a random variable <code>X~offset</code>+Exp(<code>params$rate</code>)</p></dd>
 
@@ -105,29 +101,30 @@ Creates a random variable <code>X~offset</code>+Exp(<code>params$rate</code>)</p
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.continuous.exponential.class-d"></a><div class="section">
-<h3 id="method-d-">Method <code>d()</code><a class="anchor" aria-label="anchor" href="#method-d-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.continuous.exponential.class-d"></a><div class="section">
+<h3 id="distribution-continuous-exponential-class-d-"><code>distribution.continuous.exponential.class$d()</code><a class="anchor" aria-label="anchor" href="#distribution-continuous-exponential-class-d-"></a></h3>
 <p>Density function for an exponential random variable with
 rate <code>params$rate</code>.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">distribution.continuous.exponential.class</span><span class="op">$</span><span class="fu">d</span><span class="op">(</span><span class="va">x</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>x</code></dt>
 <dd><p>vector of quantiles.</p></dd>
 
-
-<dt><code>log</code></dt>
+      <dt><code>log</code></dt>
 <dd><p>logical; if TRUE, probabilities p are given as <code>log(p)</code>.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.continuous.exponential.class-p"></a><div class="section">
-<h3 id="method-p-">Method <code>p()</code><a class="anchor" aria-label="anchor" href="#method-p-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.continuous.exponential.class-p"></a><div class="section">
+<h3 id="distribution-continuous-exponential-class-p-"><code>distribution.continuous.exponential.class$p()</code><a class="anchor" aria-label="anchor" href="#distribution-continuous-exponential-class-p-"></a></h3>
 <p>Cumulative density function for an exponential random
 variable with rate <code>params$rate</code>.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
@@ -136,28 +133,26 @@ variable with rate <code>params$rate</code>.</p><div class="section">
 <span>  lower.tail <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  log.p <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>q</code></dt>
 <dd><p>vector of quantiles.</p></dd>
 
-
-<dt><code>lower.tail</code></dt>
+      <dt><code>lower.tail</code></dt>
 <dd><p>logical; if TRUE (default), probabilities are \(P[ X \leq x ]\),
 otherwise, \(P[X&gt;x]\).</p></dd>
 
-
-<dt><code>log.p</code></dt>
+      <dt><code>log.p</code></dt>
 <dd><p>logical; if TRUE, probabilities p are given as <code>log(p)</code>.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.continuous.exponential.class-q"></a><div class="section">
-<h3 id="method-q-">Method <code><a href="https://rdrr.io/r/base/quit.html" class="external-link">q()</a></code><a class="anchor" aria-label="anchor" href="#method-q-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.continuous.exponential.class-q"></a><div class="section">
+<h3 id="distribution-continuous-exponential-class-q-"><code>distribution.continuous.exponential.class$q()</code><a class="anchor" aria-label="anchor" href="#distribution-continuous-exponential-class-q-"></a></h3>
 <p>Quantile function for an exponential random variable with
 rate <code>params$rate</code>.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
@@ -166,35 +161,31 @@ rate <code>params$rate</code>.</p><div class="section">
 <span>  lower.tail <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  log.p <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>p</code></dt>
 <dd><p>vector of probabilities.</p></dd>
 
-
-<dt><code>lower.tail</code></dt>
+      <dt><code>lower.tail</code></dt>
 <dd><p>logical; if TRUE (default), probabilities are \(P[ X \leq x ]\),
 otherwise, \(P[X&gt;x]\).</p></dd>
 
-
-<dt><code>log.p</code></dt>
+      <dt><code>log.p</code></dt>
 <dd><p>logical; if TRUE, probabilities p are given as <code>log(p)</code>.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.continuous.exponential.class-r"></a><div class="section">
-<h3 id="method-r-">Method <code>r()</code><a class="anchor" aria-label="anchor" href="#method-r-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.continuous.exponential.class-r"></a><div class="section">
+<h3 id="distribution-continuous-exponential-class-r-"><code>distribution.continuous.exponential.class$r()</code><a class="anchor" aria-label="anchor" href="#distribution-continuous-exponential-class-r-"></a></h3>
 <p>Generates random deviates for an exponential random variable
 with rate <code>params$rate</code>.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">distribution.continuous.exponential.class</span><span class="op">$</span><span class="fu">r</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>n</code></dt>
 <dd><p>number of observations. If <code>length( n ) &gt; 1</code>, the length is
@@ -204,14 +195,14 @@ taken to be the number required.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.continuous.exponential.class-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.continuous.exponential.class-clone"></a><div class="section">
+<h3 id="distribution-continuous-exponential-class-clone-"><code>distribution.continuous.exponential.class$clone()</code><a class="anchor" aria-label="anchor" href="#distribution-continuous-exponential-class-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">distribution.continuous.exponential.class</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -221,6 +212,7 @@ taken to be the number required.</p></dd>
 </div>
 
 </div>
+
 
     </div>
 

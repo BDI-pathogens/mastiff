@@ -5,10 +5,10 @@ Derived class for an uniformly-distributed random variable on
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
+[`distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
 -\> `distribution.continuous.uniform.class`
 
 ## Active bindings
@@ -33,7 +33,7 @@ Derived class for an uniformly-distributed random variable on
 
 ### Public methods
 
-- [`distribution.continuous.uniform.class$new()`](#method-distribution.continuous.uniform.class-new)
+- [`distribution.continuous.uniform.class$new()`](#method-distribution.continuous.uniform.class-initialize)
 
 - [`distribution.continuous.uniform.class$d()`](#method-distribution.continuous.uniform.class-d)
 
@@ -47,7 +47,7 @@ Derived class for an uniformly-distributed random variable on
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.continuous.uniform.class$new()`
 
 Create a new object of class `distribution.continuous.exponential.class`
 
@@ -67,7 +67,7 @@ Create a new object of class `distribution.continuous.exponential.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.continuous.uniform.class$d()`
 
 Density function for a uniform random variable on `[min, max]`.
 
@@ -87,7 +87,7 @@ Density function for a uniform random variable on `[min, max]`.
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.continuous.uniform.class$p()`
 
 Cumulative density function for a uniform random variable on
 `[min, max]`.
@@ -113,7 +113,7 @@ Cumulative density function for a uniform random variable on
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.continuous.uniform.class$q()`
 
 Quantile function for a uniform random variable on `[min, max]`. rate
 `params$rate`.
@@ -139,7 +139,7 @@ Quantile function for a uniform random variable on `[min, max]`. rate
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.continuous.uniform.class$r()`
 
 Generates random deviates for a uniform random variable on `[min, max]`.
 
@@ -156,7 +156,7 @@ Generates random deviates for a uniform random variable on `[min, max]`.
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.continuous.uniform.class$clone()`
 
 The objects of this class are cloneable with this method.
 

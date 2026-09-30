@@ -4,10 +4,10 @@ Derived class for an exponentially-distributed random variable.
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
+[`distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
 -\> `distribution.continuous.exponential.class`
 
 ## Active bindings
@@ -38,7 +38,7 @@ Derived class for an exponentially-distributed random variable.
 
 ### Public methods
 
-- [`distribution.continuous.exponential.class$new()`](#method-distribution.continuous.exponential.class-new)
+- [`distribution.continuous.exponential.class$new()`](#method-distribution.continuous.exponential.class-initialize)
 
 - [`distribution.continuous.exponential.class$d()`](#method-distribution.continuous.exponential.class-d)
 
@@ -52,7 +52,7 @@ Derived class for an exponentially-distributed random variable.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.continuous.exponential.class$new()`
 
 Create a new object of class `distribution.continuous.exponential.class`
 
@@ -73,7 +73,7 @@ Create a new object of class `distribution.continuous.exponential.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.continuous.exponential.class$d()`
 
 Density function for an exponential random variable with rate
 `params$rate`.
@@ -94,7 +94,7 @@ Density function for an exponential random variable with rate
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.continuous.exponential.class$p()`
 
 Cumulative density function for an exponential random variable with rate
 `params$rate`.
@@ -124,7 +124,7 @@ Cumulative density function for an exponential random variable with rate
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.continuous.exponential.class$q()`
 
 Quantile function for an exponential random variable with rate
 `params$rate`.
@@ -154,7 +154,7 @@ Quantile function for an exponential random variable with rate
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.continuous.exponential.class$r()`
 
 Generates random deviates for an exponential random variable with rate
 `params$rate`.
@@ -172,7 +172,7 @@ Generates random deviates for an exponential random variable with rate
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.continuous.exponential.class$clone()`
 
 The objects of this class are cloneable with this method.
 

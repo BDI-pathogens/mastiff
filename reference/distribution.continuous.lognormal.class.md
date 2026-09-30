@@ -4,10 +4,10 @@ Derived class for a lognormally-distributed random variable.
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
+[`distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
 -\> `distribution.continuous.lognormal.class`
 
 ## Active bindings
@@ -32,7 +32,7 @@ Derived class for a lognormally-distributed random variable.
 
 ### Public methods
 
-- [`distribution.continuous.lognormal.class$new()`](#method-distribution.continuous.lognormal.class-new)
+- [`distribution.continuous.lognormal.class$new()`](#method-distribution.continuous.lognormal.class-initialize)
 
 - [`distribution.continuous.lognormal.class$d()`](#method-distribution.continuous.lognormal.class-d)
 
@@ -46,7 +46,7 @@ Derived class for a lognormally-distributed random variable.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.continuous.lognormal.class$new()`
 
 Create a new object of class `distribution.continuous.lognormal.class`
 
@@ -66,7 +66,7 @@ Create a new object of class `distribution.continuous.lognormal.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.continuous.lognormal.class$d()`
 
 Density function for a lognormal random variable with mean log(X)
 `$params$meanlog` and standard deviation log(X) `$params$sdlog`.
@@ -87,7 +87,7 @@ Density function for a lognormal random variable with mean log(X)
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.continuous.lognormal.class$p()`
 
 Cumulative density function for a lognormal random variable with mean
 log(X) `$params$meanlog` and standard deviation log(X) `$params$sdlog`.
@@ -113,7 +113,7 @@ log(X) `$params$meanlog` and standard deviation log(X) `$params$sdlog`.
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.continuous.lognormal.class$q()`
 
 Quantile function for a lognormal random variable with mean log(X)
 `$params$meanlog` and standard deviation log(X) `$params$sdlog`.
@@ -139,7 +139,7 @@ Quantile function for a lognormal random variable with mean log(X)
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.continuous.lognormal.class$r()`
 
 Generates random deviates for a lognormal random variable with mean
 log(X) `$params$meanlog` and standard deviation logx(X) `$params$sdlog`
@@ -158,7 +158,7 @@ log(X) `$params$meanlog` and standard deviation logx(X) `$params$sdlog`
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.continuous.lognormal.class$clone()`
 
 The objects of this class are cloneable with this method.
 

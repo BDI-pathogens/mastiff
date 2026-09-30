@@ -4,10 +4,10 @@ Base class for multivariate t distribution
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.multivariate.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.class.md)
+[`distribution.multivariate.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.class.md)
 -\> `distribution.multivariate.t.class`
 
 ## Active bindings
@@ -32,7 +32,7 @@ Base class for multivariate t distribution
 
 ### Public methods
 
-- [`distribution.multivariate.t.class$new()`](#method-distribution.multivariate.t.class-new)
+- [`distribution.multivariate.t.class$new()`](#method-distribution.multivariate.t.class-initialize)
 
 - [`distribution.multivariate.t.class$set_uniform_correlation()`](#method-distribution.multivariate.t.class-set_uniform_correlation)
 
@@ -48,7 +48,7 @@ Base class for multivariate t distribution
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.multivariate.t.class$new()`
 
 Create a new object of class `distribution.multivariate.normal.class`
 
@@ -72,7 +72,7 @@ Create a new object of class `distribution.multivariate.normal.class`
 
 ------------------------------------------------------------------------
 
-### Method `set_uniform_correlation()`
+### `distribution.multivariate.t.class$set_uniform_correlation()`
 
 Updates to the scale_matrix matrix so that all off-diagonal correlations
 are the same
@@ -89,7 +89,7 @@ are the same
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.multivariate.t.class$d()`
 
 Density function for a multivariate normal
 
@@ -109,7 +109,7 @@ Density function for a multivariate normal
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.multivariate.t.class$r()`
 
 Generates random deviates of a multivariate normal with rate
 `params$rate`.
@@ -127,7 +127,7 @@ Generates random deviates of a multivariate normal with rate
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.multivariate.t.class$p()`
 
 Univariate cumulative density functions
 
@@ -152,7 +152,7 @@ Univariate cumulative density functions
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.multivariate.t.class$q()`
 
 Univariate quantile functions
 
@@ -177,7 +177,7 @@ Univariate quantile functions
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.multivariate.t.class$clone()`
 
 The objects of this class are cloneable with this method.
 

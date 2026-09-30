@@ -4,10 +4,10 @@ Derived class for a normally-distributed random variable.
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
+[`distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
 -\> `distribution.continuous.normal.class`
 
 ## Active bindings
@@ -33,7 +33,7 @@ Derived class for a normally-distributed random variable.
 
 ### Public methods
 
-- [`distribution.continuous.normal.class$new()`](#method-distribution.continuous.normal.class-new)
+- [`distribution.continuous.normal.class$new()`](#method-distribution.continuous.normal.class-initialize)
 
 - [`distribution.continuous.normal.class$d()`](#method-distribution.continuous.normal.class-d)
 
@@ -47,7 +47,7 @@ Derived class for a normally-distributed random variable.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.continuous.normal.class$new()`
 
 Create a new object of class `distribution.continuous.normal.class`
 
@@ -67,7 +67,7 @@ Create a new object of class `distribution.continuous.normal.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.continuous.normal.class$d()`
 
 Density function for a normal random variable with mean `$params$mean`
 and standard deviation `$params$sd`.
@@ -88,7 +88,7 @@ and standard deviation `$params$sd`.
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.continuous.normal.class$p()`
 
 Cumulative density function for a normal random variable with mean
 `$params$mean` and standard deviation `$params$sd`.
@@ -114,7 +114,7 @@ Cumulative density function for a normal random variable with mean
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.continuous.normal.class$q()`
 
 Quantile function for a normal random variable with mean `$params$mean`
 and standard deviation `$params$sd`.
@@ -140,7 +140,7 @@ and standard deviation `$params$sd`.
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.continuous.normal.class$r()`
 
 Generates random deviates for a normal random variable with mean
 `$params$mean` and standard deviation `$params$sd`.
@@ -158,7 +158,7 @@ Generates random deviates for a normal random variable with mean
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.continuous.normal.class$clone()`
 
 The objects of this class are cloneable with this method.
 

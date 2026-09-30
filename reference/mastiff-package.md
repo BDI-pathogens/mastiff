@@ -19,3 +19,7 @@ Useful links:
 ## Author
 
 **Maintainer**: Chris Wymant <chris.wymant@bdi.ox.ac.uk>
+
+Authors:
+
+- Chris Wymant <chris.wymant@bdi.ox.ac.uk>

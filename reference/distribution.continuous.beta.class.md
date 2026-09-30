@@ -4,10 +4,10 @@ Derived class for a beta random variable.
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
+[`distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
 -\> `distribution.continuous.beta.class`
 
 ## Active bindings
@@ -32,7 +32,7 @@ Derived class for a beta random variable.
 
 ### Public methods
 
-- [`distribution.continuous.beta.class$new()`](#method-distribution.continuous.beta.class-new)
+- [`distribution.continuous.beta.class$new()`](#method-distribution.continuous.beta.class-initialize)
 
 - [`distribution.continuous.beta.class$d()`](#method-distribution.continuous.beta.class-d)
 
@@ -46,7 +46,7 @@ Derived class for a beta random variable.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.continuous.beta.class$new()`
 
 Create a new object of class `distribution.continuous.normal.class`
 
@@ -66,7 +66,7 @@ Create a new object of class `distribution.continuous.normal.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.continuous.beta.class$d()`
 
 density function for a beta random variable with shape parameters
 `$params$alpha` and `$params$beta`
@@ -87,7 +87,7 @@ density function for a beta random variable with shape parameters
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.continuous.beta.class$p()`
 
 Cumulative density function for a beta random variable with shape
 parameters `$params$alpha` and `$params$beta`
@@ -113,7 +113,7 @@ parameters `$params$alpha` and `$params$beta`
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.continuous.beta.class$q()`
 
 Quantile function for a beta random variable with shape parameters
 `$params$alpha` and `$params$beta`
@@ -139,7 +139,7 @@ Quantile function for a beta random variable with shape parameters
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.continuous.beta.class$r()`
 
 Generates random deviates for a beta random variable with shape
 parameters `$params$alpha` and `$params$beta`
@@ -157,7 +157,7 @@ parameters `$params$alpha` and `$params$beta`
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.continuous.beta.class$clone()`
 
 The objects of this class are cloneable with this method.
 

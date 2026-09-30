@@ -4,8 +4,8 @@ Base class for univariate continuous distributions
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\> `distribution.continuous.class`
 
 ## Active bindings
@@ -23,7 +23,7 @@ Base class for univariate continuous distributions
 
 ### Public methods
 
-- [`distribution.continuous.class$new()`](#method-distribution.continuous.class-new)
+- [`distribution.continuous.class$new()`](#method-distribution.continuous.class-initialize)
 
 - [`distribution.continuous.class$p()`](#method-distribution.continuous.class-p)
 
@@ -33,12 +33,12 @@ Base class for univariate continuous distributions
 
 Inherited methods
 
-- [`mastiff::distribution.abstract.class$d()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-d)
-- [`mastiff::distribution.abstract.class$r()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-r)
+- [`distribution.abstract.class$d()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-d)
+- [`distribution.abstract.class$r()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-r)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.continuous.class$new()`
 
 Create a new object of class `distribution.continuous.class`
 
@@ -55,7 +55,7 @@ Create a new object of class `distribution.continuous.class`
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.continuous.class$p()`
 
 Evaluates the distribution function of a discrete random variable with
 finite integer support given density function `$d()`
@@ -81,7 +81,7 @@ finite integer support given density function `$d()`
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.continuous.class$q()`
 
 Evaluates the distribution function of a discrete random variable with
 finite integer support given distribution function `$p()`
@@ -107,7 +107,7 @@ finite integer support given distribution function `$p()`
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.continuous.class$clone()`
 
 The objects of this class are cloneable with this method.
 

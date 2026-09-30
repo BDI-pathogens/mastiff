@@ -4,10 +4,10 @@ Class for copula distributions
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.multivariate.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.class.md)
+[`distribution.multivariate.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.multivariate.class.md)
 -\> `distribution.multivariate.copula.class`
 
 ## Active bindings
@@ -41,7 +41,7 @@ Class for copula distributions
 
 ### Public methods
 
-- [`distribution.multivariate.copula.class$new()`](#method-distribution.multivariate.copula.class-new)
+- [`distribution.multivariate.copula.class$new()`](#method-distribution.multivariate.copula.class-initialize)
 
 - [`distribution.multivariate.copula.class$r()`](#method-distribution.multivariate.copula.class-r)
 
@@ -49,13 +49,13 @@ Class for copula distributions
 
 Inherited methods
 
-- [`mastiff::distribution.abstract.class$d()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-d)
-- [`mastiff::distribution.abstract.class$p()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-p)
-- [`mastiff::distribution.abstract.class$q()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-q)
+- [`distribution.abstract.class$d()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-d)
+- [`distribution.abstract.class$p()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-p)
+- [`distribution.abstract.class$q()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-q)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.multivariate.copula.class$new()`
 
 Create a new object of class `distribution.multivaraite.copula.class`
 
@@ -76,7 +76,7 @@ Create a new object of class `distribution.multivaraite.copula.class`
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.multivariate.copula.class$r()`
 
 Generates random deviates of a multivariate normal with rate
 `params$rate`.
@@ -94,7 +94,7 @@ Generates random deviates of a multivariate normal with rate
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.multivariate.copula.class$clone()`
 
 The objects of this class are cloneable with this method.
 

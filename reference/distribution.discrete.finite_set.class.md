@@ -5,10 +5,10 @@ points in (-Inf, Inf).
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
+[`distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
 -\> `distribution.discrete.finite_set.class`
 
 ## Active bindings
@@ -42,7 +42,7 @@ points in (-Inf, Inf).
 
 ### Public methods
 
-- [`distribution.discrete.finite_set.class$new()`](#method-distribution.discrete.finite_set.class-new)
+- [`distribution.discrete.finite_set.class$new()`](#method-distribution.discrete.finite_set.class-initialize)
 
 - [`distribution.discrete.finite_set.class$d()`](#method-distribution.discrete.finite_set.class-d)
 
@@ -56,7 +56,7 @@ points in (-Inf, Inf).
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.discrete.finite_set.class$new()`
 
 Create a new object of class `distribution.discrete.class`
 
@@ -77,7 +77,7 @@ Create a new object of class `distribution.discrete.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.discrete.finite_set.class$d()`
 
 Density function for the probability distribution with mass
 `$params$prob` at points `$support`.
@@ -98,7 +98,7 @@ Density function for the probability distribution with mass
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.discrete.finite_set.class$p()`
 
 Cumulative density function for the probability distribution with mass
 `$params$prob` at points `$support`.
@@ -124,7 +124,7 @@ Cumulative density function for the probability distribution with mass
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.discrete.finite_set.class$q()`
 
 Quantile function for the probability distribution with mass
 `$params$prob` at points `$support`.
@@ -150,7 +150,7 @@ Quantile function for the probability distribution with mass
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.discrete.finite_set.class$r()`
 
 Generates random deviates for probability distribution with mass
 `$params$prob` at points `$support`.
@@ -168,7 +168,7 @@ Generates random deviates for probability distribution with mass
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.discrete.finite_set.class$clone()`
 
 The objects of this class are cloneable with this method.
 

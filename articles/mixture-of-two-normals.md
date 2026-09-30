@@ -138,8 +138,8 @@ df_samples_posterior <- estimate_mixture_of_two_normals(
 #> 
 #> SAMPLING FOR MODEL 'mixture_of_two_normals' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 0.000264 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.64 seconds.
+#> Chain 1: Gradient evaluation took 0.000234 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 2.34 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -156,9 +156,9 @@ df_samples_posterior <- estimate_mixture_of_two_normals(
 #> Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 1: 
-#> Chain 1:  Elapsed Time: 6.141 seconds (Warm-up)
-#> Chain 1:                4.511 seconds (Sampling)
-#> Chain 1:                10.652 seconds (Total)
+#> Chain 1:  Elapsed Time: 6.205 seconds (Warm-up)
+#> Chain 1:                4.451 seconds (Sampling)
+#> Chain 1:                10.656 seconds (Total)
 #> Chain 1: 
 #> 
 #> SAMPLING FOR MODEL 'mixture_of_two_normals' NOW (CHAIN 2).
@@ -181,9 +181,9 @@ df_samples_posterior <- estimate_mixture_of_two_normals(
 #> Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 2: 
-#> Chain 2:  Elapsed Time: 5.721 seconds (Warm-up)
-#> Chain 2:                4.301 seconds (Sampling)
-#> Chain 2:                10.022 seconds (Total)
+#> Chain 2:  Elapsed Time: 5.772 seconds (Warm-up)
+#> Chain 2:                4.234 seconds (Sampling)
+#> Chain 2:                10.006 seconds (Total)
 #> Chain 2: 
 #> 
 #> SAMPLING FOR MODEL 'mixture_of_two_normals' NOW (CHAIN 3).
@@ -206,15 +206,15 @@ df_samples_posterior <- estimate_mixture_of_two_normals(
 #> Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 3: 
-#> Chain 3:  Elapsed Time: 6.294 seconds (Warm-up)
-#> Chain 3:                4.221 seconds (Sampling)
-#> Chain 3:                10.515 seconds (Total)
+#> Chain 3:  Elapsed Time: 6.334 seconds (Warm-up)
+#> Chain 3:                4.16 seconds (Sampling)
+#> Chain 3:                10.494 seconds (Total)
 #> Chain 3: 
 #> 
 #> SAMPLING FOR MODEL 'mixture_of_two_normals' NOW (CHAIN 4).
 #> Chain 4: 
-#> Chain 4: Gradient evaluation took 0.000135 seconds
-#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 1.35 seconds.
+#> Chain 4: Gradient evaluation took 0.000152 seconds
+#> Chain 4: 1000 transitions using 10 leapfrog steps per transition would take 1.52 seconds.
 #> Chain 4: Adjust your expectations accordingly!
 #> Chain 4: 
 #> Chain 4: 
@@ -231,9 +231,9 @@ df_samples_posterior <- estimate_mixture_of_two_normals(
 #> Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 #> Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
 #> Chain 4: 
-#> Chain 4:  Elapsed Time: 6.027 seconds (Warm-up)
-#> Chain 4:                4.056 seconds (Sampling)
-#> Chain 4:                10.083 seconds (Total)
+#> Chain 4:  Elapsed Time: 6.088 seconds (Warm-up)
+#> Chain 4:                3.993 seconds (Sampling)
+#> Chain 4:                10.081 seconds (Total)
 #> Chain 4:
 ```
 

@@ -4,10 +4,10 @@ Derived class for an beta-binomially distributed random variable.
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
+[`distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
 -\> `distribution.discrete.beta_binomial.class`
 
 ## Active bindings
@@ -35,7 +35,7 @@ Derived class for an beta-binomially distributed random variable.
 
 ### Public methods
 
-- [`distribution.discrete.beta_binomial.class$new()`](#method-distribution.discrete.beta_binomial.class-new)
+- [`distribution.discrete.beta_binomial.class$new()`](#method-distribution.discrete.beta_binomial.class-initialize)
 
 - [`distribution.discrete.beta_binomial.class$d()`](#method-distribution.discrete.beta_binomial.class-d)
 
@@ -49,7 +49,7 @@ Derived class for an beta-binomially distributed random variable.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.discrete.beta_binomial.class$new()`
 
 Create a new object of class `distribution.discrete.class`
 
@@ -73,7 +73,7 @@ Create a new object of class `distribution.discrete.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.discrete.beta_binomial.class$d()`
 
 Density function for a beta-binomial random variable with size
 `params$size` and shape parameters `params$alpha` and `params$beta`.
@@ -94,7 +94,7 @@ Density function for a beta-binomial random variable with size
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.discrete.beta_binomial.class$p()`
 
 Cumulative density function for a beta-binomial random variable with
 size `params$size` and shape parameters `params$alpha` and
@@ -125,7 +125,7 @@ size `params$size` and shape parameters `params$alpha` and
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.discrete.beta_binomial.class$q()`
 
 Quantile function for a beta-binomial random variable with size
 `params$size` and shape parameters `params$alpha` and `params$beta`.
@@ -155,7 +155,7 @@ Quantile function for a beta-binomial random variable with size
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.discrete.beta_binomial.class$r()`
 
 Generates random deviates for a beta-binomial random variable with size
 `params$size` and shape parameters `params$alpha` and `params$beta`.
@@ -173,7 +173,7 @@ Generates random deviates for a beta-binomial random variable with size
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.discrete.beta_binomial.class$clone()`
 
 The objects of this class are cloneable with this method.
 

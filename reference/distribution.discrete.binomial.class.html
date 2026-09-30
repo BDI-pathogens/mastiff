@@ -43,7 +43,7 @@
 
     <div class="section level2">
     <h2 id="super-classes">Super classes<a class="anchor" aria-label="anchor" href="#super-classes"></a></h2>
-    <p><code>mastiff::R6.class.class</code> -&gt; <code><a href="distribution.abstract.class.html">mastiff::distribution.abstract.class</a></code> -&gt; <code><a href="distribution.discrete.class.html">mastiff::distribution.discrete.class</a></code> -&gt; <code>distribution.discrete.binomial.class</code></p>
+    <p><code>R6.class.class</code> -&gt; <code><a href="distribution.abstract.class.html">distribution.abstract.class</a></code> -&gt; <code><a href="distribution.discrete.class.html">distribution.discrete.class</a></code> -&gt; <code>distribution.discrete.binomial.class</code></p>
     </div>
     <div class="section level2">
     <h2 id="active-bindings">Active bindings<a class="anchor" aria-label="anchor" href="#active-bindings"></a></h2>
@@ -51,17 +51,17 @@
 <dd><p>The list of available class interfaces</p></dd>
 
 
-<dt><code>mean</code></dt>
+    <dt><code>mean</code></dt>
 <dd><p>The mean of a binomial distribution with size <code>$params$size</code> and
 success probability <code>$params$prob</code>.</p></dd>
 
 
-<dt><code>sd</code></dt>
+    <dt><code>sd</code></dt>
 <dd><p>The standard deviation of a binomial distribution with size
 <code>$params$size</code> and success probability <code>$params$prob</code>.</p></dd>
 
 
-<dt><code>var</code></dt>
+    <dt><code>var</code></dt>
 <dd><p>The variance of a binomial distribution with size
 <code>$params$size</code> and success probability <code>$params$prob</code>.</p></dd>
 
@@ -73,115 +73,106 @@ success probability <code>$params$prob</code>.</p></dd>
 
 <div class="section">
 <h3 id="public-methods">Public methods<a class="anchor" aria-label="anchor" href="#public-methods"></a></h3>
-
-<ul><li><p><a href="#method-distribution.discrete.binomial.class-new"><code>distribution.discrete.binomial.class$new()</code></a></p></li>
+<p></p><ul><li><p><a href="#method-distribution.discrete.binomial.class-initialize"><code>distribution.discrete.binomial.class$new()</code></a></p></li>
 <li><p><a href="#method-distribution.discrete.binomial.class-d"><code>distribution.discrete.binomial.class$d()</code></a></p></li>
 <li><p><a href="#method-distribution.discrete.binomial.class-p"><code>distribution.discrete.binomial.class$p()</code></a></p></li>
 <li><p><a href="#method-distribution.discrete.binomial.class-q"><code>distribution.discrete.binomial.class$q()</code></a></p></li>
 <li><p><a href="#method-distribution.discrete.binomial.class-r"><code>distribution.discrete.binomial.class$r()</code></a></p></li>
 <li><p><a href="#method-distribution.discrete.binomial.class-clone"><code>distribution.discrete.binomial.class$clone()</code></a></p></li>
-</ul></div><p></p><hr><a id="method-distribution.discrete.binomial.class-new"></a><div class="section">
-<h3 id="method-new-">Method <code>new()</code><a class="anchor" aria-label="anchor" href="#method-new-"></a></h3>
+</ul></div><p></p><hr><a id="method-distribution.discrete.binomial.class-initialize"></a><div class="section">
+<h3 id="distribution-discrete-binomial-class-new-"><code>distribution.discrete.binomial.class$new()</code><a class="anchor" aria-label="anchor" href="#distribution-discrete-binomial-class-new-"></a></h3>
 <p>Create a new object of class <code>distribution.discrete.class</code></p><div class="section">
 <h4 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va"><a href="../reference/distribution.discrete.binomial.class.html">distribution.discrete.binomial.class</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">size</span>, <span class="va">prob</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>size</code></dt>
 <dd><p>number of trials (zero or more).</p></dd>
 
-
-<dt><code>prob</code></dt>
+      <dt><code>prob</code></dt>
 <dd><p>probability of success on each trial.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.discrete.binomial.class-d"></a><div class="section">
-<h3 id="method-d-">Method <code>d()</code><a class="anchor" aria-label="anchor" href="#method-d-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.discrete.binomial.class-d"></a><div class="section">
+<h3 id="distribution-discrete-binomial-class-d-"><code>distribution.discrete.binomial.class$d()</code><a class="anchor" aria-label="anchor" href="#distribution-discrete-binomial-class-d-"></a></h3>
 <p>Density function for a binomial random variable with size
 <code>params$size</code> and success probability <code>params$prob</code>.</p><div class="section">
 <h4 id="usage-1">Usage<a class="anchor" aria-label="anchor" href="#usage-1"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">distribution.discrete.binomial.class</span><span class="op">$</span><span class="fu">d</span><span class="op">(</span><span class="va">x</span>, log <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-1">Arguments<a class="anchor" aria-label="anchor" href="#arguments-1"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>x</code></dt>
 <dd><p>vector of quantiles.</p></dd>
 
-
-<dt><code>log</code></dt>
+      <dt><code>log</code></dt>
 <dd><p>logical; if TRUE, probabilities p are given as <code>log(p)</code>.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.discrete.binomial.class-p"></a><div class="section">
-<h3 id="method-p-">Method <code>p()</code><a class="anchor" aria-label="anchor" href="#method-p-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.discrete.binomial.class-p"></a><div class="section">
+<h3 id="distribution-discrete-binomial-class-p-"><code>distribution.discrete.binomial.class$p()</code><a class="anchor" aria-label="anchor" href="#distribution-discrete-binomial-class-p-"></a></h3>
 <p>Cumulative density function for a binomial random variable
 with size <code>params$size</code> and success probability <code>params$prob</code>.</p><div class="section">
 <h4 id="usage-2">Usage<a class="anchor" aria-label="anchor" href="#usage-2"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">distribution.discrete.binomial.class</span><span class="op">$</span><span class="fu">p</span><span class="op">(</span><span class="va">q</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-2">Arguments<a class="anchor" aria-label="anchor" href="#arguments-2"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>q</code></dt>
 <dd><p>vector of quantiles.</p></dd>
 
-
-<dt><code>lower.tail</code></dt>
+      <dt><code>lower.tail</code></dt>
 <dd><p>logical; if TRUE (default), probabilities are \(P[ X \leq x ]\),
 otherwise, \(P[X&gt;x]\).</p></dd>
 
-
-<dt><code>log.p</code></dt>
+      <dt><code>log.p</code></dt>
 <dd><p>logical; if TRUE, probabilities p are given as <code>log(p)</code>.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.discrete.binomial.class-q"></a><div class="section">
-<h3 id="method-q-">Method <code><a href="https://rdrr.io/r/base/quit.html" class="external-link">q()</a></code><a class="anchor" aria-label="anchor" href="#method-q-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.discrete.binomial.class-q"></a><div class="section">
+<h3 id="distribution-discrete-binomial-class-q-"><code>distribution.discrete.binomial.class$q()</code><a class="anchor" aria-label="anchor" href="#distribution-discrete-binomial-class-q-"></a></h3>
 <p>Quantile function for a binomial random variable with size
 <code>params$size</code> and success probability <code>params$prob</code>.</p><div class="section">
 <h4 id="usage-3">Usage<a class="anchor" aria-label="anchor" href="#usage-3"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">distribution.discrete.binomial.class</span><span class="op">$</span><span class="fu">q</span><span class="op">(</span><span class="va">p</span>, lower.tail <span class="op">=</span> <span class="cn">TRUE</span>, log.p <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-3">Arguments<a class="anchor" aria-label="anchor" href="#arguments-3"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>p</code></dt>
 <dd><p>vector of probabilities.</p></dd>
 
-
-<dt><code>lower.tail</code></dt>
+      <dt><code>lower.tail</code></dt>
 <dd><p>logical; if TRUE (default), probabilities are \(P[ X \leq x ]\),
 otherwise, \(P[X&gt;x]\).</p></dd>
 
-
-<dt><code>log.p</code></dt>
+      <dt><code>log.p</code></dt>
 <dd><p>logical; if TRUE, probabilities p are given as <code>log(p)</code>.</p></dd>
 
 
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.discrete.binomial.class-r"></a><div class="section">
-<h3 id="method-r-">Method <code>r()</code><a class="anchor" aria-label="anchor" href="#method-r-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.discrete.binomial.class-r"></a><div class="section">
+<h3 id="distribution-discrete-binomial-class-r-"><code>distribution.discrete.binomial.class$r()</code><a class="anchor" aria-label="anchor" href="#distribution-discrete-binomial-class-r-"></a></h3>
 <p>Generates random deviates for a binomial random variable
 with size <code>params$size</code> and success probability <code>params$prob</code>.</p><div class="section">
 <h4 id="usage-4">Usage<a class="anchor" aria-label="anchor" href="#usage-4"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">distribution.discrete.binomial.class</span><span class="op">$</span><span class="fu">r</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-4">Arguments<a class="anchor" aria-label="anchor" href="#arguments-4"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>n</code></dt>
 <dd><p>number of observations. If <code>length( n ) &gt; 1</code>, the length is
@@ -191,14 +182,14 @@ taken to be the number required.</p></dd>
 </dl><p></p></div>
 </div>
 
-</div><p></p><hr><a id="method-distribution.discrete.binomial.class-clone"></a><div class="section">
-<h3 id="method-clone-">Method <code>clone()</code><a class="anchor" aria-label="anchor" href="#method-clone-"></a></h3>
+</div>
+
+<p></p><hr><a id="method-distribution.discrete.binomial.class-clone"></a><div class="section">
+<h3 id="distribution-discrete-binomial-class-clone-"><code>distribution.discrete.binomial.class$clone()</code><a class="anchor" aria-label="anchor" href="#distribution-discrete-binomial-class-clone-"></a></h3>
 <p>The objects of this class are cloneable with this method.</p><div class="section">
 <h4 id="usage-5">Usage<a class="anchor" aria-label="anchor" href="#usage-5"></a></h4>
 <p></p><div class="r"><div class="sourceCode"><pre><code><span><span class="va">distribution.discrete.binomial.class</span><span class="op">$</span><span class="fu">clone</span><span class="op">(</span>deep <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div><p></p></div>
-</div>
-
-<div class="section">
+</div><p></p><div class="section">
 <h4 id="arguments-5">Arguments<a class="anchor" aria-label="anchor" href="#arguments-5"></a></h4>
 <p></p><div class="arguments"><dl><dt><code>deep</code></dt>
 <dd><p>Whether to make a deep clone.</p></dd>
@@ -208,6 +199,7 @@ taken to be the number required.</p></dd>
 </div>
 
 </div>
+
 
     </div>
 

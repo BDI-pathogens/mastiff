@@ -4,10 +4,10 @@ Derived class for a gamma-distributed random variable.
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
+[`distribution.continuous.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.continuous.class.md)
 -\> `distribution.continuous.gamma.class`
 
 ## Active bindings
@@ -44,7 +44,7 @@ Derived class for a gamma-distributed random variable.
 
 ### Public methods
 
-- [`distribution.continuous.gamma.class$new()`](#method-distribution.continuous.gamma.class-new)
+- [`distribution.continuous.gamma.class$new()`](#method-distribution.continuous.gamma.class-initialize)
 
 - [`distribution.continuous.gamma.class$d()`](#method-distribution.continuous.gamma.class-d)
 
@@ -58,7 +58,7 @@ Derived class for a gamma-distributed random variable.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.continuous.gamma.class$new()`
 
 Create a new object of class `distribution.continuous.gamma.class`
 
@@ -87,7 +87,7 @@ Create a new object of class `distribution.continuous.gamma.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.continuous.gamma.class$d()`
 
 Density function for a gamma random variable with rate `params$rate`.
 
@@ -107,7 +107,7 @@ Density function for a gamma random variable with rate `params$rate`.
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.continuous.gamma.class$p()`
 
 Cumulative density function for a gamma random variable with rate
 `params$rate`.
@@ -133,7 +133,7 @@ Cumulative density function for a gamma random variable with rate
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.continuous.gamma.class$q()`
 
 Quantile function for a gamma random variable with rate `params$rate`.
 
@@ -158,7 +158,7 @@ Quantile function for a gamma random variable with rate `params$rate`.
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.continuous.gamma.class$r()`
 
 Generates random deviates for a gamma random variable with rate
 `params$rate`.
@@ -176,7 +176,7 @@ Generates random deviates for a gamma random variable with rate
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.continuous.gamma.class$clone()`
 
 The objects of this class are cloneable with this method.
 

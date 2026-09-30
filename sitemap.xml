@@ -66,7 +66,9 @@
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/posterior_intervals.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/posterior_mass_in_range.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/posterior_means.html</loc></url>
+<url><loc>https://bdi-pathogens.github.io/mastiff/reference/read_cmdstan_out_files.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/rename_params_cmdstanfile_to_rstan.html</loc></url>
+<url><loc>https://bdi-pathogens.github.io/mastiff/reference/run_stan_interfaces.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/simulate_mixture_of_two_normals.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/stan_example_regression.html</loc></url>
 <url><loc>https://bdi-pathogens.github.io/mastiff/reference/stanfit_to_matrix.html</loc></url>

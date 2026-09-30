@@ -88,8 +88,14 @@ mastiff logo by [Lucy Back](https://github.com/1ucyb).
   : Calculates the mean or median for each parameter for each stanfit
   object
 
+- [`read_cmdstan_out_files()`](https://bdi-pathogens.github.io/mastiff/reference/read_cmdstan_out_files.md)
+  : Reads posterior output files from cmdstan into a dataframe
+
 - [`rename_params_cmdstanfile_to_rstan()`](https://bdi-pathogens.github.io/mastiff/reference/rename_params_cmdstanfile_to_rstan.md)
   : Renames tensor parameters from cmdstandr to rstan format
+
+- [`run_stan_interfaces()`](https://bdi-pathogens.github.io/mastiff/reference/run_stan_interfaces.md)
+  : Run one of rstan, cmdstanr or cmdstan on a file of Stan code
 
 - [`simulate_mixture_of_two_normals()`](https://bdi-pathogens.github.io/mastiff/reference/simulate_mixture_of_two_normals.md)
   : Simulate (randomly draw) numbers from a mixture of two normal

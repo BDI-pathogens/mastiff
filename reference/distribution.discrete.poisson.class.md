@@ -4,10 +4,10 @@ Derived class for an Poisson-distributed random variable.
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\>
-[`mastiff::distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
+[`distribution.discrete.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.discrete.class.md)
 -\> `distribution.discrete.poisson.class`
 
 ## Active bindings
@@ -33,7 +33,7 @@ Derived class for an Poisson-distributed random variable.
 
 ### Public methods
 
-- [`distribution.discrete.poisson.class$new()`](#method-distribution.discrete.poisson.class-new)
+- [`distribution.discrete.poisson.class$new()`](#method-distribution.discrete.poisson.class-initialize)
 
 - [`distribution.discrete.poisson.class$d()`](#method-distribution.discrete.poisson.class-d)
 
@@ -47,7 +47,7 @@ Derived class for an Poisson-distributed random variable.
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.discrete.poisson.class$new()`
 
 Create a new object of class `distribution.discrete.class`
 
@@ -63,7 +63,7 @@ Create a new object of class `distribution.discrete.class`
 
 ------------------------------------------------------------------------
 
-### Method `d()`
+### `distribution.discrete.poisson.class$d()`
 
 Density function for a poisson random variable with size `params$size`
 and success probability `params$prob`.
@@ -84,7 +84,7 @@ and success probability `params$prob`.
 
 ------------------------------------------------------------------------
 
-### Method `p()`
+### `distribution.discrete.poisson.class$p()`
 
 Cumulative density function for a poisson random variable with size
 `params$size` and success probability `params$prob`.
@@ -110,7 +110,7 @@ Cumulative density function for a poisson random variable with size
 
 ------------------------------------------------------------------------
 
-### Method [`q()`](https://rdrr.io/r/base/quit.html)
+### `distribution.discrete.poisson.class$q()`
 
 Quantile function for a poisson random variable with size `params$size`
 and success probability `params$prob`.
@@ -136,7 +136,7 @@ and success probability `params$prob`.
 
 ------------------------------------------------------------------------
 
-### Method `r()`
+### `distribution.discrete.poisson.class$r()`
 
 Generates random deviates for a poisson random variable with size
 `params$size` and success probability `params$prob`.
@@ -154,7 +154,7 @@ Generates random deviates for a poisson random variable with size
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.discrete.poisson.class$clone()`
 
 The objects of this class are cloneable with this method.
 

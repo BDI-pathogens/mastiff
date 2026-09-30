@@ -4,8 +4,8 @@ Base class for multivariate distributions
 
 ## Super classes
 
-`mastiff::R6.class.class` -\>
-[`mastiff::distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
+`R6.class.class` -\>
+[`distribution.abstract.class`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.md)
 -\> `distribution.multivariate.class`
 
 ## Active bindings
@@ -27,20 +27,20 @@ Base class for multivariate distributions
 
 ### Public methods
 
-- [`distribution.multivariate.class$new()`](#method-distribution.multivariate.class-new)
+- [`distribution.multivariate.class$new()`](#method-distribution.multivariate.class-initialize)
 
 - [`distribution.multivariate.class$clone()`](#method-distribution.multivariate.class-clone)
 
 Inherited methods
 
-- [`mastiff::distribution.abstract.class$d()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-d)
-- [`mastiff::distribution.abstract.class$p()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-p)
-- [`mastiff::distribution.abstract.class$q()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-q)
-- [`mastiff::distribution.abstract.class$r()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-r)
+- [`distribution.abstract.class$d()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-d)
+- [`distribution.abstract.class$p()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-p)
+- [`distribution.abstract.class$q()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-q)
+- [`distribution.abstract.class$r()`](https://bdi-pathogens.github.io/mastiff/reference/distribution.abstract.class.html#method-r)
 
 ------------------------------------------------------------------------
 
-### Method `new()`
+### `distribution.multivariate.class$new()`
 
 Create a new object of class `distribution.multivariate.class`
 
@@ -56,7 +56,7 @@ Create a new object of class `distribution.multivariate.class`
 
 ------------------------------------------------------------------------
 
-### Method `clone()`
+### `distribution.multivariate.class$clone()`
 
 The objects of this class are cloneable with this method.
 
