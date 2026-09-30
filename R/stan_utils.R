@@ -39,6 +39,32 @@
 #' @returns a dataframe with one row per sample from the posterior and one
 #'   column per parameter (unless `interface` is set to `cmdstan` and
 #'   `cmdstan_read_output_into_df` is set to `FALSE`).
+#' @examples
+#'   path_to_stan_code <- file.path(system.file("stan", package = "mastiff"), "test.stan")
+#'   writeLines(readLines(path_to_stan_code))
+#'   run_stan_interfaces(interface = "rstan",
+#'                       path_to_stan_code = path_to_stan_code,
+#'                       input_to_stan = list(N = 1),
+#'                       cores = 1,
+#'                       iter_warmup = 1,
+#'                       iter_sampling = 1)
+#'    # Change the interface. (Here inside \dontrun{} because it needs cmdstan,
+#'    # which is not a given when this code is running in different places.)
+#'    \dontrun{
+#'   run_stan_interfaces(interface = "cmdstanr",
+#'                       path_to_stan_code = path_to_stan_code,
+#'                       input_to_stan = list(N = 1),
+#'                       cores = 1,
+#'                       iter_warmup = 1,
+#'                       iter_sampling = 1)
+#'   run_stan_interfaces(interface = "cmdstan",
+#'                       cmdstan_path_to_output = "temp_",
+#'                       path_to_stan_code = path_to_stan_code,
+#'                       input_to_stan = list(N = 1),
+#'                       cores = 1,
+#'                       iter_warmup = 1,
+#'                       iter_sampling = 1)
+#'    }
 #' @export
 #'
 run_stan_interfaces <- function(path_to_stan_code,
