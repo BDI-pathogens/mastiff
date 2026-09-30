@@ -1,4 +1,4 @@
-# Renames tensor parameters from cmdstandr to rstan format
+# Renames tensor parameters from cmdstan to rstan format
 
 In cmdstan output files, tensor parameters are named with their indices
 at the end separated by dots, e.g. my_matrix.2.1; in rstan they are

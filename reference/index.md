@@ -43,7 +43,7 @@
   : Reads posterior output files from cmdstan into a dataframe
 
 - [`rename_params_cmdstanfile_to_rstan()`](https://bdi-pathogens.github.io/mastiff/reference/rename_params_cmdstanfile_to_rstan.md)
-  : Renames tensor parameters from cmdstandr to rstan format
+  : Renames tensor parameters from cmdstan to rstan format
 
 - [`run_stan_interfaces()`](https://bdi-pathogens.github.io/mastiff/reference/run_stan_interfaces.md)
   : Run one of rstan, cmdstanr or cmdstan on a file of Stan code

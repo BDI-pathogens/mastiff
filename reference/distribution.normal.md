@@ -6,7 +6,7 @@ Constructor function for an object of class
 ## Usage
 
 ``` r
-distribution.normal(mean, sd)
+distribution.normal(mean = 0, sd = 1)
 ```
 
 ## Arguments
