@@ -48,6 +48,7 @@ importFrom(RcppParallel,RcppParallelLibs)
 importFrom(VGAM,qextbetabinom)
 importFrom(data.table,
   ":=",
+  .N,
   set,
   setnames
 )
