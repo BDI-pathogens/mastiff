@@ -5,8 +5,8 @@
 \title{Run one of rstan, cmdstanr or cmdstan on a file of Stan code}
 \usage{
 run_stan_interfaces(
-  input_to_stan,
   path_to_stan_code,
+  input_to_stan,
   interface = c("rstan", "cmdstanr", "cmdstan"),
   iter_warmup = 250,
   iter_sampling = 250,
@@ -14,9 +14,8 @@ run_stan_interfaces(
   cores = parallel::detectCores(),
   params_to_ignore = character(),
   downsampling_factor = 1L,
+  rename_tensor_params = TRUE,
   cmdstan_path_to_installation = NA,
-  cmdstan_path_to_json = NA,
-  cmdstan_overwrite_json = FALSE,
   cmdstan_path_to_output = NA,
   cmdstan_path_to_compiled_model = stringr::str_remove(path_to_stan_code, ".stan$"),
   cmdstan_read_output_into_df = TRUE,
@@ -24,9 +23,9 @@ run_stan_interfaces(
 )
 }
 \arguments{
-\item{input_to_stan}{a list containing all the input the Stan code expects.}
-
 \item{path_to_stan_code}{the path to the file containing the Stan code.}
+
+\item{input_to_stan}{a list containing all the input the Stan code expects.}
 
 \item{interface}{one of \code{"rstan"}, \code{"cmdstanr"} or \code{"cmdstan"}.}
 
@@ -50,17 +49,16 @@ downsample the posterior. e.g. if a value of 2 is specified, we keep 1 in
 every 2 samples. The default of 1 means we keep all samples. TODO:
 currently only implemented for cmdstan.}
 
+\item{rename_tensor_params}{a single logical value: if \code{interface="cmdstan"}
+or \code{interface="cmdstanr"}, should we run
+\code{\link[=rename_params_cmdstanfile_to_rstan]{rename_params_cmdstanfile_to_rstan()}} on the column names of the resulting
+dataframe?}
+
 \item{cmdstan_path_to_installation}{the path to where cmdstan is installed on
-your system; you need to specify this if \code{interface="cmdstan"}, but not
-otherwise. Inside this directory there should be an executable file named
-\code{make} (which we use to compile Stan code).}
-
-\item{cmdstan_path_to_json}{the path to where we will write a temporary json
-file to hold the input for cmdstan; you need to specify this if
-\code{interface="cmdstan"}, but not otherwise.}
-
-\item{cmdstan_overwrite_json}{a single logical value: should we overwrite a
-file at \code{cmdstan_path_to_json} if it exists already?}
+your system. Inside this directory there should be an executable file named
+\code{make} (which we use to compile Stan code). If \code{interface="cmdstan"}, the
+default value for this argument is \code{\link[cmdstanr:cmdstan_path]{cmdstanr::cmdstan_path()}}; if not, this
+argument is not used.}
 
 \item{cmdstan_path_to_output}{the path to where we will write output files
 from cmdstan; you need to specify this if \code{interface="cmdstan"}, but not
@@ -86,4 +84,31 @@ column per parameter (unless \code{interface} is set to \code{cmdstan} and
 }
 \description{
 Run one of rstan, cmdstanr or cmdstan on a file of Stan code
+}
+\examples{
+  path_to_stan_code <- file.path(system.file("stan", package = "mastiff"), "test.stan")
+  writeLines(readLines(path_to_stan_code))
+  run_stan_interfaces(interface = "rstan",
+                      path_to_stan_code = path_to_stan_code,
+                      input_to_stan = list(N = 1),
+                      cores = 1,
+                      iter_warmup = 1,
+                      iter_sampling = 1)
+   # Change the interface. (Here inside \dontrun{} because it needs cmdstan,
+   # which is not a given when this code is running in different places.)
+   \dontrun{
+  run_stan_interfaces(interface = "cmdstanr",
+                      path_to_stan_code = path_to_stan_code,
+                      input_to_stan = list(N = 1),
+                      cores = 1,
+                      iter_warmup = 1,
+                      iter_sampling = 1)
+  run_stan_interfaces(interface = "cmdstan",
+                      cmdstan_path_to_output = "temp_",
+                      path_to_stan_code = path_to_stan_code,
+                      input_to_stan = list(N = 1),
+                      cores = 1,
+                      iter_warmup = 1,
+                      iter_sampling = 1)
+   }
 }

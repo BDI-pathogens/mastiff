@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mastiff <img src="man/figures/mastiff_logo_2.svg" align="right" height="148" /></a>
+# mastiff <img src="man/figures/logo.svg" align="right" height="139" alt="mastiff logo" />
 
 <!-- badges: start -->
 
@@ -15,36 +15,19 @@ University of Oxford. We work on infectious disease epidemiology. This
 package will collect mathematical and statistical methods we write in R
 (and stan) that have usefulness beyond infectious disease epidemiology.
 
-## Installation
+### Installation
 
-One or all of the following three methods should work.
-
-1.  In R:
-
-``` r
-install.packages("remotes") # if not already installed
-remotes::install_github("BDI-pathogens/mastiff", build_vignettes = TRUE)
-```
-
-2.  In a terminal / from the command line:
-
-``` bash
-git clone https://github.com/BDI-pathogens/mastiff.git
-```
-
-Then in R, change your directory to the repository you’ve just cloned,
-and run
-
-``` r
-install.packages("devtools") # if not already installed
-devtools::install(".", build_vignettes = TRUE)
-```
-
-3.  In R:
+Inside an R session, run
 
 ``` r
 install.packages("pak") # if not already installed
 pak::pak("BDI-pathogens/mastiff")
 ```
+
+### Links
+
+The source code is [here](https://github.com/BDI-pathogens/mastiff). The
+webpage, where you can read function documention and vignettes showing
+code in action, is [here](https://bdi-pathogens.github.io/mastiff/).
 
 <br/><br/> mastiff logo by [Lucy Back](https://github.com/1ucyb).

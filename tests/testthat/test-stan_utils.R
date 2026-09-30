@@ -95,7 +95,6 @@ if (testing_locally) {
 test_that("run_stan_interfaces works with cmdstan", {
   withr::with_tempdir({
     path <- getwd()
-    cmdstan_temp_file <- paste0(path, "/temp_dvsb.json")
     cmdstan_output_basename <- paste0(path, "/temp_dvsb_out")
     df_posterior <- run_stan_interfaces(
       input_to_stan = list(N=1),
@@ -103,42 +102,32 @@ test_that("run_stan_interfaces works with cmdstan", {
       interface = "cmdstan",
       iter_warmup = 1,
       iter_sampling = 1,
-      cmdstan_path_to_json = cmdstan_temp_file,
+      cmdstan_path_to_output = cmdstan_output_basename)
+  })
+  expect_true(is.data.frame(df_posterior))
+  expect_true(all(c("x[1]", "x[2]") %in% colnames(df_posterior)))
+})
+
+test_that("run_stan_interfaces works with cmdstan without renaming option", {
+  withr::with_tempdir({
+    path <- getwd()
+    cmdstan_output_basename <- paste0(path, "/temp_dvsb_out")
+    df_posterior <- run_stan_interfaces(
+      input_to_stan = list(N=1),
+      path_to_stan_code = get_stan_test_file_path(),
+      interface = "cmdstan",
+      rename_tensor_params = FALSE,
+      iter_warmup = 1,
+      iter_sampling = 1,
       cmdstan_path_to_output = cmdstan_output_basename)
   })
   expect_true(is.data.frame(df_posterior))
   expect_true(all(c("x.1", "x.2") %in% colnames(df_posterior)))
 })
 
-test_that("run_stan_interfaces with cmdstan stops if it can't overwrite the json", {
-  withr::with_tempdir({
-    path <- getwd()
-    cmdstan_temp_file <- paste0(path, "/temp_dvsb.json")
-    cmdstan_output_basename <- paste0(path, "/temp_dvsb_out")
-    df_posterior <- run_stan_interfaces(
-      input_to_stan = list(N=1),
-      path_to_stan_code = get_stan_test_file_path(),
-      interface = "cmdstan",
-      iter_warmup = 1,
-      iter_sampling = 1,
-      cmdstan_path_to_json = cmdstan_temp_file,
-      cmdstan_path_to_output = cmdstan_output_basename)
-    expect_error(run_stan_interfaces(
-      input_to_stan = list(N=1),
-      path_to_stan_code = get_stan_test_file_path(),
-      interface = "cmdstan",
-      cmdstan_path_to_json = cmdstan_temp_file,
-      cmdstan_path_to_output = cmdstan_output_basename),
-      regexp = paste("exists already; please move/rename/delete to prevent",
-                      "overwriting, or run again with cmdstan_overwrite_json",
-                      "set to TRUE"))
-  })
-})
-
 test_that("run_stan_interfaces with cmdstan returns NULL if cmdstan_read_output_into_df == FALSE", {
   withr::with_tempdir({
     path <- getwd()
-    cmdstan_temp_file <- paste0(path, "/temp_dvsb.json")
     cmdstan_output_basename <- paste0(path, "/temp_dvsb_out")
     result <- run_stan_interfaces(
       input_to_stan = list(N=1),
@@ -146,7 +135,6 @@ test_that("run_stan_interfaces with cmdstan returns NULL if cmdstan_read_output_
       interface = "cmdstan",
       iter_warmup = 1,
       iter_sampling = 1,
-      cmdstan_path_to_json = cmdstan_temp_file,
       cmdstan_path_to_output = cmdstan_output_basename,
       cmdstan_read_output_into_df = FALSE)
   })
@@ -179,4 +167,13 @@ test_that("run_stan_interfaces works with rstan", {
     stan_safe_warnings())
   expect_true(is.data.frame(df_posterior))
   expect_true(all(c("x[1]", "x[2]") %in% colnames(df_posterior)))
+})
+
+# TEST rename_params_cmdstanfile_to_rstan ----
+
+test_that("rename_params_cmdstanfile_to_rstan works as expected", {
+  param_names <- c("foo", "", "foo.1", "foo.1.2", "foo_1.1.2.3", ".1.2", "1.2")
+  expected_output <- c("foo", "", "foo[1]", "foo[1,2]", "foo_1[1,2,3]", "[1,2]",
+                       "1[2]")
+  expect_equal(rename_params_cmdstanfile_to_rstan(param_names), expected_output)
 })

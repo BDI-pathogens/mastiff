@@ -1,9 +1,13 @@
 Package: mastiff
 Title: Mathematical and Statistical Utilities by the Fraser Group at Oxford
 Version: 0.0.0.9000
-Authors@R: person( "Chris", "Wymant",
+Authors@R: c(person("Chris", "Wymant",
                     email = "chris.wymant@bdi.ox.ac.uk",
-                    role = c("aut", "cre") )
+                    role = c("aut", "cre")),
+             person("Ian", "Roberts",
+                    role = c("aut")),
+             person("Robert", "Hinch",
+                    role = c("aut")))
 Description: Provides assorted mathematical and statistical tools we have
     written for our work on infectious disease epidemiology, which should be of
     broader use. 

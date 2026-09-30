@@ -2,7 +2,7 @@
 % Please edit documentation in R/stan_summaries.R
 \name{rename_params_cmdstanfile_to_rstan}
 \alias{rename_params_cmdstanfile_to_rstan}
-\title{Renames tensor parameters from cmdstandr to rstan format}
+\title{Renames tensor parameters from cmdstan to rstan format}
 \usage{
 rename_params_cmdstanfile_to_rstan(param_names)
 }

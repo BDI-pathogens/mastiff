@@ -13,3 +13,4 @@ mastiff_*.tar.gz
 ..Rcheck/
 docs
 inst/stan/test
+*.rds

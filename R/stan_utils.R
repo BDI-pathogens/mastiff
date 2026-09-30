@@ -17,19 +17,19 @@
 #'   downsample the posterior. e.g. if a value of 2 is specified, we keep 1 in
 #'   every 2 samples. The default of 1 means we keep all samples. TODO:
 #'   currently only implemented for cmdstan.
+#' @param rename_tensor_params a single logical value: if `interface="cmdstan"`
+#'   or `interface="cmdstanr"`, should we run
+#'   [rename_params_cmdstanfile_to_rstan()] on the column names of the resulting
+#'   dataframe?
 #' @param cmdstan_path_to_installation the path to where cmdstan is installed on
-#'   your system; you need to specify this if `interface="cmdstan"`, but not
-#'   otherwise. Inside this directory there should be an executable file named
-#'   `make` (which we use to compile Stan code).
+#'   your system. Inside this directory there should be an executable file named
+#'   `make` (which we use to compile Stan code). If `interface="cmdstan"`, the
+#'   default value for this argument is [cmdstanr::cmdstan_path()]; if not, this
+#'   argument is not used.
 #' @param cmdstan_path_to_output the path to where we will write output files
 #'   from cmdstan; you need to specify this if `interface="cmdstan"`, but not
 #'   otherwise. Several files will be created with things appended to this path:
 #'   _chain1.csv, _chain2.csv etc.
-#' @param cmdstan_path_to_json the path to where we will write a temporary json
-#'   file to hold the input for cmdstan; you need to specify this if
-#'   `interface="cmdstan"`, but not otherwise.
-#' @param cmdstan_overwrite_json a single logical value: should we overwrite a
-#'   file at `cmdstan_path_to_json` if it exists already?
 #' @param cmdstan_path_to_compiled_model the path where we will create the
 #'   compiled version of the Stan code. Some value (such as the default) is
 #'   needed if `interface="cmdstan"`, but not otherwise.
@@ -43,10 +43,36 @@
 #' @returns a dataframe with one row per sample from the posterior and one
 #'   column per parameter (unless `interface` is set to `cmdstan` and
 #'   `cmdstan_read_output_into_df` is set to `FALSE`).
+#' @examples
+#'   path_to_stan_code <- file.path(system.file("stan", package = "mastiff"), "test.stan")
+#'   writeLines(readLines(path_to_stan_code))
+#'   run_stan_interfaces(interface = "rstan",
+#'                       path_to_stan_code = path_to_stan_code,
+#'                       input_to_stan = list(N = 1),
+#'                       cores = 1,
+#'                       iter_warmup = 1,
+#'                       iter_sampling = 1)
+#'    # Change the interface. (Here inside \dontrun{} because it needs cmdstan,
+#'    # which is not a given when this code is running in different places.)
+#'    \dontrun{
+#'   run_stan_interfaces(interface = "cmdstanr",
+#'                       path_to_stan_code = path_to_stan_code,
+#'                       input_to_stan = list(N = 1),
+#'                       cores = 1,
+#'                       iter_warmup = 1,
+#'                       iter_sampling = 1)
+#'   run_stan_interfaces(interface = "cmdstan",
+#'                       cmdstan_path_to_output = "temp_",
+#'                       path_to_stan_code = path_to_stan_code,
+#'                       input_to_stan = list(N = 1),
+#'                       cores = 1,
+#'                       iter_warmup = 1,
+#'                       iter_sampling = 1)
+#'    }
 #' @export
 #'
-run_stan_interfaces <- function(input_to_stan,
-                                path_to_stan_code,
+run_stan_interfaces <- function(path_to_stan_code,
+                                input_to_stan,
                                 interface = c("rstan", "cmdstanr", "cmdstan"),
                                 iter_warmup = 250,
                                 iter_sampling = 250,
@@ -54,9 +80,8 @@ run_stan_interfaces <- function(input_to_stan,
                                 cores = parallel::detectCores(),
                                 params_to_ignore = character(),
                                 downsampling_factor = 1L,
+                                rename_tensor_params = TRUE,
                                 cmdstan_path_to_installation = NA,
-                                cmdstan_path_to_json = NA,
-                                cmdstan_overwrite_json = FALSE,
                                 cmdstan_path_to_output = NA,
                                 cmdstan_path_to_compiled_model =
                                   stringr::str_remove(path_to_stan_code, ".stan$"),
@@ -79,10 +104,6 @@ run_stan_interfaces <- function(input_to_stan,
   stopifnot(is.character(interface))
   interface <- match.arg(interface)
   if (interface == "cmdstan") {
-    if (identical(cmdstan_path_to_json, NA)) stop(paste(
-      "If interface is set to cmdstan, the cmdstan_path_to_json option",
-      "must be used"
-    ))
     if (identical(cmdstan_path_to_output, NA)) stop(paste(
       "If interface is set to cmdstan, the cmdstan_path_to_output option",
       "must be used"
@@ -90,8 +111,6 @@ run_stan_interfaces <- function(input_to_stan,
     if (identical(cmdstan_path_to_installation, NA)) {
       cmdstan_path_to_installation <- cmdstanr::cmdstan_path()
     }
-    stopifnot(is.character(cmdstan_path_to_json))
-    stopifnot(length(cmdstan_path_to_json) == 1)
     stopifnot(is.character(cmdstan_path_to_output))
     stopifnot(length(cmdstan_path_to_output) == 1)
     stopifnot(is.character(cmdstan_path_to_installation))
@@ -102,11 +121,6 @@ run_stan_interfaces <- function(input_to_stan,
     cmdstan_path_to_make <- file.path(cmdstan_path_to_installation, "make")
     if (! file.exists(cmdstan_path_to_make)) stop(paste(
       "Could not find a make file inside", cmdstan_path_to_installation))
-    if (! cmdstan_overwrite_json && file.exists(cmdstan_path_to_json)) stop(paste(
-      cmdstan_path_to_json,
-      "exists already; please move/rename/delete to prevent overwriting,",
-      "or run again with cmdstan_overwrite_json set to TRUE"
-    ))
   }
   check_logical(cmdstan_read_output_into_df)
   check_numeric(downsampling_factor, lower = 1)
@@ -150,21 +164,23 @@ run_stan_interfaces <- function(input_to_stan,
     data.table::setDT(df_samples)
 
   } else {
-    cmdstanr::write_stan_json(input_to_stan, file = cmdstan_path_to_json)
     files_out_stan <- paste0(cmdstan_path_to_output, "_chain", 1:chains, ".csv")
     files_out_stan_profile <- paste0(cmdstan_path_to_output, "_profiles.csv")
-    command <- paste0(cmdstan_path_to_compiled_model,
-                      " method=sample",
-                      " num_chains=", chains,
-                      " num_warmup=", iter_warmup,
-                      " num_samples=", iter_sampling,
-                      " num_threads=", cores,
-                      " data file=", cmdstan_path_to_json,
-                      " output file=", paste(files_out_stan, collapse = ","),
-                      " profile_file=", files_out_stan_profile)
-    print("About to run this command:")
-    print(command)
-    system(command)
+    withr::with_tempfile("cmdstan_path_to_json", fileext = ".json", {
+      cmdstanr::write_stan_json(input_to_stan, file = cmdstan_path_to_json)
+      command <- paste0(cmdstan_path_to_compiled_model,
+                        " method=sample",
+                        " num_chains=", chains,
+                        " num_warmup=", iter_warmup,
+                        " num_samples=", iter_sampling,
+                        " num_threads=", cores,
+                        " data file=", cmdstan_path_to_json,
+                        " output file=", paste(files_out_stan, collapse = ","),
+                        " profile_file=", files_out_stan_profile)
+      print("About to run this command:")
+      print(command)
+      system(command)
+    })
     if (! all(file.exists(files_out_stan))) stop(paste(
       "Internal error: we expected to create all of the following files, but at",
       "least one does not exist:", paste(files_out_stan, collapse = " ")))
@@ -197,12 +213,9 @@ run_stan_interfaces <- function(input_to_stan,
   }
   df_samples <- df_samples[, ..keep_col]
 
-  # TODO:
-  #rename_params_cmdstanfile_to_rstan() if cmdstan(r)
-  #data.table::setnames(df_samples, function(names) {
-  #rename_params_from_stan(names,
-  #                        data_descriptors = input_to_stan$data_descriptors)})
-  # Add a note to for the user to do that themself if ! cmdstan_read_output_into_df
+  if (rename_tensor_params && interface == "cmdstan") {
+    data.table::setnames(df_samples, rename_params_cmdstanfile_to_rstan)
+  }
 
   df_samples
 
@@ -287,6 +300,37 @@ read_cmdstan_out_files <- function(file_paths,
 
 }
 
+#' Renames tensor parameters from cmdstan to rstan format
+#'
+#' In cmdstan output files, tensor parameters are named with their indices at the
+#' end separated by dots, e.g. my_matrix.2.1; in rstan they are named with their
+#' indices at the end internally separated by commas and then wrapped in square
+#' brackets, e.g. my_matrix\[2,1\].
+#'
+#' @param param_names A character vector of param names, before renaming i.e. as
+#'   found in cmdstan output files.
+#'
+#' @returns A character vector of the same length as `param_names`, after
+#'   renaming.
+#' @importFrom stringr str_replace_all
+#' @importFrom stringr str_match
+#' @importFrom magrittr %>%
+#' @export
+#'
+#' @examples
+#' param_names <- c("foo", "foo.1", "foo.1.2", "foo_1.1.2.3")
+#' rename_params_cmdstanfile_to_rstan(param_names)
+rename_params_cmdstanfile_to_rstan <- function(param_names) {
+  stopifnot(is.character(param_names))
+  map_chr(param_names, function(name) {
+    tensor_suffix <- stringr::str_match(name, "\\.([.0-9]+)$")[,2]
+    if (is.na(tensor_suffix)) return(name)
+    tensor_suffix_length <- nchar(tensor_suffix)
+    piece_before_suffix <- substr(name, 1, nchar(name) - tensor_suffix_length - 1)
+    tensor_suffix <- stringr::str_replace_all(tensor_suffix, "\\.", ",")
+    paste0(piece_before_suffix, "[", tensor_suffix, "]")
+  })
+}
 
 #' Get a regex for any warnings that Stan may return due to too few iterations,
 #' which we want to ignore e.g. during testing.
