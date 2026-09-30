@@ -14,6 +14,7 @@ run_stan_interfaces(
   cores = parallel::detectCores(),
   params_to_ignore = character(),
   downsampling_factor = 1L,
+  rename_tensor_params = TRUE,
   cmdstan_path_to_installation = NA,
   cmdstan_path_to_output = NA,
   cmdstan_path_to_compiled_model = stringr::str_remove(path_to_stan_code, ".stan$"),
@@ -47,6 +48,11 @@ from output (if possible; interface dependent).}
 downsample the posterior. e.g. if a value of 2 is specified, we keep 1 in
 every 2 samples. The default of 1 means we keep all samples. TODO:
 currently only implemented for cmdstan.}
+
+\item{rename_tensor_params}{a single logical value: if \code{interface="cmdstan"}
+or \code{interface="cmdstanr"}, should we run
+\code{\link[=rename_params_cmdstanfile_to_rstan]{rename_params_cmdstanfile_to_rstan()}} on the column names of the resulting
+dataframe?}
 
 \item{cmdstan_path_to_installation}{the path to where cmdstan is installed on
 your system. Inside this directory there should be an executable file named

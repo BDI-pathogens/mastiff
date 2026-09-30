@@ -17,6 +17,10 @@
 #'   downsample the posterior. e.g. if a value of 2 is specified, we keep 1 in
 #'   every 2 samples. The default of 1 means we keep all samples. TODO:
 #'   currently only implemented for cmdstan.
+#' @param rename_tensor_params a single logical value: if `interface="cmdstan"`
+#'   or `interface="cmdstanr"`, should we run
+#'   [rename_params_cmdstanfile_to_rstan()] on the column names of the resulting
+#'   dataframe?
 #' @param cmdstan_path_to_installation the path to where cmdstan is installed on
 #'   your system. Inside this directory there should be an executable file named
 #'   `make` (which we use to compile Stan code). If `interface="cmdstan"`, the
@@ -76,6 +80,7 @@ run_stan_interfaces <- function(path_to_stan_code,
                                 cores = parallel::detectCores(),
                                 params_to_ignore = character(),
                                 downsampling_factor = 1L,
+                                rename_tensor_params = TRUE,
                                 cmdstan_path_to_installation = NA,
                                 cmdstan_path_to_output = NA,
                                 cmdstan_path_to_compiled_model =
@@ -208,12 +213,9 @@ run_stan_interfaces <- function(path_to_stan_code,
   }
   df_samples <- df_samples[, ..keep_col]
 
-  # TODO:
-  #rename_params_cmdstanfile_to_rstan() if cmdstan(r)
-  #data.table::setnames(df_samples, function(names) {
-  #rename_params_from_stan(names,
-  #                        data_descriptors = input_to_stan$data_descriptors)})
-  # Add a note to for the user to do that themself if ! cmdstan_read_output_into_df
+  if (rename_tensor_params && interface == "cmdstan") {
+    data.table::setnames(df_samples, rename_params_cmdstanfile_to_rstan)
+  }
 
   df_samples
 
@@ -298,6 +300,7 @@ read_cmdstan_out_files <- function(file_paths,
 
 }
 
+# TODO: move rename_params_cmdstanfile_to_rstan here, move testing too
 
 #' Get a regex for any warnings that Stan may return due to too few iterations,
 #' which we want to ignore e.g. during testing.

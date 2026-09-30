@@ -105,6 +105,23 @@ test_that("run_stan_interfaces works with cmdstan", {
       cmdstan_path_to_output = cmdstan_output_basename)
   })
   expect_true(is.data.frame(df_posterior))
+  expect_true(all(c("x[1]", "x[2]") %in% colnames(df_posterior)))
+})
+
+test_that("run_stan_interfaces works with cmdstan without renaming option", {
+  withr::with_tempdir({
+    path <- getwd()
+    cmdstan_output_basename <- paste0(path, "/temp_dvsb_out")
+    df_posterior <- run_stan_interfaces(
+      input_to_stan = list(N=1),
+      path_to_stan_code = get_stan_test_file_path(),
+      interface = "cmdstan",
+      rename_tensor_params = FALSE,
+      iter_warmup = 1,
+      iter_sampling = 1,
+      cmdstan_path_to_output = cmdstan_output_basename)
+  })
+  expect_true(is.data.frame(df_posterior))
   expect_true(all(c("x.1", "x.2") %in% colnames(df_posterior)))
 })
 
