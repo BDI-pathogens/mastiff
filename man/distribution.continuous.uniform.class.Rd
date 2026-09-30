@@ -7,154 +7,160 @@
 Derived class for an uniformly-distributed random variable on \code{[min, max]}
 }
 \section{Super classes}{
-\code{mastiff::R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{mastiff::distribution.continuous.class}} -> \code{distribution.continuous.uniform.class}
+\code{R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{distribution.abstract.class}} -> \code{\link[mastiff:distribution.continuous.class]{distribution.continuous.class}} -> \code{distribution.continuous.uniform.class}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{interfaces}}{The list of available class interfaces}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{interfaces}}{The list of available class interfaces}
 
-\item{\code{mean}}{The mean of a uniform random variable on \code{[min, max]}.}
+    \item{\code{mean}}{The mean of a uniform random variable on \code{[min, max]}.}
 
-\item{\code{sd}}{The standard deviation of a uniform random variable on
+    \item{\code{sd}}{The standard deviation of a uniform random variable on
 \code{[min, max]}.}
 
-\item{\code{var}}{The variance of a uniform random variable on \code{[min,
+    \item{\code{var}}{The variance of a uniform random variable on \code{[min,
 max]}.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-distribution.continuous.uniform.class-new}{\code{distribution.continuous.uniform.class$new()}}
-\item \href{#method-distribution.continuous.uniform.class-d}{\code{distribution.continuous.uniform.class$d()}}
-\item \href{#method-distribution.continuous.uniform.class-p}{\code{distribution.continuous.uniform.class$p()}}
-\item \href{#method-distribution.continuous.uniform.class-q}{\code{distribution.continuous.uniform.class$q()}}
-\item \href{#method-distribution.continuous.uniform.class-r}{\code{distribution.continuous.uniform.class$r()}}
-\item \href{#method-distribution.continuous.uniform.class-clone}{\code{distribution.continuous.uniform.class$clone()}}
-}
+  \itemize{
+    \item \href{#method-distribution.continuous.uniform.class-initialize}{\code{distribution.continuous.uniform.class$new()}}
+    \item \href{#method-distribution.continuous.uniform.class-d}{\code{distribution.continuous.uniform.class$d()}}
+    \item \href{#method-distribution.continuous.uniform.class-p}{\code{distribution.continuous.uniform.class$p()}}
+    \item \href{#method-distribution.continuous.uniform.class-q}{\code{distribution.continuous.uniform.class$q()}}
+    \item \href{#method-distribution.continuous.uniform.class-r}{\code{distribution.continuous.uniform.class$r()}}
+    \item \href{#method-distribution.continuous.uniform.class-clone}{\code{distribution.continuous.uniform.class$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-distribution.continuous.uniform.class-new"></a>}}
-\if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new object of class \code{distribution.continuous.exponential.class}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$new(min = 0, max = 1)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-distribution.continuous.uniform.class-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-initialize}{}}}
+\subsection{\code{distribution.continuous.uniform.class$new()}}{
+  Create a new object of class \code{distribution.continuous.exponential.class}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.continuous.uniform.class$new(min = 0, max = 1)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{min}}{The lower bound of the uniform distribution}
+      \item{\code{max}}{The max bound of the uniform distribution}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{min}}{The lower bound of the uniform distribution}
-
-\item{\code{max}}{The max bound of the uniform distribution}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.continuous.uniform.class-d"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-d}{}}}
-\subsection{Method \code{d()}}{
-Density function for a uniform random variable on
+\subsection{\code{distribution.continuous.uniform.class$d()}}{
+  Density function for a uniform random variable on
 \code{[min, max]}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$d(x, log = FALSE)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.continuous.uniform.class$d(x, log = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{x}}{vector of quantiles.}
+      \item{\code{log}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{vector of quantiles.}
-
-\item{\code{log}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.continuous.uniform.class-p"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-p}{}}}
-\subsection{Method \code{p()}}{
-Cumulative density function for a uniform random variable on
+\subsection{\code{distribution.continuous.uniform.class$p()}}{
+  Cumulative density function for a uniform random variable on
 \code{[min, max]}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$p(q, lower.tail = TRUE, log.p = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{q}}{vector of quantiles.}
-
-\item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.continuous.uniform.class$p(q, lower.tail = TRUE, log.p = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{q}}{vector of quantiles.}
+      \item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
 otherwise, \eqn{P[X>x]}.}
+      \item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
 
-\item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.continuous.uniform.class-q"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-q}{}}}
-\subsection{Method \code{q()}}{
-Quantile function for a uniform random variable on
+\subsection{\code{distribution.continuous.uniform.class$q()}}{
+  Quantile function for a uniform random variable on
 \code{[min, max]}.
 rate \code{params$rate}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$q(p, lower.tail = TRUE, log.p = FALSE)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{p}}{vector of probabilities.}
-
-\item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.continuous.uniform.class$q(p, lower.tail = TRUE, log.p = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{p}}{vector of probabilities.}
+      \item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
 otherwise, \eqn{P[X>x]}.}
+      \item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
 
-\item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.continuous.uniform.class-r"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-r}{}}}
-\subsection{Method \code{r()}}{
-Generates random deviates for a uniform random variable on
+\subsection{\code{distribution.continuous.uniform.class$r()}}{
+  Generates random deviates for a uniform random variable on
 \code{[min, max]}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$r(n)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.continuous.uniform.class$r(n)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{n}}{number of observations. If \code{length( n ) > 1}, the length is
+taken to be the number required.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n}}{number of observations. If \code{length( n ) > 1}, the length is
-taken to be the number required.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.continuous.uniform.class-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.continuous.uniform.class-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.continuous.uniform.class$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{distribution.continuous.uniform.class$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.continuous.uniform.class$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

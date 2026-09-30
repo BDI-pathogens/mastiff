@@ -2,18 +2,18 @@
 % Please edit documentation in R/aliases.R
 \name{logistic}
 \alias{logistic}
-\title{logistic(x) = 1 / (1 + exp(-x)), a wrapper for \code{\link[stats:Logistic]{stats::plogis()}}}
+\title{logistic(x) = 1 / (1 + exp(-x)), a wrapper for \code{\link[stats:plogis]{stats::plogis()}}}
 \usage{
 logistic(...)
 }
 \arguments{
-\item{...}{A numeric vector of values, and other named arguments to \code{\link[stats:Logistic]{stats::plogis()}} if desired.}
+\item{...}{A numeric vector of values, and other named arguments to \code{\link[stats:plogis]{stats::plogis()}} if desired.}
 }
 \value{
 A numeric vector
 }
 \description{
-logistic(x) = 1 / (1 + exp(-x)), a wrapper for \code{\link[stats:Logistic]{stats::plogis()}}
+logistic(x) = 1 / (1 + exp(-x)), a wrapper for \code{\link[stats:plogis]{stats::plogis()}}
 }
 \examples{
 logistic(2)

@@ -6,6 +6,8 @@
 \alias{mastiff}
 \title{mastiff: Mathematical and Statistical Utilities by the Fraser Group at Oxford}
 \description{
+\if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
+
 Provides assorted mathematical and statistical tools we have written for our work on infectious disease epidemiology, which should be of broader use.
 
 TODO: A DESCRIPTION OF THE PACKAGE
@@ -21,6 +23,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Chris Wymant \email{chris.wymant@bdi.ox.ac.uk}
+
+Authors:
+\itemize{
+  \item Chris Wymant \email{chris.wymant@bdi.ox.ac.uk}
+}
 
 }
 \keyword{internal}

@@ -9,7 +9,7 @@ posterior_intervals(stanfit_list, prob, params_desired = NA, ...)
 }
 \arguments{
 \item{stanfit_list}{A list of stanfit objects e.g. as returned by
-\code{\link[rstan:stanmodel-method-sampling]{rstan::sampling()}}. The function's name reflects the assumption that these
+\code{\link[rstan:sampling]{rstan::sampling()}}. The function's name reflects the assumption that these
 contain samples from the posterior, but they could contain samples from the
 prior.}
 

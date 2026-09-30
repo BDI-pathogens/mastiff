@@ -7,164 +7,169 @@
 Derived class for an beta-binomially distributed random variable.
 }
 \section{Super classes}{
-\code{mastiff::R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{mastiff::distribution.abstract.class}} -> \code{\link[mastiff:distribution.discrete.class]{mastiff::distribution.discrete.class}} -> \code{distribution.discrete.beta_binomial.class}
+\code{R6.class.class} -> \code{\link[mastiff:distribution.abstract.class]{distribution.abstract.class}} -> \code{\link[mastiff:distribution.discrete.class]{distribution.discrete.class}} -> \code{distribution.discrete.beta_binomial.class}
 }
 \section{Active bindings}{
-\if{html}{\out{<div class="r6-active-bindings">}}
-\describe{
-\item{\code{interfaces}}{The list of available class interfaces}
+  \if{html}{\out{<div class="r6-active-bindings">}}
+  \describe{
+    \item{\code{interfaces}}{The list of available class interfaces}
 
-\item{\code{mean}}{The mean of a binomial distribution with size \verb{$params$size} and
+    \item{\code{mean}}{The mean of a binomial distribution with size \verb{$params$size} and
 success probability \verb{$params$prob}.}
 
-\item{\code{sd}}{The standard deviation of a binomial distribution with size
+    \item{\code{sd}}{The standard deviation of a binomial distribution with size
 \verb{$params$size} and success probability \verb{$params$prob}.}
 
-\item{\code{var}}{The variance of a binomial distribution with size
+    \item{\code{var}}{The variance of a binomial distribution with size
 \verb{$params$size} and success probability \verb{$params$prob}.}
-}
-\if{html}{\out{</div>}}
+  }
+  \if{html}{\out{</div>}}
 }
 \section{Methods}{
 \subsection{Public methods}{
-\itemize{
-\item \href{#method-distribution.discrete.beta_binomial.class-new}{\code{distribution.discrete.beta_binomial.class$new()}}
-\item \href{#method-distribution.discrete.beta_binomial.class-d}{\code{distribution.discrete.beta_binomial.class$d()}}
-\item \href{#method-distribution.discrete.beta_binomial.class-p}{\code{distribution.discrete.beta_binomial.class$p()}}
-\item \href{#method-distribution.discrete.beta_binomial.class-q}{\code{distribution.discrete.beta_binomial.class$q()}}
-\item \href{#method-distribution.discrete.beta_binomial.class-r}{\code{distribution.discrete.beta_binomial.class$r()}}
-\item \href{#method-distribution.discrete.beta_binomial.class-clone}{\code{distribution.discrete.beta_binomial.class$clone()}}
-}
+  \itemize{
+    \item \href{#method-distribution.discrete.beta_binomial.class-initialize}{\code{distribution.discrete.beta_binomial.class$new()}}
+    \item \href{#method-distribution.discrete.beta_binomial.class-d}{\code{distribution.discrete.beta_binomial.class$d()}}
+    \item \href{#method-distribution.discrete.beta_binomial.class-p}{\code{distribution.discrete.beta_binomial.class$p()}}
+    \item \href{#method-distribution.discrete.beta_binomial.class-q}{\code{distribution.discrete.beta_binomial.class$q()}}
+    \item \href{#method-distribution.discrete.beta_binomial.class-r}{\code{distribution.discrete.beta_binomial.class$r()}}
+    \item \href{#method-distribution.discrete.beta_binomial.class-clone}{\code{distribution.discrete.beta_binomial.class$clone()}}
+  }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-distribution.discrete.beta_binomial.class-new"></a>}}
-\if{latex}{\out{\hypertarget{method-distribution.discrete.beta_binomial.class-new}{}}}
-\subsection{Method \code{new()}}{
-Create a new object of class \code{distribution.discrete.class}
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.discrete.beta_binomial.class$new(size, alpha, beta)}\if{html}{\out{</div>}}
+\if{html}{\out{<a id="method-distribution.discrete.beta_binomial.class-initialize"></a>}}
+\if{latex}{\out{\hypertarget{method-distribution.discrete.beta_binomial.class-initialize}{}}}
+\subsection{\code{distribution.discrete.beta_binomial.class$new()}}{
+  Create a new object of class \code{distribution.discrete.class}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.discrete.beta_binomial.class$new(size, alpha, beta)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{size}}{number of trials (zero or more).}
+      \item{\code{alpha}}{the first shape parameter}
+      \item{\code{beta}}{the second shape parameter}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{size}}{number of trials (zero or more).}
-
-\item{\code{alpha}}{the first shape parameter}
-
-\item{\code{beta}}{the second shape parameter}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.discrete.beta_binomial.class-d"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.discrete.beta_binomial.class-d}{}}}
-\subsection{Method \code{d()}}{
-Density function for a beta-binomial random variable with size
+\subsection{\code{distribution.discrete.beta_binomial.class$d()}}{
+  Density function for a beta-binomial random variable with size
 \code{params$size} and shape parameters \code{params$alpha} and \code{params$beta}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.discrete.beta_binomial.class$d(x, log = FALSE)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.discrete.beta_binomial.class$d(x, log = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{x}}{vector of quantiles.}
+      \item{\code{log}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{x}}{vector of quantiles.}
-
-\item{\code{log}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.discrete.beta_binomial.class-p"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.discrete.beta_binomial.class-p}{}}}
-\subsection{Method \code{p()}}{
-Cumulative density function for a beta-binomial random variable
+\subsection{\code{distribution.discrete.beta_binomial.class$p()}}{
+  Cumulative density function for a beta-binomial random variable
 with size \code{params$size} and shape parameters \code{params$alpha} and \code{params$beta}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.discrete.beta_binomial.class$p(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.discrete.beta_binomial.class$p(
   q,
   lower.tail = TRUE,
   log.p = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{q}}{vector of quantiles.}
-
-\item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{q}}{vector of quantiles.}
+      \item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
 otherwise, \eqn{P[X>x]}.}
+      \item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
 
-\item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.discrete.beta_binomial.class-q"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.discrete.beta_binomial.class-q}{}}}
-\subsection{Method \code{q()}}{
-Quantile function for a beta-binomial random variable with size
+\subsection{\code{distribution.discrete.beta_binomial.class$q()}}{
+  Quantile function for a beta-binomial random variable with size
 \code{params$size} and shape parameters \code{params$alpha} and \code{params$beta}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.discrete.beta_binomial.class$q(
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.discrete.beta_binomial.class$q(
   p,
   lower.tail = TRUE,
   log.p = FALSE
-)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{p}}{vector of probabilities.}
-
-\item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
+)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{p}}{vector of probabilities.}
+      \item{\code{lower.tail}}{logical; if TRUE (default), probabilities are \eqn{P[ X \leq x ]},
 otherwise, \eqn{P[X>x]}.}
+      \item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
+    }
+    \if{html}{\out{</div>}}
+  }
+}
 
-\item{\code{log.p}}{logical; if TRUE, probabilities p are given as \code{log(p)}.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.discrete.beta_binomial.class-r"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.discrete.beta_binomial.class-r}{}}}
-\subsection{Method \code{r()}}{
-Generates random deviates for a beta-binomial random variable
+\subsection{\code{distribution.discrete.beta_binomial.class$r()}}{
+  Generates random deviates for a beta-binomial random variable
 with size \code{params$size} and shape parameters \code{params$alpha} and \code{params$beta}.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.discrete.beta_binomial.class$r(n)}\if{html}{\out{</div>}}
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.discrete.beta_binomial.class$r(n)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{n}}{number of observations. If \code{length( n ) > 1}, the length is
+taken to be the number required.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{n}}{number of observations. If \code{length( n ) > 1}, the length is
-taken to be the number required.}
-}
-\if{html}{\out{</div>}}
-}
-}
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-distribution.discrete.beta_binomial.class-clone"></a>}}
 \if{latex}{\out{\hypertarget{method-distribution.discrete.beta_binomial.class-clone}{}}}
-\subsection{Method \code{clone()}}{
-The objects of this class are cloneable with this method.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{distribution.discrete.beta_binomial.class$clone(deep = FALSE)}\if{html}{\out{</div>}}
+\subsection{\code{distribution.discrete.beta_binomial.class$clone()}}{
+  The objects of this class are cloneable with this method.
+  \subsection{Usage}{
+    \if{html}{\out{<div class="r">}}
+    \preformatted{distribution.discrete.beta_binomial.class$clone(deep = FALSE)}
+    \if{html}{\out{</div>}}
+  }
+  \subsection{Arguments}{
+    \if{html}{\out{<div class="arguments">}}
+    \describe{
+      \item{\code{deep}}{Whether to make a deep clone.}
+    }
+    \if{html}{\out{</div>}}
+  }
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{deep}}{Whether to make a deep clone.}
-}
-\if{html}{\out{</div>}}
-}
-}
 }

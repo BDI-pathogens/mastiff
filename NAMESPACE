@@ -35,7 +35,9 @@ export(posterior_intervals)
 export(posterior_mass_in_range)
 export(posterior_means)
 export(posterior_medians)
+export(read_cmdstan_out_files)
 export(rename_params_cmdstanfile_to_rstan)
+export(run_stan_interfaces)
 export(simulate_mixture_of_two_normals)
 export(stanfit_to_dt)
 export(stanfit_to_matrix)
@@ -44,25 +46,37 @@ import(Rcpp)
 import(methods)
 importFrom(RcppParallel,RcppParallelLibs)
 importFrom(VGAM,qextbetabinom)
-importFrom(data.table,":=")
-importFrom(data.table,set)
-importFrom(data.table,setnames)
+importFrom(data.table,
+  ":=",
+  set,
+  setnames
+)
 importFrom(dplyr,if_else)
-importFrom(extraDistr,dbbinom)
-importFrom(extraDistr,pbbinom)
-importFrom(extraDistr,rbbinom)
+importFrom(extraDistr,
+  dbbinom,
+  pbbinom,
+  rbbinom
+)
 importFrom(magrittr,"%>%")
-importFrom(matrixStats,colMaxs)
-importFrom(matrixStats,logSumExp)
-importFrom(mvtnorm,dmvnorm)
-importFrom(mvtnorm,dmvt)
-importFrom(mvtnorm,rmvnorm)
-importFrom(mvtnorm,rmvt)
-importFrom(purrr,map_chr)
-importFrom(purrr,map_dbl)
+importFrom(matrixStats,
+  colMaxs,
+  logSumExp
+)
+importFrom(mvtnorm,
+  dmvnorm,
+  dmvt,
+  rmvnorm,
+  rmvt
+)
+importFrom(purrr,
+  map_chr,
+  map_dbl
+)
 importFrom(rstan,sampling)
 importFrom(rstantools,rstan_config)
-importFrom(stringr,str_match)
-importFrom(stringr,str_replace_all)
+importFrom(stringr,
+  str_match,
+  str_replace_all
+)
 importFrom(utils,capture.output)
 useDynLib(mastiff, .registration = TRUE)

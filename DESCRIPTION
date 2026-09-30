@@ -13,11 +13,15 @@ Roxygen: list(markdown = TRUE)
 URL: https://github.com/BDI-pathogens/mastiff, https://bdi-pathogens.github.io/mastiff/
 BugReports: https://github.com/BDI-pathogens/mastiff/issues
 Suggests: 
+    cmdstanr,
     knitr,
+    pkgcond,
     rmarkdown,
     testthat (>= 3.0.0),
     tidyr,
     withr
+Remotes:
+    cmdstanr=stan-dev/cmdstanr
 Config/testthat/edition: 3
 Depends: 
     R (>= 3.5)
@@ -38,7 +42,8 @@ Imports:
     R6 (>= 2.4.1),
     extraDistr,
     VGAM,
-    mvtnorm
+    mvtnorm,
+    R.utils
 VignetteBuilder: knitr
 Biarch: true
 LinkingTo: 
@@ -64,6 +69,8 @@ Collate:
     'mixture_of_two_normals.R'
     'plot_posterior.R'
     'stan_summaries.R'
+    'stan_utils.R'
     'stanmodels.R'
     'utils.R'
     'utils_misc.R'
+Config/roxygen2/version: 8.1.0

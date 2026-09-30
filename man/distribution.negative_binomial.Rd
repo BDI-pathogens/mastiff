@@ -13,7 +13,7 @@ positive, need not be integer.}
 
 \item{prob}{probability of success in each trial. 0 < prob <= 1.}
 
-\item{mu}{alternative parametrization via mean: see \link[stats:NegBinomial]{stats::dnbinom}}
+\item{mu}{alternative parametrization via mean: see \link[stats:dnbinom]{stats::dnbinom}}
 
 \item{var}{alternative parametrization via mean and variance}
 }
