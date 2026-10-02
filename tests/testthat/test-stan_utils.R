@@ -92,6 +92,19 @@ test_that("read_cmdstan_out_files breaks for gzipped file with comment_lines == 
 
 if (testing_locally) {
 
+test_that("run_stan_interfaces works with cmdstanr", {
+  df_posterior <- pkgcond::suppress_warnings(run_stan_interfaces(
+    input_to_stan = list(N=1),
+    path_to_stan_code = get_stan_test_file_path(),
+    interface = "cmdstanr",
+    cores = 4,
+    iter_warmup = 2000,
+    iter_sampling = 2000),
+    stan_safe_warnings())
+  expect_true(is.data.frame(df_posterior))
+  expect_true(all(c("x[1]", "x[2]") %in% colnames(df_posterior)))
+})
+
 test_that("run_stan_interfaces works with cmdstan", {
   withr::with_tempdir({
     path <- getwd()
@@ -139,19 +152,6 @@ test_that("run_stan_interfaces with cmdstan returns NULL if cmdstan_read_output_
       cmdstan_read_output_into_df = FALSE)
   })
   expect_true(is.null(result))
-})
-
-test_that("run_stan_interfaces works with cmdstanr", {
-  df_posterior <- pkgcond::suppress_warnings(run_stan_interfaces(
-    input_to_stan = list(N=1),
-    path_to_stan_code = get_stan_test_file_path(),
-    interface = "cmdstanr",
-    cores = 1,
-    iter_warmup = 1,
-    iter_sampling = 1),
-    stan_safe_warnings())
-  expect_true(is.data.frame(df_posterior))
-  expect_true(all(c("x[1]", "x[2]") %in% colnames(df_posterior)))
 })
 
 }
