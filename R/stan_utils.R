@@ -129,7 +129,8 @@ run_stan_interfaces <- function(path_to_stan_code,
   if (interface == "rstan") {
     model_compiled <- rstan::stan_model(path_to_stan_code, auto_write = TRUE)
   } else if (interface == "cmdstanr") {
-    model_compiled <- cmdstanr::cmdstan_model(path_to_stan_code)
+    model_compiled <- cmdstanr::cmdstan_model(path_to_stan_code,
+                                              cpp_options = list(stan_threads = TRUE))
   } else {
     system(paste("cd", cmdstan_path_to_installation, "&& make STAN_THREADS=true", cmdstan_path_to_compiled_model))
   }
@@ -158,6 +159,7 @@ run_stan_interfaces <- function(path_to_stan_code,
       iter_sampling = iter_sampling,
       chains = chains,
       parallel_chains = cores,
+      threads_per_chain = 1,
       ...
     )
     df_samples <- samples$draws(format = "draws_df")
