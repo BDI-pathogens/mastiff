@@ -136,12 +136,12 @@ per parameter (unless `interface` is set to `cmdstan` and
                       cores = 1,
                       iter_warmup = 1,
                       iter_sampling = 1)
-#> Started running Stan at[1] "2026-09-30 14:24:04 UTC"
+#> Started running Stan at[1] "2026-10-02 09:10:31 UTC"
 #> 
 #> SAMPLING FOR MODEL 'anon_model' NOW (CHAIN 1).
 #> Chain 1: 
-#> Chain 1: Gradient evaluation took 4e-06 seconds
-#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.04 seconds.
+#> Chain 1: Gradient evaluation took 3e-06 seconds
+#> Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 0.03 seconds.
 #> Chain 1: Adjust your expectations accordingly!
 #> Chain 1: 
 #> Chain 1: 
@@ -209,8 +209,8 @@ per parameter (unless `interface` is set to `cmdstan` and
 #> Chain 4:                0 seconds (Sampling)
 #> Chain 4:                0 seconds (Total)
 #> Chain 4: 
-#> Finished running Stan at[1] "2026-09-30 14:24:04 UTC"
-#> Time difference of 0.08137035 secs
+#> Finished running Stan at[1] "2026-10-02 09:10:31 UTC"
+#> Time difference of 0.0787921 secs
 #>          x[1]      x[2]      lp__
 #>         <num>     <num>     <num>
 #> 1: 0.09472183 0.7532501 -4.139062
