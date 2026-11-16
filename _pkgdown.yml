@@ -6,6 +6,7 @@ reference:
   - check_logical
   - check_numeric
   - estimate_mixture_of_two_normals
+  - get_n_character_ids
   - logistic
   - logit
   - plot_posterior
