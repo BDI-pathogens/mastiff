@@ -41,6 +41,10 @@ mastiff logo by [Lucy Back](https://github.com/1ucyb).
 - [`estimate_mixture_of_two_normals()`](https://bdi-pathogens.github.io/mastiff/reference/estimate_mixture_of_two_normals.md)
   : Estimate the parameters of a mixture of two normal distributions
 
+- [`get_n_character_ids()`](https://bdi-pathogens.github.io/mastiff/reference/get_n_character_ids.md)
+  : Return a length-n vector of unique short strings e.g. for labelling
+  n objects
+
 - [`logistic()`](https://bdi-pathogens.github.io/mastiff/reference/logistic.md)
   :
 
